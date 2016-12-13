@@ -1,0 +1,9 @@
+---
+name: napalm
+description: A StackStorm pack for working with network devices using the NAPALM library
+keywords:
+    - networking
+    - napalm
+version: 0.1.0
+author: mierdin
+email: info@stackstorm.com

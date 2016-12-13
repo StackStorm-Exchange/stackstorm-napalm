@@ -1,0 +1,12 @@
+---
+devices:
+- driver: junos
+  hostname: 192.168.50.51
+  username: root
+  password: Juniper
+  port: 22
+- driver: junos
+  hostname: 192.168.50.52
+  username: root
+  password: Juniper
+  port: 22

@@ -1,0 +1,13 @@
+---
+    name: "napalm_bgp_peers_decrease"                      # required
+    pack: "napalm"                       # optional
+    description: "Rule description."       # optional
+    enabled: true                          # required
+
+    trigger:                               # required
+        type: "napalm.BgpPeerDecrease"
+
+    action:                                # required
+        ref: "core.local"
+        parameters:                        # optional
+            cmd: echo "hello"

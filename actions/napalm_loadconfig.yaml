@@ -1,0 +1,44 @@
+---
+name: "napalm_load_config"
+runner_type: "python-script"
+description: "Loads (merge) a configuration to a network device using NAPALM."
+enabled: true
+entry_point: "napalm_load_config.py"
+parameters:
+
+    driver:
+        type: "string"
+        description: "device type"
+        required: true
+        position: 0
+    hostname:
+        type: "string"
+        description: "The hostname of the device to which you wish to post a configuration"
+        required: true
+        position: 1
+    username:
+        type: "string"
+        description: "username for logging on to device"
+        required: true
+        position: 2
+    password:
+        type: "string"
+        description: "password for logging on to device"
+        required: true
+        position: 3
+        secret: true
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: true
+        position: 4
+    config:
+        type: "string"
+        description: "configuration to load to device"
+        required: true
+        position: 5
+    method:
+        type: "string"
+        description: "Method to load the config (either 'merge' or 'replace', default is 'merge')"
+        required: false
+        position: 6
