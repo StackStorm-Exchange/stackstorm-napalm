@@ -37,4 +37,6 @@ class NapalmLoadConfig(Action):
                     filename=config_file
                 )
 
+            device.commit_config()
+
         return "load (%s) successful on %s" % (method, hostname)
