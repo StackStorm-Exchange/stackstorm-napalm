@@ -9,7 +9,7 @@ class NapalmRouteTo(Action):
     def __init__(self, *args, **kwargs):
         super(NapalmRouteTo, self).__init__(*args, **kwargs)
 
-    def run(self, driver, hostname, username, password, port, destination, protocol):
+    def run(self, driver, hostname, port, destination, protocol):
 
 
         with get_network_driver(driver)(
