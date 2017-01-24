@@ -21,4 +21,4 @@ class NapalmRouteTo(Action):
 
             route = device.get_route_to(destination, protocol)
 
-        return (TRUE, route)
+        return (True, route)
