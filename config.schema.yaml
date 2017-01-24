@@ -1,4 +1,14 @@
 ---
+username:
+  description: "Username to connect to devices"
+  type: "string"
+  required: true
+  
+password:
+  description: "Password to connect to devices"
+  type: "string"
+  required: true
+
 devices:
   description: "The array of devices"
   required: true

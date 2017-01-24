@@ -5,7 +5,6 @@ description: "Shows an IP route on a network device using NAPALM."
 enabled: true
 entry_point: "napalm_routeto.py"
 parameters:
-
     driver:
         type: "string"
         description: "device type"
@@ -16,30 +15,18 @@ parameters:
         description: "The hostname of the device to which you wish to post a configuration"
         required: true
         position: 1
-    username:
-        type: "string"
-        description: "username for logging on to device"
-        required: true
-        secret: true
-        position: 2
-    password:
-        type: "string"
-        description: "password for logging on to device"
-        required: true
-        position: 3
-        secret: true
     port:
         type: "string"
         description: "port for accessing device"
         required: true
-        position: 4
+        position: 2
     destination:
         type: "string"
         description: "Destination IP address"
         required: true
-        position: 5
+        position: 3
     protocol:
         type: "string"
         description: "Retrieve the routes only for a specific protocol (bgp or isis)"
         required: false
-        position: 6
+        position: 4

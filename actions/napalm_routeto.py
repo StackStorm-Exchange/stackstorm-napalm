@@ -14,8 +14,8 @@ class NapalmRouteTo(Action):
 
         with get_network_driver(driver)(
             hostname=str(hostname),
-            username=username,
-            password=password,
+            username=self.config['username'],
+            password=self.config['password'],
             optional_args={'port': str(port)}
         ) as device:
 
