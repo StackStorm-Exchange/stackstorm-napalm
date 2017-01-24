@@ -19,6 +19,6 @@ class NapalmRouteTo(Action):
             optional_args={'port': str(port)}
         ) as device:
 
-            route = device.get_route_to(route, protocol)
+            route = device.get_route_to(destination, protocol)
 
         return (TRUE, route)
