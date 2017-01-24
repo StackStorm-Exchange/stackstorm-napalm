@@ -20,6 +20,7 @@ parameters:
         type: "string"
         description: "username for logging on to device"
         required: true
+        secret: true
         position: 2
     password:
         type: "string"
