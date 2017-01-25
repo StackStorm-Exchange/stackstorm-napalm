@@ -1,11 +1,11 @@
 ---
 credentials:
-- core:
-  username: myuser
-  password: mypassword
-- customers:
-  username: customeruser
-  password: customerpw
+  core:
+    username: myuser
+    password: mypassword
+  cutomer:
+    username: customeruser
+    password: customerpw
 
 bgpsensordevices:
 - driver: junos

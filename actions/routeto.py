@@ -1,3 +1,5 @@
+from napalm import get_network_driver
+
 from lib.action import NapalmBaseAction
 
 class NapalmRouteTo(NapalmBaseAction):
@@ -7,6 +9,9 @@ class NapalmRouteTo(NapalmBaseAction):
         login = self._get_credentials(credentials)
 
         try:
+
+            if not port:
+                port = 22
 
             with get_network_driver(driver)(
                 hostname=str(hostname),
