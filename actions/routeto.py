@@ -20,7 +20,11 @@ class NapalmRouteTo(NapalmBaseAction):
                 optional_args={'port': str(port)}
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-                route = device.get_route_to(destination, protocol)
+
+                if not protocol:
+                    route = device.get_route_to(destination)
+                else:
+                    route = device.get_route_to(destination, protocol)
 
         except Exception, e:
             self.logger.error(str(e))
