@@ -2,6 +2,9 @@ from napalm import get_network_driver
 
 from st2actions.runners.pythonrunner import Action
 
+__all__ = [
+    'NapalmBaseAction'
+]
 
 class NapalmBaseAction(Action):
 
