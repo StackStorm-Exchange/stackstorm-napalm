@@ -20,7 +20,7 @@ class NapalmGetARPTable(NapalmBaseAction):
                 optional_args={'port': str(port)}
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-                result = device.get_arp_table(command)
+                result = device.get_arp_table()
 
         except Exception, e:
             self.logger.error(str(e))
