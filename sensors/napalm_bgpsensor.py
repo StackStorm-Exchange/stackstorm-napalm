@@ -61,7 +61,7 @@ class NapalmBGPSensor(PollingSensor):
         #         napalm_config[opt_name] == default_opts
 
         # Assign options to instance
-        self._devices = napalm_config['devices']
+        self._devices = napalm_config['bgpsensordevices']
 
         # Generate dictionary of device objects per configuration
         # IP Address(key): Device Object(value)

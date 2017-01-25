@@ -1,9 +1,9 @@
 ---
-name: "napalm_loadconfig"
+name: "loadconfig"
 runner_type: "python-script"
 description: "Loads (merge) a configuration to a network device using NAPALM."
 enabled: true
-entry_point: "napalm_loadconfig.py"
+entry_point: "loadconfig.py"
 parameters:
 
     driver:

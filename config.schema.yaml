@@ -1,15 +1,22 @@
 ---
-username:
-  description: "Username to connect to devices"
-  type: "string"
+credentials:
+  description: "An array of credientails"
   required: true
-  
-password:
-  description: "Password to connect to devices"
-  type: "string"
-  required: true
+  type: "array"
+  items:
+    type: "object"
+    required: true
+    properties:
+      username:
+        description: "Username to connect to devices"
+        type: "string"
+        required: true
+      password:
+        description: "Password to connect to devices"
+        type: "string"
+        required: true
 
-devices:
+bgpsensordevices:
   description: "The array of devices"
   required: true
   type: "array"
