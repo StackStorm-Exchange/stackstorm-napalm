@@ -13,12 +13,9 @@ class NapalmBaseAction(Action):
 
     def _get_credentials(self, credentials):
 
-        authconfig = self.config['credentials'].get(credentials, None)
+        authconfig = self.config['credentials'].credentials
 
-        if not authconfig:
-            raise ValueError(('Invalid credentials set name "%s". Please make'
-                              ' sure that credentials set with this name is'
-                              ' defined in the config' % (credentials)))
+        print authconfig
 
         if authconfig['password'] is None:
             raise ValueError("Missing password in credentials.")
