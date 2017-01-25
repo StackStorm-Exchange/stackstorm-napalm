@@ -22,12 +22,18 @@ class NapalmGetBGPConfig(NapalmBaseAction):
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
 
                 if not group:
-                    route = device.get_bgp_config()
+                    if not neighbour:
+                        bgpconf = device.get_bgp_config()
+                    else:
+                        bgpconf = device.get_bgp_config(neighbor=neighbour)
                 else:
-                    route = device.get_route_to(group, neighbour)
+                    if not neighbour:
+                        bgpconf = device.get_bgp_config(group=group)
+                    else:
+                        bgpconf = device.get_bgp_config(group=group, neighbor=neighbour)
 
         except Exception, e:
             self.logger.error(str(e))
             return False
 
-        return (True, route)
+        return (True, bgpconf)

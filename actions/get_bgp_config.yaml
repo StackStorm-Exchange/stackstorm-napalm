@@ -1,7 +1,7 @@
 ---
 name: "get_bgp_config"
 runner_type: "python-script"
-description: "Shows an IP route on a network device using NAPALM."
+description: "Get BGP configuration from a device using NAPALM."
 enabled: true
 entry_point: "get_bgp_config.py"
 parameters:
@@ -27,11 +27,11 @@ parameters:
         position: 3
     group:
         type: "string"
-        description: "BGP Neighbour group"
+        description: "Restrict configuration to this BGP Neighbour/Peer group"
         required: false
         position: 4
     neighbour:
         type: "string"
-        description: "BGP Neighbour"
+        description: "Restrict configuration to this BGP Neighbour"
         required: false
         position: 5
