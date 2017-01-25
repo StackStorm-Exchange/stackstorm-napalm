@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmRunCmd(NapalmBaseAction):
+class NapalmGetBGPConfig(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials, command):
+    def run(self, driver, hostname, port, credentials, group, neighbour):
 
         login = self._get_credentials(credentials)
 
@@ -20,10 +20,14 @@ class NapalmRunCmd(NapalmBaseAction):
                 optional_args={'port': str(port)}
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-                result = device.cli(command)
+
+                if not group:
+                    route = device.get_bgp_config()
+                else:
+                    route = device.get_route_to(group, neighbour)
 
         except Exception, e:
             self.logger.error(str(e))
             return False
 
-        return (True, result)
+        return (True, route)

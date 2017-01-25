@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmRunCmd(NapalmBaseAction):
+class NapalmGetARPTable(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials, command):
+    def run(self, driver, hostname, port, credentials):
 
         login = self._get_credentials(credentials)
 
@@ -20,7 +20,7 @@ class NapalmRunCmd(NapalmBaseAction):
                 optional_args={'port': str(port)}
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-                result = device.cli(command)
+                result = device.get_arp_table(command)
 
         except Exception, e:
             self.logger.error(str(e))
