@@ -1,6 +1,6 @@
 ---
 name: "routeto"
-runner_type: "python-script"
+runner_type: "run-python"
 description: "Shows an IP route on a network device using NAPALM."
 enabled: true
 entry_point: "routeto.py"
