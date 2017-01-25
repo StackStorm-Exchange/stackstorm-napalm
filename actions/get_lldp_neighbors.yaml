@@ -1,9 +1,9 @@
 ---
-name: "get_bgp_neighbors"
+name: "get_lldp_neighbors"
 runner_type: "python-script"
-description: "Get the BGP Neighbours from a device using NAPALM."
+description: "Get the LLDP Neighbours from a device using NAPALM."
 enabled: true
-entry_point: "get_bgp_neighbors.py"
+entry_point: "get_lldp_neighbors.py"
 parameters:
     driver:
         type: "string"
@@ -25,8 +25,8 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: true
         position: 3
-    neighbour:
+    interface:
         type: "string"
-        description: "Get Detail on a specific BGP neighbour"
+        description: "Get Details of LLDP on a specific interface"
         required: false
         position: 4

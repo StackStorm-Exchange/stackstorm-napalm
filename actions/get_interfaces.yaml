@@ -1,9 +1,9 @@
 ---
-name: "get_bgp_neighbors"
+name: "get_interfaces"
 runner_type: "python-script"
-description: "Get the BGP Neighbours from a device using NAPALM."
+description: "Get interfaces from a device using NAPALM."
 enabled: true
-entry_point: "get_bgp_neighbors.py"
+entry_point: "get_interfaces.py"
 parameters:
     driver:
         type: "string"
@@ -25,8 +25,13 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: true
         position: 3
-    neighbour:
-        type: "string"
-        description: "Get Detail on a specific BGP neighbour"
+    counters:
+        type: "bool"
+        description: "Get only counter information for the interfaces interfaces"
         required: false
         position: 4
+    ipaddresses:
+        type: "bool"
+        description: "Get only the ip addresses on the interfaces"
+        required: false
+        position: 5

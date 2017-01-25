@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetBGPNeighbours(NapalmBaseAction):
+class NapalmGetInterfaces(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials, neighbour):
+    def run(self, driver, hostname, port, credentials, counters, ipaddresses):
 
         login = self._get_credentials(credentials)
 
@@ -21,14 +21,18 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
 
+                if counters and ipaddresses:
+                    raise ValueError("Both ipaddresses and counters can not be set at the same time.")
 
-                if not neighbour:
-                    bgp_neighbours = device.get_bgp_neighbors()
+                if counters:
+                    interfaces = device.get_interfaces_counters()
+                elif ipaddresses:
+                    interfaces = device.get_interfaces_ip()
                 else:
-                    bgp_neighbours = device.get_bgp_neighbors_detail(neighbour)
+                    interfaces = device.get_interfaces()
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, bgp_neighbours)
+        return (True, interfaces)
