@@ -18,9 +18,7 @@ class NapalmBaseAction(Action):
         print authconfig
 
         if not authconfig:
-            raise ValueError(('Invalid credentials set name "%s". Please make'
-                              ' sure that credentials set with this name is'
-                              ' defined in the config' % (credentials)))
+            raise ValueError(('Can not find credentials group "%s". ' % (credentials)))
 
         if authconfig['password'] is None:
             raise ValueError("Missing password in credentials.")
