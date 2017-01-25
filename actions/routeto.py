@@ -28,6 +28,6 @@ class NapalmRouteTo(NapalmBaseAction):
 
         except Exception, e:
             self.logger.error(str(e))
-            return False
+            return (False, str(e))
 
         return (True, route)

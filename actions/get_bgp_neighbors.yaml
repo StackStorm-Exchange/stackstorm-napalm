@@ -1,11 +1,10 @@
 ---
-name: "loadconfig"
+name: "get_bgp_neighbors"
 runner_type: "python-script"
-description: "Loads (merge) a configuration to a network device using NAPALM."
+description: "Get the BGP Neighbour from a device using NAPALM."
 enabled: true
-entry_point: "loadconfig.py"
+entry_point: "get_bgp_neighbors.py"
 parameters:
-
     driver:
         type: "string"
         description: "device type"
@@ -19,20 +18,15 @@ parameters:
     port:
         type: "string"
         description: "port for accessing device"
-        required: true
+        required: false
         position: 2
     credentials:
         type: "string"
         description: "The credentials group which contains the username and password to log in"
         required: true
         position: 3
-    config_file:
+    neighbour:
         type: "string"
-        description: "configuration to load to device"
-        required: true
-        position: 4
-    method:
-        type: "string"
-        description: "Method to load the config (either 'merge' or 'replace', default is 'merge')"
+        description: "Get Detail on a specific BGP neighbour"
         required: false
-        position: 5
+        position: 4

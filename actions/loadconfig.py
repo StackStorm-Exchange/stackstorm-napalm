@@ -1,15 +1,15 @@
 from napalm import get_network_driver
 
-from st2actions.runners.pythonrunner import Action
+from lib.action import NapalmBaseAction
 
 
 class NapalmLoadConfig(Action):
     """Load configuration into network device via NAPALM
     """
-    def __init__(self, *args, **kwargs):
-        super(NapalmLoadConfig, self).__init__(*args, **kwargs)
 
-    def run(self, driver, hostname, username, password, port, config_file, method):
+    def run(self, driver, hostname, port, credentials, config_file, method):
+
+        login = self._get_credentials(credentials)
 
         # Usually I'd rely on setting the "method" arg for this function as an optional arg, but
         # that doesn't seem to work - I'm guessing the caller for this function is actually calling
@@ -20,23 +20,28 @@ class NapalmLoadConfig(Action):
             method = method.lower()
             if method not in ["merge", "replace"]:
                 raise ValueError
+        try:
 
-        with get_network_driver(driver)(
-            hostname=str(hostname),
-            username=username,
-            password=password,
-            optional_args={'port': str(port)}
-        ) as device:
+            with get_network_driver(driver)(
+                hostname=str(hostname),
+                username=login['username'],
+                password=login['password'],
+                optional_args={'port': str(port)}
+            ) as device:
 
-            if method == "replace":
-                device.load_replace_candidate(
-                    filename=config_file
-                )
-            else:
-                device.load_merge_candidate(
-                    filename=config_file
-                )
+                if method == "replace":
+                    device.load_replace_candidate(
+                        filename=config_file
+                    )
+                else:
+                    device.load_merge_candidate(
+                        filename=config_file
+                    )
 
-            device.commit_config()
+                device.commit_config()
 
-        return "load (%s) successful on %s" % (method, hostname)
+        except Exception, e:
+            self.logger.error(str(e))
+            return (False, str(e))
+
+        return (True, ("load (%s) successful on %s" % (method, hostname)))
