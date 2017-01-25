@@ -10,6 +10,9 @@ class NapalmGetInterfaces(NapalmBaseAction):
 
         try:
 
+            if counters and ipaddresses:
+                raise ValueError("Both ipaddresses and counters can not be set at the same time.")
+
             if not port:
                 port = 22
 
@@ -20,9 +23,6 @@ class NapalmGetInterfaces(NapalmBaseAction):
                 optional_args={'port': str(port)}
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-
-                if counters and ipaddresses:
-                    raise ValueError("Both ipaddresses and counters can not be set at the same time.")
 
                 if counters:
                     interfaces = device.get_interfaces_counters()

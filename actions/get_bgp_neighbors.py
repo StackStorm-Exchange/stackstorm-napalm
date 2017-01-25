@@ -21,7 +21,6 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
             ) as device:
                 self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
 
-
                 if not neighbour:
                     bgp_neighbours = device.get_bgp_neighbors()
                 else:

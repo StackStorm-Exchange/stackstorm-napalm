@@ -20,6 +20,7 @@ class NapalmLoadConfig(Action):
             method = method.lower()
             if method not in ["merge", "replace"]:
                 raise ValueError
+                
         try:
 
             with get_network_driver(driver)(
