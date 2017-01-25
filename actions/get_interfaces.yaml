@@ -26,12 +26,12 @@ parameters:
         required: true
         position: 3
     counters:
-        type: "bool"
+        type: "boolean"
         description: "Get only counter information for the interfaces interfaces"
         required: false
         position: 4
     ipaddresses:
-        type: "bool"
+        type: "boolean"
         description: "Get only the ip addresses on the interfaces"
         required: false
         position: 5
