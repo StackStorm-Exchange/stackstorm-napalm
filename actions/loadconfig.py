@@ -14,20 +14,26 @@ class NapalmLoadConfig(Action):
         # Usually I'd rely on setting the "method" arg for this function as an optional arg, but
         # that doesn't seem to work - I'm guessing the caller for this function is actually calling
         # this function with method set to "None" if the action is omitting this arg
-        if not method:
-            method = 'merge'
-        else:
-            method = method.lower()
-            if method not in ["merge", "replace"]:
-                raise ValueError
-                
+
+
         try:
+            if not method:
+                method = 'merge'
+            else:
+                method = method.lower()
+                if method not in ["merge", "replace"]:
+                    raise ValueError (("%s is not a valid load method, use: merge or replace" % (method)))
+
+            if not port:
+                optional_args=None
+            else:
+                optional_args={'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(hostname),
                 username=login['username'],
                 password=login['password'],
-                optional_args={'port': str(port)}
+                optional_args=optional_args
             ) as device:
 
                 if method == "replace":

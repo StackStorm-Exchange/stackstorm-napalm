@@ -2,16 +2,13 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetInterfaces(NapalmBaseAction):
+class NapalmGetNetworkInstances(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials, counters, ipaddresses):
+    def run(self, driver, hostname, port, credentials, name):
 
         login = self._get_credentials(credentials)
 
         try:
-
-            if counters and ipaddresses:
-                raise ValueError("Both ipaddresses and counters can not be set at the same time.")
 
             if not port:
                 optional_args=None
@@ -25,15 +22,13 @@ class NapalmGetInterfaces(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                if counters:
-                    interfaces = device.get_interfaces_counters()
-                elif ipaddresses:
-                    interfaces = device.get_interfaces_ip()
+                if not name:
+                    network_instances = device.get_network_instances()
                 else:
-                    interfaces = device.get_interfaces()
+                    network_instances = device.get_network_instances(name)
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, interfaces)
+        return (True, network_instances)

@@ -1,0 +1,32 @@
+---
+name: "get_network_instances"
+runner_type: "python-script"
+description: "Get details of network/routing instances/vrfs from a network device using NAPALM."
+enabled: true
+entry_point: "get_network_instances.py"
+parameters:
+    driver:
+        type: "string"
+        description: "device type"
+        required: true
+        position: 0
+    hostname:
+        type: "string"
+        description: "The hostname of the device to which you wish to post a configuration"
+        required: true
+        position: 1
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: false
+        position: 2
+    credentials:
+        type: "string"
+        description: "The credentials group which contains the username and password to log in"
+        required: true
+        position: 3
+    name:
+        type: "string"
+        description: "Get details about a specific routing/network instance"
+        required: false
+        position: 4

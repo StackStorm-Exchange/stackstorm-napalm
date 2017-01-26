@@ -1,0 +1,32 @@
+---
+name: "get_ntp"
+runner_type: "python-script"
+description: "Gets NTP information from a network device using NAPALM."
+enabled: true
+entry_point: "get_ntp.py"
+parameters:
+    driver:
+        type: "string"
+        description: "device type"
+        required: true
+        position: 0
+    hostname:
+        type: "string"
+        description: "The hostname of the device to which you wish to post a configuration"
+        required: true
+        position: 1
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: false
+        position: 2
+    credentials:
+        type: "string"
+        description: "The credentials group which contains the username and password to log in"
+        required: true
+        position: 3
+    type:
+        type: "string"
+        description: "Type of NTP information to gather. Can be peers, servers or stats. Default is stats."
+        required: false
+        position: 4

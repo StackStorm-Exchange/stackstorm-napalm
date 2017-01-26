@@ -11,13 +11,15 @@ class NapalmGetARPTable(NapalmBaseAction):
         try:
 
             if not port:
-                port = 22
+                optional_args=None
+            else:
+                optional_args={'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(hostname),
                 username=login['username'],
                 password=login['password'],
-                optional_args={'port': str(port)}
+                optional_args=optional_args
             ) as device:
                 result = device.get_arp_table()
 
