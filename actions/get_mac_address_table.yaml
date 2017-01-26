@@ -1,0 +1,27 @@
+---
+name: "get_mac_address_table"
+runner_type: "python-script"
+description: "Get the MAC Address table from a device using NAPALM."
+enabled: true
+entry_point: "get_mac_address_table.py"
+parameters:
+    driver:
+        type: "string"
+        description: "device type"
+        required: true
+        position: 0
+    hostname:
+        type: "string"
+        description: "The hostname of the device to which you wish to post a configuration"
+        required: true
+        position: 1
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: false
+        position: 2
+    credentials:
+        type: "string"
+        description: "The credentials group which contains the username and password to log in"
+        required: true
+        position: 3

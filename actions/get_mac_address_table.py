@@ -2,7 +2,7 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetFacts(NapalmBaseAction):
+class NapalmGetMACTable(NapalmBaseAction):
 
     def run(self, driver, hostname, port, credentials):
 
@@ -21,7 +21,7 @@ class NapalmGetFacts(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.get_facts()
+                result = device.get_mac_address_table()
 
         except Exception, e:
             self.logger.error(str(e))
