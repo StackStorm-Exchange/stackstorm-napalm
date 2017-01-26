@@ -41,7 +41,7 @@ parameters:
         required: false
         position: 6
     timeout:
-        type: "intenger"
+        type: "integer"
         description: "Timeout"
         required: false
         position: 7
