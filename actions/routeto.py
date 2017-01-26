@@ -19,7 +19,6 @@ class NapalmRouteTo(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
 
                 if not protocol:
                     route = device.get_route_to(destination)

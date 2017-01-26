@@ -19,8 +19,6 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
-
 
                 if not neighbour:
                     lldp_neighbours = device.get_lldp_neighbors()

@@ -19,7 +19,6 @@ class NapalmRunCmd(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
                 result = device.cli([command])
 
         except Exception, e:

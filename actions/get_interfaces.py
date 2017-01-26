@@ -22,7 +22,6 @@ class NapalmGetInterfaces(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                self.logger.info(('Successfully connected to device "%s". ' % (hostname)))
 
                 if counters:
                     interfaces = device.get_interfaces_counters()

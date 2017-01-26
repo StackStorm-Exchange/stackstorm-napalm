@@ -2,7 +2,7 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetARPTable(NapalmBaseAction):
+class NapalmGetEnv(NapalmBaseAction):
 
     def run(self, driver, hostname, port, credentials):
 
@@ -19,7 +19,7 @@ class NapalmGetARPTable(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                result = device.get_arp_table()
+                result = device.get_environment()
 
         except Exception, e:
             self.logger.error(str(e))

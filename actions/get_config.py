@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetARPTable(NapalmBaseAction):
+class NapalmGetConfig(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials):
+    def run(self, driver, hostname, port, credentials, retrieve):
 
         login = self._get_credentials(credentials)
 
@@ -19,10 +19,14 @@ class NapalmGetARPTable(NapalmBaseAction):
                 password=login['password'],
                 optional_args={'port': str(port)}
             ) as device:
-                result = device.get_arp_table()
+
+                if not retrieve:
+                    config_output = device.get_config()
+                else:
+                    config_output = device.get_config(retrieve)
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, result)
+        return (True, config_output)
