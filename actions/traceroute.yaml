@@ -40,7 +40,7 @@ parameters:
         description: "Time to live / Maximum Hops"
         required: false
         position: 6
-    timeout:
+    trtimeout:
         type: "integer"
         description: "Timeout"
         required: false

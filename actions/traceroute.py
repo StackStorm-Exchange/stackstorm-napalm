@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmTraceroute(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials, destination, source=u'', ttl=255, timeout=2):
+    def run(self, driver, hostname, port, credentials, destination, source=u'', ttl=255, trtimeout=2):
 
         login = self._get_credentials(credentials)
 
@@ -22,7 +22,7 @@ class NapalmTraceroute(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                route = device.traceroute(destination, source, ttl, timeout)
+                route = device.traceroute(destination, source, ttl, trtimeout)
 
         except Exception, e:
             self.logger.error(str(e))
