@@ -2,7 +2,7 @@
     name: "napalm_bgp_peers_decrease"                      # required
     pack: "napalm"                       # optional
     description: "Rule description."       # optional
-    enabled: true                          # required
+    enabled: false                          # required
 
     trigger:                               # required
         type: "napalm.BgpPeerDecrease"
