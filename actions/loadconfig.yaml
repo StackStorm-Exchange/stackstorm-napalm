@@ -5,16 +5,15 @@ description: "Loads (merge) a configuration to a network device using NAPALM."
 enabled: true
 entry_point: "loadconfig.py"
 parameters:
-
-    driver:
-        type: "string"
-        description: "device type"
-        required: true
-        position: 0
     hostname:
         type: "string"
-        description: "The hostname of the device to which you wish to post a configuration"
+        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration."
         required: true
+        position: 0
+    driver:
+        type: "string"
+        description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
+        required: false
         position: 1
     port:
         type: "string"

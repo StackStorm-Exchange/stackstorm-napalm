@@ -34,6 +34,11 @@ class NapalmBaseAction(Action):
 
         for d in devices:
             hostname = d['hostname'].lower()
+
+            # Find the first device in the configuration which matches the
+            # start of the hostname. Network devices don't often report
+            # the FQDN in the syslog events for example.
+            
             if hostname.startswith(search):
                 if hostname != search:
                     self.logger.warn('Hostname "%s" is not an exact match for host in configuration "%s"' % (search, hostname))

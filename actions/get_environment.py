@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetEnv(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials):
+    def run(self, hostname, driver, port, credentials):
 
         login = self._get_credentials(credentials)
 

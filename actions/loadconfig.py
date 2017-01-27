@@ -7,9 +7,20 @@ class NapalmLoadConfig(Action):
     """Load configuration into network device via NAPALM
     """
 
-    def run(self, driver, hostname, port, credentials, config_file, method):
+    def run(self, hostname, driver, port, credentials, config_file, method):
 
         login = self._get_credentials(credentials)
+
+        # Look up the driver if it's not given from the configuration file
+        # Also overides the hostname since we might have a partial host i.e. from
+        # syslog such as host1 instead of host1.example.com
+        #
+        if not driver:
+            (hostname, driver) = self.find_device_from_config(hostname)
+
+            if not driver:
+                raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
+
 
         # Usually I'd rely on setting the "method" arg for this function as an optional arg, but
         # that doesn't seem to work - I'm guessing the caller for this function is actually calling

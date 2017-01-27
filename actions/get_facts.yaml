@@ -7,12 +7,12 @@ entry_point: "get_facts.py"
 parameters:
     hostname:
         type: "string"
-        description: "The hostname of the device to which you wish to post a configuration"
+        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration."
         required: true
         position: 0
     driver:
         type: "string"
-        description: "device type"
+        description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
         required: false
         position: 1
     port:
