@@ -26,10 +26,20 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_driver_for_device (self, hostname):
+    def find_device_from_config (self, search):
 
         devices = self.config['devices']
 
+        search = search.lower()
+
         for d in devices:
-            if d['hostname'] == hostname:
-                return d['driver']
+            hostname = d['hostname'].lower()
+            if hostname.startswith(search):
+                if hostname != search:
+                    self.logger.warn('Hostname "%s" is not an exact match for host in configuration "%s"' % (search, hostname))
+
+                return (d['hostname'], d['driver'])
+
+        # Return the original search if we don't find anything
+        #
+        return (search, None)
