@@ -32,4 +32,4 @@ class NapalmBaseAction(Action):
 
         for d in devices:
             if d['hostname'] == hostname:
-                return d
+                return d['driver']
