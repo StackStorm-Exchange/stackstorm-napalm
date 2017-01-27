@@ -18,10 +18,7 @@ class NapalmGetFacts(NapalmBaseAction):
             if not driver:
                 raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
 
-            self.logger.info('Found Driver %s for host %s' % (driver, hostname))
-
         try:
-
             if not port:
                 optional_args=None
             else:

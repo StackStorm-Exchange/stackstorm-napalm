@@ -7,7 +7,7 @@ entry_point: "get_facts.py"
 parameters:
     hostname:
         type: "string"
-        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration."
+        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
         required: true
         position: 0
     driver:
