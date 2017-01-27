@@ -6,3 +6,9 @@ credentials:
   cutomer:
     username: customeruser
     password: customerpw
+
+devices:
+- hostname: router1.lon
+  driver: junos
+- hostname: router2.par
+  driver: junos

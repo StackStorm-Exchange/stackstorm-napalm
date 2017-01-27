@@ -25,3 +25,11 @@ class NapalmBaseAction(Action):
             raise ValueError("Missing username in credentials.")
 
         return authconfig
+
+    def find_driver_for_device (self, hostname):
+
+        devices = self.config['devices']
+
+        for d in devices:
+            if d['hostname'] == hostname:
+                return d

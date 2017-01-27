@@ -1,1 +1,25 @@
 ---
+credentials:
+  core:
+    username: myuser
+    password: mypassword
+  cutomer:
+    username: customeruser
+    password: customerpw
+
+devices:
+  description: "List of devices to map the device hostname with the driver"
+  required: true
+  type: "array"
+  items:
+    type: "object"
+    required: true
+    properties:
+      hostname:
+        description: "Hostname for the device"
+        type: "string"
+        required: true
+      driver:
+        description: "Driver for the device"
+        type: "string"
+        required: true
