@@ -4,9 +4,17 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetFacts(NapalmBaseAction):
 
-    def run(self, driver, hostname, port, credentials):
+    def run(self, hostname, driver, port, credentials):
 
         login = self._get_credentials(credentials)
+
+        # Look up the driver if it's not given in the configuration file
+        #
+        if not driver:
+            driver = self.find_driver_for_device (hostname)
+
+            if not driver:
+                raise ValueError(('Can not find driver for host "%s". ' % (hostname)))
 
         try:
 

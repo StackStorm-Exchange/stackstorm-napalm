@@ -5,15 +5,15 @@ description: "Get the various facts (Version, Serial Number, Vendor, Model, etc.
 enabled: true
 entry_point: "get_facts.py"
 parameters:
-    driver:
-        type: "string"
-        description: "device type"
-        required: true
-        position: 0
     hostname:
         type: "string"
         description: "The hostname of the device to which you wish to post a configuration"
         required: true
+        position: 0
+    driver:
+        type: "string"
+        description: "device type"
+        required: false
         position: 1
     port:
         type: "string"
