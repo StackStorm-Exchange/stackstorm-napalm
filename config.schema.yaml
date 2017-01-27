@@ -1,12 +1,4 @@
 ---
-credentials:
-  core:
-    username: myuser
-    password: mypassword
-  cutomer:
-    username: customeruser
-    password: customerpw
-
 devices:
   description: "List of devices to map the device hostname with the driver"
   required: true
