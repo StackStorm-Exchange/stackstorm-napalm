@@ -1,10 +1,10 @@
 ---
 version: '2.0'
 
-napalm.bgp_down_remed_workflow:
+napalm.bgp_prefix_exceeded_workflow:
 
   input:
-    - host
+    - hostname
     - neighbour
     - asnum
     - prefixes
@@ -13,23 +13,25 @@ napalm.bgp_down_remed_workflow:
     show_bgp_neighbours:
       action: napalm.get_bgp_neighbors
       input:
-        hostname: <% $.host %>
+        hostname: <% $.hostname %>
         neighbour: <% $.neighbour %>
         credentials: "public"
       on-success:
         - show_route
       on-error:
         - report_failure
+
     show_route:
       action: napalm.routeto
       input:
-        hostname: <% $.host %>
+        hostname: <% $.hostname %>
         destination: <% $.neighbour %>
         credentials: "public"
       on-success:
         - send_email
       on-error:
         - report_failure
+
     send_email:
       action: core.sendmail
       input:
@@ -39,8 +41,8 @@ napalm.bgp_down_remed_workflow:
         body:  "<% task(show_bgp_neighbours).result.result %>\n<% task(show_route).result.result %>"
       on-error:
         - report_failure
+
     report_failure:
-      # [135, 740]
       action: core.sendmail
       input:
         to: "rob.woodward@colt.net"

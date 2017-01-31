@@ -11,9 +11,9 @@
   criteria: {}
 
   action:
-    ref: napalm.bgp_prefix_exceeded_remed_workflow
+    ref: napalm.bgp_prefix_exceeded_workflow
     parameters:
-      host: "{{trigger.body.result.logsource}}"
-      neighbour: "{{trigger.body.result.neighbour}}"
-      asnum: "{{trigger.body.result.asnum}}"
-      prefixes: "{{trigger.body.result.prefixes}}"
+      host: "{{trigger.body.logsource}}"
+      neighbour: "{{trigger.body.neighbour}}"
+      asnum: "{{trigger.body.asnum}}"
+      prefixes: "{{trigger.body.prefixes}}"
