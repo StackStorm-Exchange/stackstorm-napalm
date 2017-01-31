@@ -8,6 +8,9 @@ parameters:
   hostname:
     required: true
     type: string
+  message:
+    required: true
+    type: string
   neighbour:
     required: true
     type: string

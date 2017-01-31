@@ -14,6 +14,7 @@
     ref: napalm.bgp_prefix_exceeded_workflow
     parameters:
       hostname: "{{trigger.body.logsource}}"
+      message: "{{trigger.body.message}}"
       neighbour: "{{trigger.body.neighbour}}"
       asnum: "{{trigger.body.asnum}}"
       prefixes: "{{trigger.body.prefixes}}"
