@@ -15,8 +15,9 @@ napalm.bgp_prefix_exceeded_workflow:
       action: napalm.get_bgp_neighbors
       input:
         hostname: <% $.hostname %>
-        neighbour: <% $.neighbour %>
         credentials: "public"
+      publish:
+        neighbourdetails: <% task(show_bgp_neighbours).result.result.global.peers.get($.neighbour) %>
       on-success:
         - show_route
       on-error:
@@ -39,7 +40,7 @@ napalm.bgp_prefix_exceeded_workflow:
         to: "rob.woodward@colt.net"
         from: "stackstorm@colt.net"
         subject: "BGP neighbour <% $.neighbour %> exceeded prefix limit on <% $.hostname %>."
-        body:  "<% $.message %>\r\n<% task(show_bgp_neighbours).result.result %>\r\n<% task(show_route).result.result %>"
+        body:  "<% $.message %>\r\n<% $.neighbourdetails %>\r\n<% task(show_route).result.result %>"
       on-error:
         - report_failure
 
