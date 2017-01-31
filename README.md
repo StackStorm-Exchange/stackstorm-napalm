@@ -8,9 +8,13 @@ This pack leverages the NAPALM library to allow ST2 to perform multivendor netwo
 
 - **napalm_loadconfig.yaml**: loads a config (either replace or merge) to a network device
 
-## Sensors
+## Rules
 
-- **napalm_bgpsensor**: retrives operational information about the BGP process running on a device
+The pack defines rules for handing syslog events or monitoring events. Logstash is a good source for handling syslog events and extracting the required parameters.
+
+- **bgp_neighbour_down**: Webhook trigger to run a workflow when a bgp neighbour goes down.
+- **bgp_prefix_trigger**: Webhook trigger to run a workflow when a bgp neighbour exceeds its prefix limit.
+- **interface_flap**: Webhook trigger to run a workflow when an interface goes down.
 
 ## Requirements
 
@@ -18,7 +22,7 @@ All Python dependencies are included in requirements.txt. This is primarily comp
 
 ## Configuration
 
-1. Edit config.schema.yaml and look at the options. This is where you'll need to tell StackStorm about the network devices you wish to monitor with the various sensors.
+1. Edit config.schema.yaml and look at the options. This is where you'll need to tell StackStorm about the network devices you wish use.
 
 ## Notes
 

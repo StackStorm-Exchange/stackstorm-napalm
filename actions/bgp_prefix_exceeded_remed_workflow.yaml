@@ -1,0 +1,20 @@
+---
+description: Workflow to process a BGP neighbour prefix limit exceeded event.
+enabled: true
+entry_point: workflows/bgp_prefix_exceeded_remed_workflow.yaml
+name: bgp_prefix_exceeded_remed_workflow
+runner_type: mistral-v2
+pack: napalm
+parameters:
+  host:
+    required: true
+    type: string
+  neighbour:
+    required: true
+    type: string
+  asnum:
+    required: true
+    type: string
+  prefixes:
+    required: true
+    type: integer
