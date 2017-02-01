@@ -1,10 +1,10 @@
 ---
-  name: "bgp_prefix_exceeded_workflow"
+  name: "bgp_prefix_exceeded_chain"
   description: "Workflow to process a BGP neighbour prefix limit exceeded event."
-  runner_type: "mistral-v2"
+  runner_type: "action-chain"
   pack: napalm
   enabled: true
-  entry_point: "workflows/bgp_prefix_exceeded_workflow.yaml"
+  entry_point: "chains/bgp_prefix_exceeded_chain.yaml"
   parameters:
     hostname:
       required: true
