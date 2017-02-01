@@ -11,7 +11,7 @@
   criteria: {}
 
   action:
-    ref: napalm.bgp_prefix_exceeded_workflow
+    ref: napalm.bgp_prefix_exceeded_chain
     parameters:
       hostname: "{{trigger.body.logsource}}"
       message: "{{trigger.body.message}}"

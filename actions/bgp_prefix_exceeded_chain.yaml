@@ -1,6 +1,6 @@
 ---
   name: "bgp_prefix_exceeded_chain"
-  description: "Workflow to process a BGP neighbour prefix limit exceeded event."
+  description: "Action Chain to process a BGP neighbour prefix limit exceeded event."
   runner_type: "action-chain"
   pack: napalm
   enabled: true
@@ -8,7 +8,7 @@
   parameters:
     hostname:
       required: true
-      description: "Hostname of the device"
+      description: "Hostname of the device."
       type: string
     message:
       required: true
@@ -20,9 +20,9 @@
       type: string
     asnum:
       required: true
-      type: string
       description: "AS Number of the neighbour that has gone down"
+      type: string
     prefixes:
-      description: "Number of prefixes the neighbour is sending"
       required: true
+      description: "Number of prefixes the neighbour is sending"
       type: integer
