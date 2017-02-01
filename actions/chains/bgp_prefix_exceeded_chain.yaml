@@ -44,7 +44,7 @@
               body:  "{{ message }}\r\n\r\n
                       {{ neighbourdetails | to_json_string }}\r\n\r\n
                       {{ show_route.result | to_json_string }}\r\n\r\n
-                      {{ show_log.result | to_json_string }}\r\n\r\n"
+                      {{ show_log.result }}\r\n\r\n"
         -
             name: "report_failure"
             ref: "core.sendmail"

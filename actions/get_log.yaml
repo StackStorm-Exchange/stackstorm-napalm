@@ -1,0 +1,33 @@
+---
+name: "get_log"
+runner_type: "python-script"
+description: "Get logs from devices using NAPALM."
+enabled: true
+entry_point: "get_log.py"
+parameters:
+    hostname:
+        type: "string"
+        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
+        required: true
+        position: 0
+    driver:
+        type: "string"
+        description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
+        required: false
+        position: 1
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: false
+        position: 2
+    credentials:
+        type: "string"
+        description: "The credentials group which contains the username and password to log in"
+        required: true
+        position: 3
+    lastlines:
+        type: "string"
+        description: "How many lines to retrieve from the end of the log."
+        required: false
+        default: 50
+        position: 4
