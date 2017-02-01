@@ -20,6 +20,17 @@
                 credentials: "public"
             publish:
               stderr: "{{ show_route.stderr }}"
+            on-success: "show_log"
+            on-failure: "report_failure"
+        -
+            name: "show_log"
+            ref: "napalm.run_cmd"
+            parameters:
+                hostname: "{{ hostname }}"
+                command: "show log"
+                credentials: "public"
+            publish:
+              stderr: "{{ show_route.stderr }}"
             on-success: "send_email"
             on-failure: "report_failure"
         -
@@ -29,9 +40,11 @@
               to: "rob.woodward@colt.net"
               from: "stackstorm@colt.net"
               subject: "BGP neighbour <% $.neighbour %> exceeded prefix limit on <% $.hostname %>."
-              body:  "{{ message }}\r\n
-                      {{ neighbourdetails | to_json_string }}
-                      {{ show_route.result | to_json_string }}"
+              content_type: "text/plain"
+              body:  "{{ message }}\r\n\r\n
+                      {{ neighbourdetails | to_json_string }}\r\n\r\n
+                      {{ show_route.result | to_json_string }}\r\n\r\n
+                      {{ show_log.result | to_json_string }}\r\n\r\n"
         -
             name: "report_failure"
             ref: "core.sendmail"
