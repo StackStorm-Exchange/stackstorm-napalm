@@ -21,16 +21,14 @@ class NapalmGetLog(NapalmBaseAction):
         login = self._get_credentials(credentials)
 
         if not lastlines:
-            lastlines = '5'
-        else:
-            lastlines = str(lastlines)
+            lastlines = 5
 
         if driver == 'junos':
-            log_cmd = 'show log messages | last  ' + lastlines
+            log_cmd = 'show log messages'
             commands = ['set cli screen-width 0', 'set cli screen-length 0']
             commands.append(log_cmd)
         elif driver == 'iosxr':
-            log_cmd = 'show log last  ' + lastlines
+            log_cmd = 'show log'
             commands = ['term width 0', 'term len 0']
             commands.append(log_cmd)
         elif driver == 'ios':
@@ -38,7 +36,7 @@ class NapalmGetLog(NapalmBaseAction):
             commands = ['term width 0', 'term len 0']
             commands.append(log_cmd)
         elif driver == 'eos':
-            log_cmd = 'show log ' + lastline
+            log_cmd = 'show log'
             commands = ['term width 32767', 'term len 0']
             commands.append(log_cmd)
         else:
@@ -58,7 +56,10 @@ class NapalmGetLog(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
                 cmd_result = device.cli(commands)
-                result = cmd_result[log_cmd]
+                log_output = cmd_result[log_cmd].split('\n')
+                result = log_output[-lastlines:]
+
+
 
         except Exception, e:
             self.logger.error(str(e))

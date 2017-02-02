@@ -55,7 +55,7 @@
                 {{ show_route.result | to_json_string }}\r\n\r\n
 
                 \r\nLog file from Device:
-                \r\n{{ show_log.result | replace('\n', '\r\n') }}
+                \r\n{{ show_log.result }}
                 \r\n\r\n"
       -
         name: "report_failure"
