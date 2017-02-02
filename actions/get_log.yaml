@@ -26,8 +26,8 @@ parameters:
         required: false
         position: 3
     lastlines:
-        type: "string"
-        description: "How many lines to retrieve from the end of the log."
+        type: "integer"
+        description: "How many lines to retrieve from the end of the log. Not used for all drivers."
         required: false
         default: 50
         position: 4

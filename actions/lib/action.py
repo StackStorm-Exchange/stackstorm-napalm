@@ -16,7 +16,7 @@ class NapalmBaseAction(Action):
         authconfig = self.config['credentials'].get(credentials, None)
 
         if not authconfig:
-            raise ValueError(('Can not find credentials group "%s". ' % (credentials)))
+            raise ValueError(('Can not find credentials group %s. ' % (credentials)))
 
         if authconfig['password'] is None:
             raise ValueError("Missing password in credentials.")
@@ -41,7 +41,7 @@ class NapalmBaseAction(Action):
 
             if hostname.startswith(search):
                 if hostname != search:
-                    self.logger.warn('Hostname "%s" is not an exact match for host in configuration "%s"' % (search, hostname))
+                    self.logger.warn('Hostname %s is not an exact match for host in configuration %s' % (search, hostname))
 
                 if not driver:
                     driver = d['driver']

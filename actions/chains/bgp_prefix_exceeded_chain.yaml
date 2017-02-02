@@ -5,8 +5,6 @@
         ref: "napalm.get_bgp_neighbors"
         parameters:
           hostname: "{{ hostname }}"
-        publish:
-          stderr: "{{ show_bgp_neighbours.stderr }}"
         on-success: "show_route"
         on-failure: "report_failure"
       -
@@ -15,8 +13,6 @@
         parameters:
           hostname: "{{ hostname }}"
           destination: "{{ neighbour }}"
-        publish:
-          stderr: "{{ show_route.stderr }}"
         on-success: "show_log"
         on-failure: "report_failure"
       -
@@ -24,8 +20,6 @@
         ref: "napalm.get_log"
         parameters:
           hostname: "{{ hostname }}"
-        publish:
-          stderr: "{{ show_route.stderr }}"
         on-success: "send_email"
         on-failure: "report_failure"
       -
@@ -65,11 +59,11 @@
                   {{ valuelog | replace('\n', '\r\n') }}\r\n\r\n
                 {% endfor %}"
       -
-          name: "report_failure"
-          ref: "core.sendmail"
-          parameters:
-            to: "rob.woodward@colt.net"
-            from: "stackstorm@colt.net"
-            subject: "Stackstorm BGP prefix exceeded workflow error"
-            body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n {{ stderr }}"
+        name: "report_failure"
+        ref: "core.sendmail"
+        parameters:
+          to: "rob.woodward@colt.net"
+          from: "stackstorm@colt.net"
+          subject: "Stackstorm BGP prefix exceeded workflow error"
+          body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n"
   default: "show_bgp_neighbours"
