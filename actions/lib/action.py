@@ -40,9 +40,6 @@ class NapalmBaseAction(Action):
             # the FQDN in the syslog events for example.
 
             if hostname.startswith(search):
-                if hostname != search:
-                    self.logger.warn('Hostname {} is not an exact match for host in configuration {}'.format(search, hostname))
-
                 if not driver:
                     driver = d['driver']
 

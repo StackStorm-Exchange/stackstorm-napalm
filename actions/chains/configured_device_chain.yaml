@@ -1,0 +1,31 @@
+---
+  chain:
+      -
+        name: "backup_device"
+        ref: "core.remote"
+        parameters:
+          cmd: "grep {{ hostname }} /home/rwoodwar/seedfiles/all.osp | cut -d';' -f2"
+          username: "rwoodwar"
+          private_key: "/home/stanley/.ssh/stanley_rsa"
+          hosts: "atsip01.lon.osspriv.colt.net"
+          cwd: /home/rwoodwar
+        on-success: "send_email"
+        on-failure: "report_failure"
+      -
+        name: "send_email"
+        ref: "core.sendmail"
+        parameters:
+          to: "rob.woodward@colt.net"
+          from: "stackstorm@colt.net"
+          subject: "Router backup completed on {{ hostname }}."
+          content_type: "text/plain"
+          body: "Backed up the router\r\n\r\n"
+      -
+        name: "report_failure"
+        ref: "core.sendmail"
+        parameters:
+          to: "rob.woodward@colt.net"
+          from: "stackstorm@colt.net"
+          subject: "Stackstorm Router Backup Action Chain error"
+          body:  "Something went wrong with the router backup action chain.\r\n\r\n"
+  default: "backup_device"

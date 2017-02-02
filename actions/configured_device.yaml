@@ -1,0 +1,12 @@
+---
+  name: "configured_device_chain"
+  description: "Action Chain to process when a configuration change was made on a router"
+  runner_type: "action-chain"
+  pack: napalm
+  enabled: true
+  entry_point: "chains/configured_device_chain.yaml"
+  parameters:
+    hostname:
+      required: true
+      description: "Hostname of the device."
+      type: string

@@ -1,0 +1,17 @@
+---
+  name: "configured_device"
+  enabled: true
+  description: "Webhook which handles when a device has been configured"
+
+  trigger:
+    type: "core.st2.webhook"
+    parameters:
+      url: "napalm_conf_device"
+
+  criteria: {}
+
+  action:
+    ref: napalm.configured_device_chain
+    parameters:
+      hostname: "{{trigger.body.logsource}}"
+      
