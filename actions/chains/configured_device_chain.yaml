@@ -4,11 +4,10 @@
         name: "backup_device"
         ref: "core.remote"
         parameters:
-          cmd: "grep {{ hostname }} /home/rwoodwar/seedfiles/all.osp | cut -d';' -f2"
-          username: "rwoodwar"
+          cmd: "{{st2kv.system.backuphost_backupcmd}}"
+          username: "{{st2kv.system.backuphost_username}}"
           private_key: "/home/stanley/.ssh/stanley_rsa"
-          hosts: "atsip01.lon.osspriv.colt.net"
-          cwd: /home/rwoodwar
+          hosts: "{{st2kv.system.backuphost_hostname}}"
         on-success: "send_email"
         on-failure: "report_failure"
       -
