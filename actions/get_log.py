@@ -56,7 +56,7 @@ class NapalmGetLog(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
                 cmd_result = device.cli(commands)
-                log_output = cmd_result[log_cmd].split('\n')
+                log_output = list(filter(None, cmd_result[log_cmd].split('\n')))
                 result = log_output[-lastlines:]
 
 

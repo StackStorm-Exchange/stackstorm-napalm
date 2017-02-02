@@ -20,6 +20,7 @@
         ref: "napalm.get_log"
         parameters:
           hostname: "{{ hostname }}"
+          lastlines: 10
         on-success: "send_email"
         on-failure: "report_failure"
       -
@@ -51,11 +52,13 @@
                   {% endif %}
                 {% endfor %}
 
-                \r\nRoute to neighbour is:\r\n
+                \r\nRoute to neighbour is:\r\n\r\n
                 {{ show_route.result | to_json_string }}\r\n\r\n
 
-                \r\nLog file from Device:
-                \r\n{{ show_log.result }}
+                \r\nLog file from Device:\r\n\r\n
+                {% for log_line in show_log.result %}
+                  \r\n{{ log_line }}
+                {% endfor %}
                 \r\n\r\n"
       -
         name: "report_failure"
