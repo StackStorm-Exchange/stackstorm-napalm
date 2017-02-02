@@ -26,7 +26,7 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_device_from_config (self, search):
+    def find_device_from_config (self, search, driver=None, credentials=None):
 
         devices = self.config['devices']
 
@@ -38,13 +38,19 @@ class NapalmBaseAction(Action):
             # Find the first device in the configuration which matches the
             # start of the hostname. Network devices don't often report
             # the FQDN in the syslog events for example.
-            
+
             if hostname.startswith(search):
                 if hostname != search:
                     self.logger.warn('Hostname "%s" is not an exact match for host in configuration "%s"' % (search, hostname))
 
-                return (d['hostname'], d['driver'])
+                if not driver:
+                    driver = d['driver']
+
+                if not credentials:
+                    credentials = d['credentials']
+
+                return (d['hostname'], driver, credentials)
 
         # Return the original search if we don't find anything
         #
-        return (search, None)
+        return (search, driver, credentials)

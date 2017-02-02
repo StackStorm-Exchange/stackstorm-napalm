@@ -3,12 +3,14 @@ credentials:
   core:
     username: myuser
     password: mypassword
-  cutomer:
+  customer:
     username: customeruser
     password: customerpw
 
 devices:
 - hostname: router1.lon
   driver: junos
+  credentials: core
 - hostname: router2.par
   driver: junos
+  credentials: customer

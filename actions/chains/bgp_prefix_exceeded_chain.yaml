@@ -1,77 +1,75 @@
 ---
-    chain:
-        -
-            name: "show_bgp_neighbours"
-            ref: "napalm.get_bgp_neighbors"
-            parameters:
-                hostname: "{{ hostname }}"
-                credentials: "public"
-            publish:
-              stderr: "{{ show_bgp_neighbours.stderr }}"
-            on-success: "show_route"
-            on-failure: "report_failure"
-        -
-            name: "show_route"
-            ref: "napalm.routeto"
-            parameters:
-                hostname: "{{ hostname }}"
-                destination: "{{ neighbour }}"
-                credentials: "public"
-            publish:
-              stderr: "{{ show_route.stderr }}"
-            on-success: "show_log"
-            on-failure: "report_failure"
-        -
-            name: "show_log"
-            ref: "napalm.run_cmd"
-            parameters:
-                hostname: "{{ hostname }}"
-                command: "show log"
-                credentials: "public"
-            publish:
-              stderr: "{{ show_route.stderr }}"
-            on-success: "send_email"
-            on-failure: "report_failure"
-        -
-            name: "send_email"
-            ref: "core.sendmail"
-            parameters:
-              to: "rob.woodward@colt.net"
-              from: "stackstorm@colt.net"
-              subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
-              content_type: "text/plain"
-              body:  "{{ message }}\r\n\r\n
-                      {% for key, value in show_bgp_neighbours.result.global.peers.get(neighbour).iteritems() %}
-                      {% if key is equalto 'address_family' %}
-                      {% for keyaf, valueaf in value.iteritems() %}
+  chain:
+      -
+        name: "show_bgp_neighbours"
+        ref: "napalm.get_bgp_neighbors"
+        parameters:
+          hostname: "{{ hostname }}"
+        publish:
+          stderr: "{{ show_bgp_neighbours.stderr }}"
+        on-success: "show_route"
+        on-failure: "report_failure"
+      -
+        name: "show_route"
+        ref: "napalm.routeto"
+        parameters:
+          hostname: "{{ hostname }}"
+          destination: "{{ neighbour }}"
+        publish:
+          stderr: "{{ show_route.stderr }}"
+        on-success: "show_log"
+        on-failure: "report_failure"
+      -
+        name: "show_log"
+        ref: "napalm.get_log"
+        parameters:
+          hostname: "{{ hostname }}"
+        publish:
+          stderr: "{{ show_route.stderr }}"
+        on-success: "send_email"
+        on-failure: "report_failure"
+      -
+        name: "send_email"
+        ref: "core.sendmail"
+        parameters:
+          to: "rob.woodward@colt.net"
+          from: "stackstorm@colt.net"
+          subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
+          content_type: "text/plain"
+          body: "{{ message }}\r\n\r\n
+                {% for key, value in show_bgp_neighbours.result.global.peers.get(neighbour).iteritems() %}
+                  {% if key is equalto 'address_family' %}
+                    {% for keyaf, valueaf in value.iteritems() %}
                       {% if keyaf is equalto 'ipv4' %}
-                      \r\nAddress Family (IPv4):
-                      {% for keyv4, valuev4 in valueaf.iteritems() %}
-                      \r\n{{ keyv4 }} : {{ valuev4 }}
-                      {% endfor %}
+                        \r\nAddress Family (IPv4):
+                        {% for keyv4, valuev4 in valueaf.iteritems() %}
+                          \r\n{{ keyv4 }} : {{ valuev4 }}
+                        {% endfor %}
                       {% elif keyaf is equalto 'ipv6' %}
-                      \r\nAddress Family (IPv6):
-                      {% for keyv6, valuev6 in valueaf.iteritems() %}
-                      \r\n{{ keyv6 }} : {{ valuev6 }}
-                      {% endfor %}
+                        \r\nAddress Family (IPv6):
+                        {% for keyv6, valuev6 in valueaf.iteritems() %}
+                          \r\n{{ keyv6 }} : {{ valuev6 }}
+                        {% endfor %}
                       {% endif %}
-                      {% endfor %}
-                      {% else %}
-                      \r\n{{ key }} : {{ value }}
-                      {% endif %}
-                      {% endfor %}
-                      \r\nRoute to neighbour is:\r\n
-                      {{ show_route.result | to_json_string }}\r\n\r\n
-                      \r\nLog file from Device:\r\n
-                      {% for keylog, valuelog in show_log.result.iteritems() %}
-                      {{ valuelog | replace('\n', '\r\n') }}\r\n\r\n
-                      {% endfor %}"
-        -
-            name: "report_failure"
-            ref: "core.sendmail"
-            parameters:
-              to: "rob.woodward@colt.net"
-              from: "stackstorm@colt.net"
-              subject: "Stackstorm BGP prefix exceeded workflow error"
-              body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n {{ stderr }}"
-    default: "show_bgp_neighbours"
+                    {% endfor %}
+                  {% else %}
+                    \r\n{{ key }} : {{ value }}
+                  {% endif %}
+                {% endfor %}
+
+                \r\nRoute to neighbour is:\r\n
+                {{ show_route.result | to_json_string }}\r\n\r\n
+
+                \r\nLog file from Device:\r\n
+                {% for keylog, valuelog in show_log.result.iteritems() %}
+                  {{ valuelog | replace('\n', '\r\n') }}\r\n\r\n
+                {% endfor %}"
+      -
+          name: "report_failure"
+          ref: "core.sendmail"
+          parameters:
+            to: "rob.woodward@colt.net"
+            from: "stackstorm@colt.net"
+            subject: "Stackstorm BGP prefix exceeded workflow error"
+            body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n {{ stderr }}"
+  default: "show_bgp_neighbours"

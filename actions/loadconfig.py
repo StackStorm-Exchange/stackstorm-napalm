@@ -9,23 +9,23 @@ class NapalmLoadConfig(Action):
 
     def run(self, hostname, driver, port, credentials, config_file, method):
 
-        login = self._get_credentials(credentials)
-
-        # Look up the driver if it's not given from the configuration file
+        # Look up the driver  and if it's not given from the configuration file
         # Also overides the hostname since we might have a partial host i.e. from
         # syslog such as host1 instead of host1.example.com
         #
+        (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
+
         if not driver:
-            (hostname, driver) = self.find_device_from_config(hostname)
+            raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
 
-            if not driver:
-                raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
+        if not credentials:
+            raise ValueError(('Can not find credentials for host %s, try with credentials parameter.' % (hostname)))
 
+        login = self._get_credentials(credentials)
 
         # Usually I'd rely on setting the "method" arg for this function as an optional arg, but
         # that doesn't seem to work - I'm guessing the caller for this function is actually calling
         # this function with method set to "None" if the action is omitting this arg
-
 
         try:
             if not method:

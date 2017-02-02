@@ -1,6 +1,6 @@
 ---
 devices:
-  description: "List of devices to map the device hostname with the driver"
+  description: "List of devices to map the device hostname with the driver and credentials"
   required: true
   type: "array"
   items:
@@ -13,5 +13,9 @@ devices:
         required: true
       driver:
         description: "Driver for the device"
+        type: "string"
+        required: true
+      credentials:
+        description: "Credentials group used to login to the device"
         type: "string"
         required: true

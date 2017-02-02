@@ -23,7 +23,7 @@ parameters:
     credentials:
         type: "string"
         description: "The credentials group which contains the username and password to log in"
-        required: true
+        required: false
         position: 3
     command:
         type: "string"
