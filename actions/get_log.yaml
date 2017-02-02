@@ -29,5 +29,4 @@ parameters:
         type: "integer"
         description: "How many lines to retrieve from the end of the log. Not used for all drivers."
         required: false
-        default: 50
         position: 4

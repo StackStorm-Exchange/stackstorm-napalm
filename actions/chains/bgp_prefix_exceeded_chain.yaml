@@ -20,7 +20,6 @@
         ref: "napalm.get_log"
         parameters:
           hostname: "{{ hostname }}"
-          lastlines: 10
         on-success: "send_email"
         on-failure: "report_failure"
       -

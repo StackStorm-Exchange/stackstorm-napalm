@@ -21,7 +21,7 @@ class NapalmGetLog(NapalmBaseAction):
         login = self._get_credentials(credentials)
 
         if not lastlines:
-            lastlines = '50'
+            lastlines = '5'
         else:
             lastlines = str(lastlines)
 
