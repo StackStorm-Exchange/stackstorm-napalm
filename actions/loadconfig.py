@@ -16,10 +16,10 @@ class NapalmLoadConfig(Action):
         (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
         if not driver:
-            raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
+            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(hostname))
 
         if not credentials:
-            raise ValueError(('Can not find credentials for host %s, try with credentials parameter.' % (hostname)))
+            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(hostname))
 
         login = self._get_credentials(credentials)
 
@@ -33,7 +33,7 @@ class NapalmLoadConfig(Action):
             else:
                 method = method.lower()
                 if method not in ["merge", "replace"]:
-                    raise ValueError (("%s is not a valid load method, use: merge or replace" % (method)))
+                    raise ValueError ("{} is not a valid load method, use: merge or replace".format(method))
 
             if not port:
                 optional_args=None
@@ -62,4 +62,4 @@ class NapalmLoadConfig(Action):
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, ("load (%s) successful on %s" % (method, hostname)))
+        return (True, "load ({}) successful on {}".format(method, hostname))

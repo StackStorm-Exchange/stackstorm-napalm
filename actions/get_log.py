@@ -13,26 +13,36 @@ class NapalmGetLog(NapalmBaseAction):
         (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
         if not driver:
-            raise ValueError(('Can not find driver for host %s, try with driver parameter.' % (hostname)))
+            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(hostname))
 
         if not credentials:
-            raise ValueError(('Can not find credentials for host %s, try with credentials parameter.' % (hostname)))
+            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(hostname))
 
         login = self._get_credentials(credentials)
 
         if not lastlines:
-            lastlines = 50;
+            lastlines = '50'
+        else:
+            lastlines = str(lastlines)
 
         if driver == 'junos':
-            commands = ['set cli screen-width 0', 'set cli screen-length 0', 'show log messages | last  ' . lastlines]
+            log_cmd = 'show log messages | last  ' + lastlines
+            commands = ['set cli screen-width 0', 'set cli screen-length 0']
+            commands.append(log_cmd)
         elif driver == 'iosxr':
-            commands = ['term width 0', 'term len 0', 'show log last ' . lastlines]
+            log_cmd = 'show log last  ' + lastlines
+            commands = ['term width 0', 'term len 0']
+            commands.append(log_cmd)
         elif driver == 'ios':
-            commands = ['term width 0', 'term len 0', 'show log']
+            log_cmd = 'show log'
+            commands = ['term width 0', 'term len 0']
+            commands.append(log_cmd)
         elif driver == 'eos':
-            commands = ['term width 32767', 'term len 0', 'show log ' . lastline]
+            log_cmd = 'show log ' + lastline
+            commands = ['term width 32767', 'term len 0']
+            commands.append(log_cmd)
         else:
-            raise ValueError(('Not able to find logging command for %s, with driver %s.' % (hostname, driver)))
+            raise ValueError('Not able to find logging command for {}, with driver {}.'.format(hostname, driver))
 
         try:
 
@@ -47,7 +57,8 @@ class NapalmGetLog(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.cli(commands)
+                cmd_result = device.cli(commands)
+                result = cmd_result[log_cmd]
 
         except Exception, e:
             self.logger.error(str(e))
