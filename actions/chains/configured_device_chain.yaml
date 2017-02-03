@@ -1,15 +1,24 @@
 ---
   chain:
       -
-        name: "backup_device"
-        ref: "core.remote"
+        name: "send_detected_email"
+        ref: "core.sendmail"
         parameters:
-          cmd: "{{st2kv.system.napalm_remotebackup_cmd}}"
-          username: "{{st2kv.system.napalm_remotebackup_user}}"
-          private_key: "/home/stanley/.ssh/stanley_rsa"
-          hosts: "{{st2kv.system.napalm_remotebackup_host}}"
-        on-success: "send_email"
-        on-failure: "report_failure"
+          to: "{{st2kv.system.napalm_remotebackup_mailto}}"
+          from: "{{st2kv.system.napalm_remotebackup_mailfrom}}"
+          subject: "Detected configuration change on {{ hostname }}."
+          content_type: "text/plain"
+          body: "{{ message }}\r\n\r\n"
+      # -
+        # name: "backup_device"
+        # ref: "core.remote"
+        # parameters:
+        #   cmd: "{{st2kv.system.napalm_remotebackup_cmd}}"
+        #   username: "{{st2kv.system.napalm_remotebackup_user}}"
+        #   private_key: "/home/stanley/.ssh/stanley_rsa"
+        #   hosts: "{{st2kv.system.napalm_remotebackup_host}}"
+        # on-success: "send_email"
+        # on-failure: "report_failure"
       -
         name: "send_email"
         ref: "core.sendmail"
@@ -27,4 +36,4 @@
           from: "{{st2kv.system.napalm_actionerror_mailfrom}}"
           subject: "Stackstorm Router Backup Action Chain error"
           body:  "Something went wrong with the router backup action chain.\r\n\r\n"
-  default: "backup_device"
+  default: "send_detected_email"
