@@ -1,0 +1,56 @@
+---
+  version: '2.0'
+
+  napalm.configuration_change_workflow:
+
+    input:
+      - hostname
+      - message
+      - username
+
+    type: direct
+
+    task-defaults:
+      on-error:
+        - notify_on_error
+
+    tasks:
+      send_detected_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
+          from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
+          subject: "Detected configuration change on <% $.hostname %>."
+          content_type: "text/plain"
+          body: "<% $.message %>\r\n\r\n"
+        on-success:
+          - send_complete_email
+
+      # backup_device:
+      #   action: "core.remote"
+      #   input:
+      #     cmd: "<% st2kv('system.napalm_remotebackup_cmd') %>"
+      #     username: "<% st2kv('system.napalm_remotebackup_user') %>"
+      #     private_key: "/home/stanley/.ssh/stanley_rsa"
+      #     hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
+      #   on-success:
+      #     - send_complete_email
+
+      send_complete_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
+          from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
+          subject: "Completed backup of <% $.hostname %>."
+          content_type: "text/plain"
+          body: "Device backed up due to message: <% $.message %>\r\n\r\n"
+
+      notify_on_error:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_actionerror_mailto') %>"
+          from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
+          subject: "Stackstorm device backup workflow error"
+          body:  "Something went wrong with the device backup workflow.\r\n\r\n"
+        on-complete:
+          - fail

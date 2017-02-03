@@ -1,18 +1,18 @@
 ---
-  name: "configured_device"
+  name: "configuration_change"
   enabled: true
   description: "Webhook which handles when a device has been configured and changes commited"
 
   trigger:
     type: "core.st2.webhook"
     parameters:
-      url: "napalm_conf_device"
+      url: "napalm_conf_change"
 
   criteria: {}
 
   action:
-    ref: napalm.configured_device_chain
+    ref: napalm.configuration_change_workflow
     parameters:
       hostname: "{{trigger.body.logsource}}"
-      message: "{{trigger.body.username}}"
       message: "{{trigger.body.message}}"
+      username: "{{trigger.body.username}}"
