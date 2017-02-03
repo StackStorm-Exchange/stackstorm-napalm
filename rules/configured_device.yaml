@@ -8,9 +8,14 @@
     parameters:
       url: "napalm_conf_device"
 
-  criteria: {}
+  criteria:
+    # Don't trigger only when a commit requested wait for commit complete on JunOS
+    trigger.body.message:
+      type: "ncontains"
+      pattern : "requested 'commit' operation"
 
   action:
     ref: napalm.configured_device_chain
     parameters:
       hostname: "{{trigger.body.logsource}}"
+      message: "{{trigger.body.message}}"

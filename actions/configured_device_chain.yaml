@@ -10,3 +10,7 @@
       required: true
       description: "Hostname of the device."
       type: string
+    message:
+      required: true
+      description: "Configuration message from the device."
+      type: string
