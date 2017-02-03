@@ -10,7 +10,7 @@
         on-failure: "report_failure"
       -
         name: "show_route"
-        ref: "napalm.routeto"
+        ref: "napalm.get_route_to"
         parameters:
           hostname: "{{ hostname }}"
           destination: "{{ neighbour }}"

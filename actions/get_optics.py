@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmRunCmd(NapalmBaseAction):
+class NapalmOptics(NapalmBaseAction):
 
-    def run(self, hostname, driver, port, credentials, command):
+    def run(self, hostname, driver, port, credentials):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -26,7 +26,7 @@ class NapalmRunCmd(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.cli([command])
+                result = device.get_optics()
 
         except Exception, e:
             self.logger.error(str(e))

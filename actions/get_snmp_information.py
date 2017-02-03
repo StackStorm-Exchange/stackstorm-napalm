@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmRouteTo(NapalmBaseAction):
+class NapalmGetSNMPInformation(NapalmBaseAction):
 
-    def run(self, hostname, driver, port, credentials, destination, protocol):
+    def run(self, hostname, driver, port, credentials):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -14,7 +14,7 @@ class NapalmRouteTo(NapalmBaseAction):
             (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
             login = self._get_credentials(credentials)
-            
+
             if not port:
                 optional_args=None
             else:
@@ -26,14 +26,10 @@ class NapalmRouteTo(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-
-                if not protocol:
-                    route = device.get_route_to(destination)
-                else:
-                    route = device.get_route_to(destination, protocol)
+                result = device.get_snmp_information()
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, route)
+        return (True, result)

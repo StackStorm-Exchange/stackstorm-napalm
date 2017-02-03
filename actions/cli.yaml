@@ -1,9 +1,9 @@
 ---
-name: "routeto"
+name: "cli"
 runner_type: "python-script"
-description: "Shows an IP route on a network device using NAPALM."
+description: "Run CLI commands on a device using NAPALM."
 enabled: true
-entry_point: "routeto.py"
+entry_point: "cli.py"
 parameters:
     hostname:
         type: "string"
@@ -25,13 +25,8 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 3
-    destination:
-        type: "string"
-        description: "Destination IP network or Address"
+    command:s
+        type: "array"
+        description: "Array of commands to run on the device"
         required: true
         position: 4
-    protocol:
-        type: "string"
-        description: "Retrieve the routes only for a specific protocol (bgp or isis)"
-        required: false
-        position: 5

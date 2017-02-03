@@ -67,6 +67,7 @@ devices:
 Actions in the NAPALM pack largely mirror the NAPALM library methods documented
 [here](https://napalm.readthedocs.io/en/latest/base.html).
 
+- **cli**: Run a CLI command on a devices.
 - **get_arp_table**:  Get the APR table from a device.
 - **get_bgp_config**: Get BGP configuration from a device.
 - **get_bgp_neighbors**: Get the BGP Neighbours from a device.
@@ -79,12 +80,15 @@ Actions in the NAPALM pack largely mirror the NAPALM library methods documented
 - **get_lldp_neighbors**: Get the LLDP Neighbours from a device.
 - **get_log**: Get logs from devices.
 - **get_mac_address_table**: Get the MAC Address table from a device.
-- **get_network_instances**: Get details of network/routing instances/vrfs from a network device.
+- **get_network_instances**: Get details of network/routing instances/vrfs from a device.
 - **get_ntp**: Gets NTP information from a network device.
-- **loadconfig**: Loads (merge) a configuration to a network device.
-- **routeto**: Shows an IP route on a network device.
-- **run_cmd**: Run commands on devices.
-- **traceroute**: Run a traceroute from a network device.
+- **get_optics**: Fetches the power usage on the various transceivers installed on the device (in dbm).
+- **get_probes_config**: Get RPM (JunOS) or IP SLA (IOS-XR) probe configuration from a device.
+- **get_probes_results**: Get RPM (JunOS) or IP SLA (IOS-XR) probe results from a device.
+- **get_route_to**: Shows an IP route on a device.
+- **get_snmp_information**: Get the SNMP information from a device using NAPALM.
+- **loadconfig**: Loads (merge) a configuration to a device.
+- **traceroute**: Run a traceroute from a device.
 
 ## Rules and Triggers
 

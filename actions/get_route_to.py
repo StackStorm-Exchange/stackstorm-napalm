@@ -2,12 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+class NapalmGetRouteTo(NapalmBaseAction):
 
-class NapalmLoadConfig(Action):
-    """Load configuration into network device via NAPALM
-    """
-
-    def run(self, hostname, driver, port, credentials, config_file, method):
+    def run(self, hostname, driver, port, credentials, destination, protocol):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -17,13 +14,6 @@ class NapalmLoadConfig(Action):
             (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
             login = self._get_credentials(credentials)
-
-            if not method:
-                method = 'merge'
-            else:
-                method = method.lower()
-                if method not in ["merge", "replace"]:
-                    raise ValueError ("{} is not a valid load method, use: merge or replace".format(method))
 
             if not port:
                 optional_args=None
@@ -37,15 +27,13 @@ class NapalmLoadConfig(Action):
                 optional_args=optional_args
             ) as device:
 
-                if method == "replace":
-                    device.load_replace_candidate(filename=config_file)
+                if not protocol:
+                    route = device.get_route_to(destination)
                 else:
-                    device.load_merge_candidate(filename=config_file)
-
-                device.commit_config()
+                    route = device.get_route_to(destination, protocol)
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, "load ({}) successful on {}".format(method, hostname))
+        return (True, route)

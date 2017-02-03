@@ -1,9 +1,9 @@
 ---
-name: "run_cmd"
+name: "get_snmp_information"
 runner_type: "python-script"
-description: "Run commands on devices using NAPALM."
+description: "Get the SNMP information from a device using NAPALM."
 enabled: true
-entry_point: "run_cmd.py"
+entry_point: "get_snmp_information.py"
 parameters:
     hostname:
         type: "string"
@@ -25,8 +25,3 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 3
-    command:
-        type: "string"
-        description: "Command to run on the device"
-        required: true
-        position: 4
