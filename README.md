@@ -16,7 +16,7 @@ comprised of the various Python libraries that make up the NAPALM project.
 
 ## Configuration
 
-1. Look at config.schema.yaml. The napalm.yaml.example file as a base to start
+Look at config.schema.yaml. The napalm.yaml.example file as a base to start
 the configuration which needs to be copied into your stackstorm configs
 directory (/opt/stackstorm/configs/ by default on debian/ubuntu) as napalm.yaml.
 This is where you'll need to tell StackStorm about the network devices
@@ -64,10 +64,27 @@ devices:
 
 ## Actions
 
-Actions in the NAPALM pack largely mirror the NAPALM library methods. Documented
-[here](https://napalm.readthedocs.io/en/latest/base.html)
+Actions in the NAPALM pack largely mirror the NAPALM library methods documented
+[here](https://napalm.readthedocs.io/en/latest/base.html).
 
-- **loadconfig.yaml**: loads a config (either replace or merge) to a network device
+- **get_arp_table**:  Get the APR table from a device.
+- **get_bgp_config**: Get BGP configuration from a device.
+- **get_bgp_neighbors**: Get the BGP Neighbours from a device.
+- **get_bgp_neighbors_detail**: Get a detailed BGP neighbour from a device.
+- **get_config**: Get configuration from the device.
+- **get_environment**: Get the environment sensor output from a device.
+- **get_facts**: Get the various facts (Version, Serial Number, Vendor, Model, etc.) from a device.
+- **get_firewall_policies**: Get firewall policies from a device.
+- **get_interfaces**: Get interfaces from a device.
+- **get_lldp_neighbors**: Get the LLDP Neighbours from a device.
+- **get_log**: Get logs from devices.
+- **get_mac_address_table**: Get the MAC Address table from a device.
+- **get_network_instances**: Get details of network/routing instances/vrfs from a network device.
+- **get_ntp**: Gets NTP information from a network device.
+- **loadconfig**: Loads (merge) a configuration to a network device.
+- **routeto**: Shows an IP route on a network device.
+- **run_cmd**: Run commands on devices.
+- **traceroute**: Run a traceroute from a network device.
 
 ## Rules and Triggers
 
@@ -121,7 +138,6 @@ st2 key set napalm_bgpsyslog_mailto "bgpnotify@example.com"
 # What email should be the sender of BGP related notifications
 st2 key set napalm_bgpsyslog_mailfrom "stackstorm@example.com"
 ```
-
 
 ## Notes
 
