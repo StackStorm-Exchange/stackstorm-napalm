@@ -27,6 +27,6 @@ parameters:
         position: 3
     commands:
         type: "array"
-        description: "Array of commands to run on the device"
+        description: "Commands to run on the device (seperate each command with a comma)"
         required: true
         position: 4

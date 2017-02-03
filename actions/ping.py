@@ -2,9 +2,9 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmTraceroute(NapalmBaseAction):
+class NapalmPing(NapalmBaseAction):
 
-    def run(self, hostname, driver, port, credentials, destination, source='', ttl=255, trtimeout=2):
+    def run(self, hostname, driver, port, credentials, destination, source='', ttl=255, trtimeout=2, size=100, count=5):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -27,7 +27,7 @@ class NapalmTraceroute(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                route = device.traceroute(destination, source, ttl, trtimeout)
+                route = device.ping(destination, source, ttl, trtimeout, size, count)
 
         except Exception, e:
             self.logger.error(str(e))

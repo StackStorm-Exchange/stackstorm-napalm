@@ -1,0 +1,57 @@
+---
+name: "ping"
+runner_type: "python-script"
+description: "Run a ping from a network device using NAPALM."
+enabled: true
+entry_point: "ping.py"
+parameters:
+  hostname:
+    type: "string"
+    description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
+    required: true
+    position: 0
+  driver:
+    type: "string"
+    description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
+    required: false
+    position: 1
+  port:
+    type: "string"
+    description: "port for accessing device"
+    required: false
+    position: 2
+  credentials:
+    type: "string"
+    description: "The credentials group which contains the username and password to log in"
+    required: false
+    position: 3
+  destination:
+    type: "string"
+    description: "Destination IP address"
+    required: true
+    position: 4
+  source:
+    type: "string"
+    description: "Source IP address to run the traceroute from"
+    required: false
+    position: 5
+  ttl:
+    type: "integer"
+    description: "Time to live / Maximum Hops"
+    required: false
+    position: 6
+  trtimeout:
+    type: "integer"
+    description: "Timeout"
+    required: false
+    position: 7
+  size:
+    type: "integer"
+    description: "Size of Packet to send"
+    required: false
+    position: 8
+  count:
+    type: "integer"
+    description: "Number of probes to send"
+    required: false
+    position: 9
