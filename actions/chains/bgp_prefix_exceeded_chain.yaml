@@ -5,6 +5,7 @@
         ref: "napalm.get_bgp_neighbors"
         parameters:
           hostname: "{{ hostname }}"
+          neighbour: "{{ neighbour }}"
         on-success: "show_route"
         on-failure: "report_failure"
       -
@@ -32,7 +33,7 @@
           subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
           content_type: "text/plain"
           body: "{{ message }}\r\n\r\n
-                {% for key, value in show_bgp_neighbours.result.global.peers.get(neighbour).iteritems() %}
+                {% for key, value in show_bgp_neighbours.result.iteritems() %}
                   {% if key is equalto 'address_family' %}
                     {% for keyaf, valueaf in value.iteritems() %}
                       {% if keyaf is equalto 'ipv4' %}

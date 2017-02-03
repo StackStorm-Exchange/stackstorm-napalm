@@ -42,9 +42,12 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
                     raise ValueError('Routing instance {} does not exist on this device.'.format(routing_instance))
 
                 if not neighbour:
-                    bgp_neighbours = result[routing_instance][peers]
+                    bgp_neighbours = result[routing_instance]['peers']
                 else:
-                    bgp_neighbours = result[routing_instance][peers].get(neighbour)
+                    if neighbour not in result[routing_instance]['peers']:
+                        raise ValueError('BGP Neighbour {} does not exist on this device.'.format(neighbour))
+                    else:
+                        bgp_neighbours = result[routing_instance]['peers'][neighbour]
 
         except Exception, e:
             self.logger.error(str(e))
