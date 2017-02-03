@@ -40,18 +40,22 @@ parameters:
     description: "Time to live / Maximum Hops"
     required: false
     position: 6
-  trtimeout:
+    default: 255
+  pingtout:
     type: "integer"
     description: "Timeout"
     required: false
     position: 7
+    default: 2
   size:
     type: "integer"
     description: "Size of Packet to send"
     required: false
     position: 8
+    default: 100
   count:
     type: "integer"
     description: "Number of probes to send"
     required: false
     position: 9
+    default: 5

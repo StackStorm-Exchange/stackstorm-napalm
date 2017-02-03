@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmPing(NapalmBaseAction):
 
-    def run(self, hostname, driver, port, credentials, destination, source='', ttl=255, trtimeout=2, size=100, count=5):
+    def run(self, hostname, driver, port, credentials, destination, source, ttl=255, pingtout=2, size=100, count=5):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -27,7 +27,7 @@ class NapalmPing(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                route = device.ping(destination, source, ttl, trtimeout, size, count)
+                route = device.ping(destination, source, ttl, pingtout, size, count)
 
         except Exception, e:
             self.logger.error(str(e))
