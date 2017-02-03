@@ -14,4 +14,5 @@
     ref: napalm.configured_device_chain
     parameters:
       hostname: "{{trigger.body.logsource}}"
+      message: "{{trigger.body.username}}"
       message: "{{trigger.body.message}}"

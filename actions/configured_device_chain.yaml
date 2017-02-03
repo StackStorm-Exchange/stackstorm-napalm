@@ -14,3 +14,7 @@
       required: true
       description: "Configuration message from the device."
       type: string
+    username:
+      required: false
+      description: "Username who made the configuration change."
+      type: string
