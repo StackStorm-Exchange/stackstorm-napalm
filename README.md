@@ -4,25 +4,70 @@
 
 This pack leverages the NAPALM library to allow ST2 to perform multivendor network automation
 
-## Actions
-
-- **napalm_loadconfig.yaml**: loads a config (either replace or merge) to a network device
-
-## Rules
-
-The pack defines rules for handing syslog events or monitoring events. Logstash is a good source for handling syslog events and extracting the required parameters.
-
-- **bgp_neighbour_down**: Webhook trigger to run a workflow when a bgp neighbour goes down.
-- **bgp_prefix_trigger**: Webhook trigger to run a workflow when a bgp neighbour exceeds its prefix limit.
-- **interface_flap**: Webhook trigger to run a workflow when an interface goes down.
-
 ## Requirements
 
 All Python dependencies are included in requirements.txt. This is primarily comprised of the various Python libraries that make up the NAPALM project.
 
 ## Configuration
 
-1. Edit config.schema.yaml and look at the options. This is where you'll need to tell StackStorm about the network devices you wish use.
+1. Look at config.schema.yaml. The napalm.yaml.example file as a base to start the configuration which needs to be copied into your
+stackstorm configs directory (/opt/stackstorm/configs/ by default on debian/ubuntu) as napalm.yaml.
+This is where you'll need to tell StackStorm about the network devices you wish use.
+
+## Actions
+
+- **loadconfig.yaml**: loads a config (either replace or merge) to a network device
+
+## Rules and Triggers
+
+The pack defines rules for handing syslog events or monitoring events. Logstash is a good source for handling syslog events and extracting the required parameters. There is an example logstash configuration in the examples directory.
+
+- **configured_device_chain**: Webhook trigger to run a remote backup action chain when a configuration change is detected on a device.
+- **bgp_prefix_exceeded_chain**: Webhook trigger to run an action chain when a bgp neighbour exceeds its prefix limit.
+
+## Datastore
+
+Action chains in this pack require certain datastore values to be set.
+
+Common datastore key value pairs for all the action chains and workflows.
+
+```sh
+# Where to send notifications when an action chain fails.
+st2 key set napalm_actionerror_mailto "stackstorm_errors@example.com"
+
+# What email should be the sender of failure notifications
+st2 key set napalm_actionerror_mailfrom "stackstorm@example.com"
+```
+
+For the remote backup action chain the following commands will create the datastore key value pairs needed.
+
+```sh
+# Command to run on the remote server to backup the device
+st2 key set napalm_remotebackup_cmd "backup_cmd"
+
+# Username used to connect to the remote server
+st2 key set napalm_remotebackup_user "username"
+
+# Hostname of the remote server.
+st2 key set napalm_remotebackup_host "backup hostname"
+
+# Where to send notifications of a successful backup.
+st2 key set napalm_remotebackup_mailto "backupnotify@example.com"
+
+# What email should be the sender of notifications
+st2 key set napalm_remotebackup_mailfrom "stackstorm@example.com"
+```
+
+For BGP related action chains the following commands will create the datastore key value pairs needed.
+
+```sh
+# Where to send output from BGP actions.
+st2 key set napalm_bgpsyslog_mailto "bgpnotify@example.com"
+
+# What email should be the sender of BGP related notifications
+st2 key set napalm_bgpsyslog_mailfrom "stackstorm@example.com"
+```
+
 
 ## Notes
 

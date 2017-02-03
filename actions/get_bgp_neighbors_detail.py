@@ -2,7 +2,7 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
-class NapalmGetBGPNeighbours(NapalmBaseAction):
+class NapalmGetBGPNeighbourDetail(NapalmBaseAction):
 
     def run(self, hostname, driver, port, credentials, neighbour):
 
@@ -33,14 +33,10 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.get_bgp_neighbors()
-                if not neighbour:
-                    bgp_neighbours = result
-                else:
-                    bgp_neighbours = result.get(neighbour)
+                bgp_neighbour = device.get_bgp_neighbors_detail(neighbour)
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, bgp_neighbours)
+        return (True, bgp_neighbour)

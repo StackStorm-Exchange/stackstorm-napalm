@@ -27,8 +27,8 @@
         name: "send_email"
         ref: "core.sendmail"
         parameters:
-          to: "rob.woodward@colt.net"
-          from: "stackstorm@colt.net"
+          to: "{{st2kv.system.napalm_bgpsyslog_mailto}}"
+          from: "{{st2kv.system.napalm_bgpsyslog_mailfrom}}"
           subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
           content_type: "text/plain"
           body: "{{ message }}\r\n\r\n
@@ -64,8 +64,8 @@
         name: "report_failure"
         ref: "core.sendmail"
         parameters:
-          to: "rob.woodward@colt.net"
-          from: "stackstorm@colt.net"
+          to: "{{st2kv.system.napalm_actionerror_mailto}}"
+          from: "{{st2kv.system.napalm_actionerror_mailfrom}}"
           subject: "Stackstorm BGP prefix exceeded workflow error"
           body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n"
   default: "show_bgp_neighbours"
