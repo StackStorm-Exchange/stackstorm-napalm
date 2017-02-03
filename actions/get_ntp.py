@@ -12,12 +12,6 @@ class NapalmGetNTP(NapalmBaseAction):
         #
         (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
-        if not driver:
-            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(hostname))
-
-        if not credentials:
-            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(hostname))
-
         login = self._get_credentials(credentials)
 
         try:
