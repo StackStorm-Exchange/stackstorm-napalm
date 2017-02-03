@@ -25,7 +25,7 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 3
-    command:s
+    commands:
         type: "array"
         description: "Array of commands to run on the device"
         required: true
