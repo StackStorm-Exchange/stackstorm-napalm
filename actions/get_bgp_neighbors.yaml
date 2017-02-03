@@ -25,8 +25,14 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 3
+    routing_instance:
+        type: "string"
+        description: "Get BGP neighbour details for a speific routing instance."
+        required: false
+        default: "global"
+        position: 4
     neighbour:
         type: "string"
         description: "Get a specific BGP neighbour, for more detailed neighbour output use the get_bgp_neighbors_detail action instead."
         required: false
-        position: 4
+        position: 5
