@@ -6,22 +6,15 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
 
     def run(self, hostname, driver, port, credentials, interface):
 
-        # Look up the driver  and if it's not given from the configuration file
-        # Also overides the hostname since we might have a partial host i.e. from
-        # syslog such as host1 instead of host1.example.com
-        #
-        (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
-
-        if not driver:
-            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(hostname))
-
-        if not credentials:
-            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(hostname))
-
-        login = self._get_credentials(credentials)
-
         try:
+            # Look up the driver  and if it's not given from the configuration file
+            # Also overides the hostname since we might have a partial host i.e. from
+            # syslog such as host1 instead of host1.example.com
+            #
+            (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
 
+            login = self._get_credentials(credentials)
+            
             if not port:
                 optional_args=None
             else:
