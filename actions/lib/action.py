@@ -32,6 +32,9 @@ class NapalmBaseAction(Action):
 
         search = search.lower()
 
+        # Set hostname here in case it's not found.
+        hostname = search
+
         for d in devices:
             hostname = d['hostname'].lower()
 
@@ -46,8 +49,21 @@ class NapalmBaseAction(Action):
                 if not credentials:
                     credentials = d['credentials']
 
-                return (d['hostname'], driver, credentials)
+                # Found first entry, no need to carry on.
+                break
 
-        # Return the original search if we don't find anything
+        if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos", "pluribus", "panos", "ros", "vyos"]:
+            raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
+
+        # If we get here both credentials and driver should be set either from
+        # the config file or passed as parameters
+
+        if not driver:
+            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(hostname))
+
+        if not credentials:
+            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(hostname))
+
+        # Return, this will be the original search if we didn't find anything
         #
-        return (search, driver, credentials)
+        return (hostname, driver, credentials)

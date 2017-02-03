@@ -4,6 +4,10 @@ description: A StackStorm pack for working with network devices using the NAPALM
 keywords:
     - networking
     - napalm
-version: 0.1.0
-author: mierdin
+    - cisco
+    - juniper
+    - arista
+    - ibm
+version: 0.2.0
+author: mierdin, Rob Woodward
 email: info@stackstorm.com
