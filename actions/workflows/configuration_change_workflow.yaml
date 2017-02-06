@@ -20,7 +20,7 @@
         input:
           to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
           from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
-          subject: "Stackstorm detected a configuration change on <% $.hostname %> {% if username %} by {{ username }}{% endif %}."
+          subject: "Stackstorm detected a configuration change on <% $.hostname %> {% if _.username %} by {{ _.username }} {% endif %}."
           content_type: "text/plain"
           body: "\r\n\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n"
         on-success:
