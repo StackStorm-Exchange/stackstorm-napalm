@@ -35,8 +35,8 @@
           private_key: "/home/stanley/.ssh/stanley_rsa"
           hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
         publish:
-          stdout: <% task(backup_device).result.stdout %>
-          stderr: <% task(backup_device).result.stderr %>
+          stdout: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stdout %>
+          stderr: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stderr %>
         on-success:
           - send_complete_email
 
@@ -47,9 +47,9 @@
           from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
           subject: "Completed backup of <% $.hostname %>."
           content_type: "text/plain"
-          body: "Device backed up due to message: <% $.message %>\r\n
-                <% $.stderr %>\r\n
-                <% $.stdout %>\r\n
+          body: "\r\nDevice backed up due to message: <% $.message %>\r\n\r\n
+                \r\n<% $.stderr %>\r\n
+                \r\n<% $.stdout %>\r\n
                 \r\n\r\n"
 
       notify_on_error:
