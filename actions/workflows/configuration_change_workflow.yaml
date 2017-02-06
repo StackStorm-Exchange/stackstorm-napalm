@@ -5,6 +5,7 @@
 
     input:
       - hostname
+      - host_ip
       - message
       - username
       - driver

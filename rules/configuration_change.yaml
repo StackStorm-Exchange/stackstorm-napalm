@@ -14,6 +14,7 @@
     ref: napalm.configuration_change_workflow
     parameters:
       hostname: "{{trigger.body.logsource}}"
+      host_ip: "{{trigger.body.host}}"
       message: "{{trigger.body.message}}"
       username: "{{trigger.body.username}}"
       driver: "{{trigger.body.os_type}}"
