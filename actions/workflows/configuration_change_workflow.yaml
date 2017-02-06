@@ -20,15 +20,15 @@
         input:
           to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
           from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
-          subject: "Detected configuration change on <% $.hostname %>."
+          subject: "Stackstorm detected a configuration change on <% $.hostname %> {% if username %} by {{ username }}{% endif %}."
           content_type: "text/plain"
-          body: "<% $.message %>\r\n\r\n"
+          body: "\r\n\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n"
         on-success:
           - backup_device
 
       backup_device:
         action: "core.remote"
-        # wait-before: 180
+        wait-before: 180
         input:
           cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %>"
           username: "<% st2kv('system.napalm_remotebackup_user') %>"
@@ -45,9 +45,9 @@
         input:
           to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
           from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
-          subject: "Completed backup of <% $.hostname %>."
+          subject: "Stackstorm completed a backup of <% $.hostname %>."
           content_type: "text/plain"
-          body: "\r\nDevice backed up due to message: <% $.message %>\r\n\r\n
+          body: "\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n
                 \r\n<% $.stderr %>\r\n
                 \r\n<% $.stdout %>\r\n
                 \r\n\r\n"
@@ -58,6 +58,6 @@
           to: "<% st2kv('system.napalm_actionerror_mailto') %>"
           from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
           subject: "Stackstorm device backup workflow error"
-          body:  "Something went wrong with the device backup workflow.\r\n\r\n"
+          body:  "Something went wrong with the device backup workflow. Check stackstorm for the error. Execution ID <% env().st2_execution_id %>\r\n\r\n"
         on-complete:
           - fail

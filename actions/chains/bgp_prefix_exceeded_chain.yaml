@@ -68,5 +68,5 @@
           to: "{{st2kv.system.napalm_actionerror_mailto}}"
           from: "{{st2kv.system.napalm_actionerror_mailfrom}}"
           subject: "Stackstorm BGP prefix exceeded workflow error"
-          body:  "Something went wrong with the BGP neighbour prefix exceeded workflow.\r\n\r\n"
+          body:  "Something went wrong with the device backup workflow. Check stackstorm for the error. Execution ID: {{action_context.parent.execution_id}}.\r\n\r\n"
   default: "show_bgp_neighbours"
