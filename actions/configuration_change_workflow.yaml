@@ -18,7 +18,3 @@
       required: false
       description: "Username who made the configuration change."
       type: string
-    workflow:
-      default: napalm.configuration_change_workflow.main
-      immutable: true
-      type: string

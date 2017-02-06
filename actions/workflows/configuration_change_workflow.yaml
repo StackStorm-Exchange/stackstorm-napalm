@@ -1,65 +1,65 @@
 ---
   version: '2.0'
-  name: napalm.configuration_change_workflow
-  description: Workflow to process a configuration change on a network device.
 
-  workflows:
-    main:
-      input:
-        - hostname
-        - message
-        - username
+  napalm.configuration_change_workflow:
 
-      type: direct
+    input:
+      - hostname
+      - message
+      - username
 
-      task-defaults:
-        on-error:
-          - notify_on_error
+    type: direct
 
-      tasks:
-        send_detected_email:
-          action: core.sendmail
-          input:
-            to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
-            from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
-            subject: "Stackstorm detected a configuration change on <% $.hostname %> {% if _.username %} by {{ _.username }} {% endif %}."
-            content_type: "text/plain"
-            body: "\r\n\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n"
-          on-success:
-            - backup_device
+    task-defaults:
+      on-error:
+        - notify_on_error
 
-        backup_device:
-          action: "core.remote"
-          wait-before: 180
-          input:
-            cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %>"
-            username: "<% st2kv('system.napalm_remotebackup_user') %>"
-            private_key: "/home/stanley/.ssh/stanley_rsa"
-            hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
-          publish:
-            stdout: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stdout %>
-            stderr: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stderr %>
-          on-success:
-            - send_complete_email
+    tasks:
+      send_detected_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
+          from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
+          # Will work when this is in the code: https://github.com/StackStorm/st2/pull/3177
+          #subject: "Stackstorm detected a configuration change on <% $.hostname %> {% if _.username %} by {{ _.username }} {% endif %}."
+          subject: "Stackstorm detected a configuration change on <% $.hostname %>."
+          content_type: "text/plain"
+          body: "\r\n\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n"
+        on-success:
+          - backup_device
 
-        send_complete_email:
-          action: core.sendmail
-          input:
-            to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
-            from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
-            subject: "Stackstorm completed a backup of <% $.hostname %>."
-            content_type: "text/plain"
-            body: "\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n
-                  \r\n<% $.stderr %>\r\n
-                  \r\n<% $.stdout %>\r\n
-                  \r\n\r\n"
+      backup_device:
+        action: "core.remote"
+        wait-before: 180
+        input:
+          cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %>"
+          username: "<% st2kv('system.napalm_remotebackup_user') %>"
+          private_key: "/home/stanley/.ssh/stanley_rsa"
+          hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
+        publish:
+          stdout: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stdout %>
+          stderr: <% task(backup_device).result.get(st2kv('system.napalm_remotebackup_host')).stderr %>
+        on-success:
+          - send_complete_email
 
-        notify_on_error:
-          action: core.sendmail
-          input:
-            to: "<% st2kv('system.napalm_actionerror_mailto') %>"
-            from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
-            subject: "Stackstorm device backup workflow error"
-            body:  "Something went wrong with the device backup workflow. Check stackstorm for the error. Execution ID <% env().st2_execution_id %>\r\n\r\n"
-          on-complete:
-            - fail
+      send_complete_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_remotebackup_mailto') %>"
+          from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
+          subject: "Stackstorm completed a backup of <% $.hostname %>."
+          content_type: "text/plain"
+          body: "\r\nThe following syslog triggered this event: <% $.message %>\r\n\r\n
+                \r\n<% $.stderr %>\r\n
+                \r\n<% $.stdout %>\r\n
+                \r\n\r\n"
+
+      notify_on_error:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_actionerror_mailto') %>"
+          from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
+          subject: "Stackstorm device backup workflow error"
+          body:  "Something went wrong with the device backup workflow. Check stackstorm for the error. Execution ID <% env().st2_execution_id %>\r\n\r\n"
+        on-complete:
+          - fail
