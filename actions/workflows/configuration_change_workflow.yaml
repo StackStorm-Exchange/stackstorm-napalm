@@ -28,12 +28,15 @@
 
       backup_device:
         action: "core.remote"
-        wait-before: 180
+        # wait-before: 180
         input:
           cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %>"
           username: "<% st2kv('system.napalm_remotebackup_user') %>"
           private_key: "/home/stanley/.ssh/stanley_rsa"
           hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
+        publish:
+          stdout: <% task(backup_device).result.stdout %>
+          stderr: <% task(backup_device).result.stderr %>
         on-success:
           - send_complete_email
 
@@ -45,7 +48,8 @@
           subject: "Completed backup of <% $.hostname %>."
           content_type: "text/plain"
           body: "Device backed up due to message: <% $.message %>\r\n
-                <% task(backup_device).result.stdout %>
+                <% $.stderr %>\r\n
+                <% $.stdout %>\r\n
                 \r\n\r\n"
 
       notify_on_error:
