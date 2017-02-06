@@ -16,3 +16,4 @@
       hostname: "{{trigger.body.logsource}}"
       message: "{{trigger.body.message}}"
       username: "{{trigger.body.username}}"
+      driver: "{{trigger.body.os_type}}"
