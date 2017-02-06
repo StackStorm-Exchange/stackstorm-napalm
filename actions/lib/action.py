@@ -2,6 +2,8 @@ from napalm import get_network_driver
 
 from st2actions.runners.pythonrunner import Action
 
+import socket
+
 __all__ = [
     'NapalmBaseAction'
 ]
@@ -26,7 +28,7 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_device_from_config (self, search, driver=None, credentials=None):
+    def find_device_from_config (self, search, host_ip=None, driver=None, credentials=None):
 
         devices = self.config['devices']
 
@@ -43,29 +45,41 @@ class NapalmBaseAction(Action):
             # the FQDN in the syslog events for example.
 
             if hostname.startswith(search):
+                # Driver has not been set by a parameter so set from config.
                 if not driver:
                     driver = d['driver']
 
+                # Credentials has not been set by a parameter so set from config.
                 if not credentials:
                     credentials = d['credentials']
 
+                # Set FQDN or hostname from the config, found in the match.
                 host_result = hostname
 
                 # Found first entry, no need to carry on.
                 break
 
         # If we get here both credentials and driver should be set either from
-        # the config file or passed as parameters
+        # the config file or passed as parameters. If the host is not found
+        # in the config file then we can't get driver or credentials from the
+        # config so they must be be passed as parameters manually, if not then
+        # we fail.
 
         if not driver:
             raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(host_result))
 
         if not credentials:
-            raise ValueError('Can not find credentials for host {}, try with credentials parameter.'.format(host_result))
+            raise ValueError('Can not find credential group for host {}, try with credentials parameter.'.format(host_result))
 
         if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos", "pluribus", "panos", "ros", "vyos"]:
             raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
 
-        # Return, this will be the original search if we didn't find anything
+        # If the IP address is given we don't need to work it out otherwise
+        # resolve the hostname.
+        if not host_ip:
+            host_ip = socket.gethostbyname(host_result)
+
+        # Return, this will be the original search and parameters
+        # if we didn't find anything
         #
-        return (host_result, driver, credentials)
+        return (host_result, host_ip, driver, credentials)

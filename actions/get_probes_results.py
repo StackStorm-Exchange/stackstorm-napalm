@@ -4,14 +4,14 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetProbesResults(NapalmBaseAction):
 
-    def run(self, hostname, driver, port, credentials):
+    def run(self, hostname, host_ip, driver, port, credentials):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
             # Also overides the hostname since we might have a partial host i.e. from
             # syslog such as host1 instead of host1.example.com
             #
-            (hostname, driver, credentials) = self.find_device_from_config(hostname, driver, credentials)
+            (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
             if driver not in ["iosxr", "junos"]:
                 raise ValueError('Not supported with {} driver, only IOS-XR and JunOS are supported.'.format(driver))
@@ -24,7 +24,7 @@ class NapalmGetProbesResults(NapalmBaseAction):
                 optional_args={'port': str(port)}
 
             with get_network_driver(driver)(
-                hostname=str(hostname),
+                hostname=str(host_ip),
                 username=login['username'],
                 password=login['password'],
                 optional_args=optional_args

@@ -15,6 +15,7 @@
     parameters:
       hostname: "{{trigger.body.logsource}}"
       host_ip: "{{trigger.body.host}}"
+      driver: "{{trigger.body.os_type}}"
       message: "{{trigger.body.message}}"
       username: "{{trigger.body.username}}"
-      driver: "{{trigger.body.os_type}}"
+      

@@ -10,52 +10,57 @@ parameters:
     description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
     required: true
     position: 0
+  host_ip:
+    type: "string"
+    description: "The IP address of the device to connect to. If no IP address is given the hostname will be resolved if possible."
+    required: false
+    position: 1
   driver:
     type: "string"
     description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
     required: false
-    position: 1
+    position: 2
   port:
     type: "string"
     description: "port for accessing device"
     required: false
-    position: 2
+    position: 3
   credentials:
     type: "string"
     description: "The credentials group which contains the username and password to log in"
     required: false
-    position: 3
+    position: 4
   destination:
     type: "string"
     description: "Destination IP address"
     required: true
-    position: 4
+    position: 5
   source:
     type: "string"
     description: "Source IP address to run the traceroute from"
     required: false
-    position: 5
+    position: 6
   ttl:
     type: "integer"
     description: "Time to live / Maximum Hops"
     required: false
-    position: 6
+    position: 7
     default: 255
   pingtout:
     type: "integer"
     description: "Timeout"
     required: false
-    position: 7
+    position: 8
     default: 2
   size:
     type: "integer"
     description: "Size of Packet to send"
     required: false
-    position: 8
+    position: 9
     default: 100
   count:
     type: "integer"
     description: "Number of probes to send"
     required: false
-    position: 9
+    position: 10
     default: 5

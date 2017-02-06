@@ -5,6 +5,7 @@
         ref: "napalm.get_bgp_neighbors"
         parameters:
           hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
           neighbour: "{{ neighbour }}"
         on-success: "show_route"
         on-failure: "report_failure"
@@ -13,6 +14,7 @@
         ref: "napalm.get_route_to"
         parameters:
           hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
           destination: "{{ neighbour }}"
         on-success: "show_log"
         on-failure: "report_failure"
@@ -21,6 +23,7 @@
         ref: "napalm.get_log"
         parameters:
           hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
           lastlines: 10
         on-success: "send_email"
         on-failure: "report_failure"

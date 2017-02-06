@@ -10,28 +10,33 @@ parameters:
         description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
         required: true
         position: 0
+    host_ip:
+        type: "string"
+        description: "The IP address of the device to connect to. If no IP address is given the hostname will be resolved if possible."
+        required: false
+        position: 1
     driver:
         type: "string"
         description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
         required: false
-        position: 1
+        position: 2
     port:
         type: "string"
         description: "port for accessing device"
         required: false
-        position: 2
+        position: 3
     credentials:
         type: "string"
         description: "The credentials group which contains the username and password to log in"
         required: false
-        position: 3
+        position: 4
     counters:
         type: "boolean"
         description: "Get only counter information for the interfaces interfaces"
         required: false
-        position: 4
+        position: 5
     ipaddresses:
         type: "boolean"
         description: "Get only the ip addresses on the interfaces"
         required: false
-        position: 5
+        position: 6

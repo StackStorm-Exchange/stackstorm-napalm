@@ -8,7 +8,11 @@
   parameters:
     hostname:
       required: true
-      description: "Hostname of the device."
+      description: "Hostname of the device"
+      type: string
+    host_ip:
+      required: false
+      description: "IP Address of the device"
       type: string
     message:
       required: true
