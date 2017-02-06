@@ -24,17 +24,18 @@
           content_type: "text/plain"
           body: "<% $.message %>\r\n\r\n"
         on-success:
-          - send_complete_email
+          - backup_device
 
-      # backup_device:
-      #   action: "core.remote"
-      #   input:
-      #     cmd: "<% st2kv('system.napalm_remotebackup_cmd') %>"
-      #     username: "<% st2kv('system.napalm_remotebackup_user') %>"
-      #     private_key: "/home/stanley/.ssh/stanley_rsa"
-      #     hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
-      #   on-success:
-      #     - send_complete_email
+      backup_device:
+        action: "core.remote"
+        wait-before: 180
+        input:
+          cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %>"
+          username: "<% st2kv('system.napalm_remotebackup_user') %>"
+          private_key: "/home/stanley/.ssh/stanley_rsa"
+          hosts: "<% st2kv('system.napalm_remotebackup_host') %>"
+        on-success:
+          - send_complete_email
 
       send_complete_email:
         action: core.sendmail
@@ -43,7 +44,9 @@
           from: "<% st2kv('system.napalm_remotebackup_mailfrom') %>"
           subject: "Completed backup of <% $.hostname %>."
           content_type: "text/plain"
-          body: "Device backed up due to message: <% $.message %>\r\n\r\n"
+          body: "Device backed up due to message: <% $.message %>\r\n
+                <% task(backup_device).result.stdout %>
+                \r\n\r\n"
 
       notify_on_error:
         action: core.sendmail
