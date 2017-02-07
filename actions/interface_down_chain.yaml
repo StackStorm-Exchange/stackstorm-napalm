@@ -1,0 +1,24 @@
+---
+  name: "interface_down_chain"
+  description: "Action Chain to process an interface down event."
+  runner_type: "action-chain"
+  pack: napalm
+  enabled: true
+  entry_point: "chains/interface_down_chain.yaml"
+  parameters:
+    hostname:
+      required: true
+      description: "Hostname of the device"
+      type: string
+    host_ip:
+      required: false
+      description: "IP Address of the device"
+      type: string
+    message:
+      required: true
+      description: "Syslog Message"
+      type: string
+    interface:
+      required: true
+      description: "Name of the down interface."
+      type: string

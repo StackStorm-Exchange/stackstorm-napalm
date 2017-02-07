@@ -94,10 +94,16 @@ Actions in the NAPALM pack largely mirror the NAPALM library methods documented
 
 The pack defines rules for handing syslog events or monitoring events. Logstash
 is a good source for handling syslog events and extracting the required
-parameters. There is an example logstash configuration in the examples
+parameters. There is an example logstash and rsyslog configuration in the examples
 directory.
 
-- **configured_device_chain**: Webhook trigger to run a remote backup action chain when a configuration change is detected on a device.
+It's important to note that the rules and triggers here rely on the host field
+being set to the IP address of the host and the logsoure being set to the hostname
+received from the box. The example rsyslog configuration example details more
+on this.
+
+- **configuration_change_workflow**: Webhook trigger to run a remote backup mistral workflow when a configuration change is detected on a device.
+- **interface_down_chain**: Webhook trigger to run an action chain when an interface goes down.
 - **bgp_prefix_exceeded_chain**: Webhook trigger to run an action chain when a bgp neighbour exceeds its prefix limit.
 
 ## Datastore
@@ -132,6 +138,16 @@ st2 key set napalm_remotebackup_mailto "backupnotify@example.com"
 # What email should be the sender of notifications
 st2 key set napalm_remotebackup_mailfrom "stackstorm@example.com"
 ```
+For Interface related action chains the following commands will create the datastore key value pairs needed.
+
+```sh
+# Where to send output from BGP actions.
+st2 key set napalm_interface_down_mailto "interfaceevent@example.com"
+
+# What email should be the sender of BGP related notifications
+st2 key set napalm_interface_down_mailfrom "stackstorm@example.com"
+```
+
 
 For BGP related action chains the following commands will create the datastore key value pairs needed.
 

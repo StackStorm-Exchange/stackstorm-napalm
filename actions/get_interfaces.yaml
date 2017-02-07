@@ -30,13 +30,18 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 4
+    interface:
+        type: "string"
+        description: "Get details of a specific interface."
+        required: false
+        position: 5
     counters:
         type: "boolean"
         description: "Get only counter information for the interfaces interfaces"
         required: false
-        position: 5
+        position: 6
     ipaddresses:
         type: "boolean"
         description: "Get only the ip addresses on the interfaces"
         required: false
-        position: 6
+        position: 7

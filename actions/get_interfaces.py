@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetInterfaces(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, counters, ipaddresses):
+    def run(self, hostname, host_ip, driver, port, credentials, interface=None, counters, ipaddresses):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -31,11 +31,16 @@ class NapalmGetInterfaces(NapalmBaseAction):
             ) as device:
 
                 if counters:
-                    interfaces = device.get_interfaces_counters()
+                    result = device.get_interfaces_counters()
                 elif ipaddresses:
-                    interfaces = device.get_interfaces_ip()
+                    result = device.get_interfaces_ip()
                 else:
-                    interfaces = device.get_interfaces()
+                    result = device.get_interfaces()
+
+                if interface:
+                    interfaces = result.get(interface)
+                else:
+                    interfaces = result
 
         except Exception, e:
             self.logger.error(str(e))
