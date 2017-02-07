@@ -75,8 +75,9 @@ class NapalmBaseAction(Action):
             raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
 
         # If the IP address is given we don't need to work it out otherwise
-        # resolve the hostname.
-        if not host_ip:
+        # resolve the hostname. Check for string None - thinking jinja sometimes
+        # converts to a string.
+        if not host_ip or host_ip == "None":
             host_ip = socket.gethostbyname(host_result)
 
         # Return, this will be the original search and parameters

@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetInterfaces(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, interface=None, counters, ipaddresses):
+    def run(self, hostname, host_ip, driver, port, credentials, interface=None, counters=False, ipaddresses=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
