@@ -50,7 +50,7 @@ class NapalmGetLog(NapalmBaseAction):
             ) as device:
                 cmd_result = device.cli(commands)
                 log_output = list(filter(None, cmd_result[log_cmd].split('\n')))
-                result['raw'] = log_output[-lastlines:]
+                result = {"raw" : log_output[-lastlines:] }
 
             if htmlout:
                 result['html'] = "<pre>" + result['raw'].join("\n") + "</pre>"
