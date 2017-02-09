@@ -1,10 +1,11 @@
 from napalm import get_network_driver
+from json2html import *
 
 from lib.action import NapalmBaseAction
 
 class NapalmGetInterfaces(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, interface=None, counters=False, ipaddresses=False):
+    def run(self, hostname, host_ip, driver, port, credentials, interface=None, counters=False, ipaddresses=False, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -39,8 +40,12 @@ class NapalmGetInterfaces(NapalmBaseAction):
 
                 if interface:
                     interfaces = result.get(interface)
+                    interfaces['name'] = interface
                 else:
                     interfaces = result
+
+                if htmlout:
+                    interfaces = json2html.convert(json = interfaces)
 
         except Exception, e:
             self.logger.error(str(e))

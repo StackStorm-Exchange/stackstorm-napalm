@@ -7,6 +7,7 @@
         hostname: "{{ hostname }}"
         host_ip: "{{ host_ip }}"
         interface: "{{ interface }}"
+        htmlout: true
       on-success: "show_interface_counters"
       on-failure: "report_failure"
     -
@@ -37,6 +38,7 @@
         subject: "Interface {{ interface }} is down on {{ hostname }}."
         content_type: "text/plain"
         body: "\r\n{{ message }}\r\n\r\n
+              \r\n{{ show_interface.result }}\r\n\r\n
               \r\n{{ show_interface.result | to_json_string }}\r\n\r\n
               \r\n{{ show_interface_counters.result | to_json_string }}\r\n\r\n
               \r\nLog file from Device:\r\n\r\n
