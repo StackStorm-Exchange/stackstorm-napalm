@@ -1,5 +1,4 @@
 from napalm import get_network_driver
-from json2table import convert
 
 from lib.action import NapalmBaseAction
 
@@ -39,13 +38,13 @@ class NapalmGetInterfaces(NapalmBaseAction):
                     result = device.get_interfaces()
 
                 if interface:
-                    interfaces = result.get(interface)
-                    interfaces['name'] = interface
+                    interfaces = {"raw" : result.get(interface) }
+                    interfaces['raw']['name'] = interface
                 else:
-                    interfaces = result
+                    interfaces = {"raw" : result }
 
                 if htmlout:
-                    interfaces = convert(interfaces)
+                    interfaces['html'] = self._html_out(interfaces['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

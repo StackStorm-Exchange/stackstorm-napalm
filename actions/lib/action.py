@@ -1,5 +1,5 @@
 from napalm import get_network_driver
-
+from json2table import convert
 from st2actions.runners.pythonrunner import Action
 
 import socket
@@ -84,3 +84,9 @@ class NapalmBaseAction(Action):
         # if we didn't find anything
         #
         return (host_result, host_ip, driver, credentials)
+
+
+    def _html_out(to_convert):
+        table_attributes = {"style" : "width:100%", "border" : "1"}
+        
+        return convert(to_convert, table_attributes=table_attributes)

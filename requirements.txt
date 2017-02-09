@@ -9,5 +9,4 @@ napalm-nxos
 napalm-pluribus
 napalm-panos
 napalm
-json2html
 json2table

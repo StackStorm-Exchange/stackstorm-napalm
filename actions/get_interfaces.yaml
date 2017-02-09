@@ -47,6 +47,6 @@ parameters:
         position: 7
     htmlout:
         type: "boolean"
-        description: "Return output in HTML instead of a python dictionary."
+        description: "In addition to the normal output also includes html output."
         required: false
         position: 8

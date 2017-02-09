@@ -51,9 +51,9 @@
           from: "<% st2kv('system.napalm_interface_down_mailfrom') %>"
           subject: "Interface <% $.interface %> is down on <% $.hostname %>."
           content_type: "text/html"
-          body: "The following syslog triggered this event: <% $.message %><br />
-                <% task(show_interface).result.result %>
-                <% task(show_interface_counters).result.result %>
+          body: "The following syslog triggered this event: <% $.message %><br /><br />
+                <% task(show_interface).result.result.html %><br /><br />
+                <% task(show_interface_counters).result.result.html %><br /><br />
                 <% task(show_log).result.result %>
                 "
 
