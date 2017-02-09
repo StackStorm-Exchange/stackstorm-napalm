@@ -32,12 +32,12 @@ class NapalmCLI(NapalmBaseAction):
                 result_with_pre = {}
 
 
-                for cmd in cmds_output:
-                    result['raw_array'][cmd] = cmds_output[cmd].split('\n')
-                    result_with_pre[cmd] = "<pre>" + cmds_output[cmd] + "</pre>"
+                # for cmd in cmds_output:
+                    # result['raw_array'][cmd] = cmds_output[cmd].split('\n')
+                    # result_with_pre[cmd] = "<pre>" + cmds_output[cmd] + "</pre>"
 
                 if htmlout:
-                    result['html'] = self._html_out(result_with_pre)
+                    result['html'] = self._html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
