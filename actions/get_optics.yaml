@@ -30,3 +30,8 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 4
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 5

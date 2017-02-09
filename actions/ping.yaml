@@ -64,3 +64,8 @@ parameters:
     required: false
     position: 10
     default: 5
+  htmlout:
+    type: "boolean"
+    description: "In addition to the normal output also includes html output."
+    required: false
+    position: 11

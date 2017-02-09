@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetNetworkInstances(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, name):
+    def run(self, hostname, host_ip, driver, port, credentials, name, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -28,9 +28,12 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
             ) as device:
 
                 if not name:
-                    network_instances = device.get_network_instances()
+                    network_instances = {'raw' : device.get_network_instances()}
                 else:
-                    network_instances = device.get_network_instances(name)
+                    network_instances = {'raw' : device.get_network_instances(name)}
+
+                if htmlout:
+                    network_instances['html'] = self._html_out(network_instances['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

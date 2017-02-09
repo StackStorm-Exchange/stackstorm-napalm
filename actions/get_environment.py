@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetEnv(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials):
+    def run(self, hostname, host_ip, driver, port, credentials, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -26,7 +26,10 @@ class NapalmGetEnv(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.get_environment()
+                result = {'raw' : device.get_environment()}
+
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

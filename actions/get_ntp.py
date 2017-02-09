@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetNTP(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, type):
+    def run(self, hostname, host_ip, driver, port, credentials, type, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -35,13 +35,16 @@ class NapalmGetNTP(NapalmBaseAction):
             ) as device:
 
                 if type == "stats":
-                    ntp_result = device.get_ntp_stats()
+                    ntp_result = {'raw': device.get_ntp_stats()}
                 elif type == "servers":
-                    ntp_result = device.get_ntp_servers()
+                    ntp_result = {'raw': device.get_ntp_servers()}
                 elif type == "peers":
-                    ntp_result = device.get_ntp_peers()
+                    ntp_result = {'raw': device.get_ntp_peers()}
                 else:
                     raise ValueError (("%s is not a valid ntp query type, use: stats, servers or peers" % (type)))
+
+                if htmlout:
+                    ntp_result['html'] = self._html_out(ntp_result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

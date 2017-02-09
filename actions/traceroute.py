@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmTraceroute(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, destination, source, ttl=255, trtimeout=2):
+    def run(self, hostname, host_ip, driver, port, credentials, destination, source, ttl=255, trtimeout=2, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -27,10 +27,13 @@ class NapalmTraceroute(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                route = device.traceroute(destination, source, ttl, trtimeout)
+                result = {'raw': device.traceroute(destination, source, ttl, trtimeout)}
+
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, route)
+        return (True, result)

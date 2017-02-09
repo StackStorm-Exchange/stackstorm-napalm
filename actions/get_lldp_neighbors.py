@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetLLDPNeighbours(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, interface):
+    def run(self, hostname, host_ip, driver, port, credentials, interface, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -28,9 +28,12 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
             ) as device:
 
                 if not neighbour:
-                    lldp_neighbours = device.get_lldp_neighbors()
+                    lldp_neighbours = {'raw': device.get_lldp_neighbors() }
                 else:
-                    lldp_neighbours = device.get_lldp_neighbors_detail(interface)
+                    lldp_neighbours = {'raw': device.get_lldp_neighbors_detail(interface) }
+
+                if htmlout:
+                    lldp_neighbours['html'] = self._html_out(lldp_neighbours['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

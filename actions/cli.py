@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmCLI(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, commands):
+    def run(self, hostname, host_ip, driver, port, credentials, commands, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -26,7 +26,18 @@ class NapalmCLI(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = device.cli(commands)
+                cmds_output = device.cli(commands)
+
+                result = {'raw' : cmds_output }
+                result_with_pre = {}
+
+
+                for cmd in cmds_output:
+                    result['raw_array'][cmd] = cmds_output[cmd].split('\n')
+                    result_with_pre[cmd] = "<pre>" + cmds_output[cmd] + "</pre>"
+
+                if htmlout:
+                    result['html'] = self._html_out(result_with_pre)
 
         except Exception, e:
             self.logger.error(str(e))

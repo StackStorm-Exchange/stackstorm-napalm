@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetConfig(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, retrieve):
+    def run(self, hostname, host_ip, driver, port, credentials, retrieve, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -32,8 +32,12 @@ class NapalmGetConfig(NapalmBaseAction):
                 else:
                     config_output = device.get_config(retrieve)
 
+                result = {'raw' : config_output }
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
+
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, config_output)
+        return (True, result)

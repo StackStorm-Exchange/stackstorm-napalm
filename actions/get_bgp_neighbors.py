@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetBGPNeighbours(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, routing_instance, neighbour):
+    def run(self, hostname, host_ip, driver, port, credentials, routing_instance, neighbour, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -39,8 +39,13 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
                     else:
                         bgp_neighbours = result[routing_instance]['peers'][neighbour]
 
+                result = {'raw' : bgp_neighbours }
+
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
+
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, bgp_neighbours)
+        return (True, result)

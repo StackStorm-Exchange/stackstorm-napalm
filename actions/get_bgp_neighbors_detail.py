@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetBGPNeighbourDetail(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, neighbour):
+    def run(self, hostname, host_ip, driver, port, credentials, neighbour, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -26,10 +26,13 @@ class NapalmGetBGPNeighbourDetail(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                bgp_neighbour = device.get_bgp_neighbors_detail(neighbour)
+                result = {'raw' : device.get_bgp_neighbors_detail(neighbour)}
+
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, bgp_neighbour)
+        return (True, result)

@@ -35,4 +35,8 @@ parameters:
         description: "Get details about a specific routing/network instance"
         required: false
         position: 5
-        
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 6    

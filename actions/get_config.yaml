@@ -35,3 +35,8 @@ parameters:
         description: "Configuration section to be retrieved"
         required: false
         position: 5
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 6

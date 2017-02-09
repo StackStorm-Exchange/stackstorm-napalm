@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetBGPConfig(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, group, neighbour):
+    def run(self, hostname, host_ip, driver, port, credentials, group, neighbour, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -38,8 +38,13 @@ class NapalmGetBGPConfig(NapalmBaseAction):
                     else:
                         bgpconf = device.get_bgp_config(group=group, neighbor=neighbour)
 
+                result = {'raw' : bgpconf }
+
+                if htmlout:
+                    result['html'] = self._html_out(result['raw'])
+
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, bgpconf)
+        return (True, result)

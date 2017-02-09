@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetRouteTo(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, destination, protocol):
+    def run(self, hostname, host_ip, driver, port, credentials, destination, protocol, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -28,9 +28,12 @@ class NapalmGetRouteTo(NapalmBaseAction):
             ) as device:
 
                 if not protocol:
-                    route = device.get_route_to(destination)
+                    route = {'raw': device.get_route_to(destination)}
                 else:
-                    route = device.get_route_to(destination, protocol)
+                    route = {'raw': device.get_route_to(destination, protocol)}
+
+                if htmlout:
+                    route['html'] = self._html_out(route['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

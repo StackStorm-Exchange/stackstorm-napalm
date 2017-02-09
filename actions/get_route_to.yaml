@@ -40,3 +40,8 @@ parameters:
         description: "Retrieve the routes only for a specific protocol (bgp or isis)"
         required: false
         position: 6
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 7

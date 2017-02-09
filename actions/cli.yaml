@@ -35,3 +35,8 @@ parameters:
         description: "Commands to run on the device (seperate each command with a comma)"
         required: true
         position: 5
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 6
