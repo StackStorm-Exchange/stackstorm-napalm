@@ -58,7 +58,6 @@
           cmd: cat <% st2kv('system.napalm_html_mail_footer_file') %>
         publish:
           html_footer: <% task(get_html_footer).result.stdout %>
-
         on-success: "send_email"
 
       send_email:
@@ -69,10 +68,10 @@
           subject: "Interface <% $.interface %> is down on <% $.hostname %>."
           content_type: "text/html"
           body: "<% $.html_header %>
-                The following syslog triggered this event: <% $.message %><br /><br />
+                <p>The following syslog triggered this event: <% $.message %></p>
                 <% task(show_interface).result.result.html %><br /><br />
                 <% task(show_interface_counters).result.result.html %><br /><br />
-                <% task(show_log).result.result %>
+                <% task(show_log).result.result.html %>
                 <% $.html_footer %>
                 "
 

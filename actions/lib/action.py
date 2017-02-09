@@ -88,9 +88,6 @@ class NapalmBaseAction(Action):
 
     def _html_out(self, to_convert):
 
-        table_attributes = {"style" : self.config['html_table_style']}
-
-        if self.config['html_table_border']:
-            table_attributes['border'] = 1;
+        table_attributes = {"class" : self.config['html_table_class']}
 
         return convert(to_convert, table_attributes=table_attributes)

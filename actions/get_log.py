@@ -4,7 +4,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetLog(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, lastlines):
+    def run(self, hostname, host_ip, driver, port, credentials, lastlines, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -50,9 +50,10 @@ class NapalmGetLog(NapalmBaseAction):
             ) as device:
                 cmd_result = device.cli(commands)
                 log_output = list(filter(None, cmd_result[log_cmd].split('\n')))
-                result = log_output[-lastlines:]
+                result['raw'] = log_output[-lastlines:]
 
-
+            if htmlout:
+                result['html'] = "<pre>" + result['raw'].join("\n") + "</pre>"
 
         except Exception, e:
             self.logger.error(str(e))

@@ -1,6 +1,5 @@
 ---
-html_table_style: "margin: 0; margin-left: 1.3em; margin-right: 1.3em; padding: 0; border-collapse: collapse; border-spacing: 0; border: 1px solid #CBCBCB; width: 100%; max-width: 400px; empty-cells: show;"
-html_table_border: true
+html_table_class: napalm
 
 credentials:
   core:

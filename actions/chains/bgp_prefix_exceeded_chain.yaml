@@ -60,7 +60,7 @@
                 {{ show_route.result | to_json_string }}\r\n\r\n
 
                 \r\nLog file from Device:\r\n\r\n
-                {% for log_line in show_log.result %}
+                {% for log_line in show_log.result.raw %}
                   \r\n{{ log_line }}
                 {% endfor %}
                 \r\n\r\n"
