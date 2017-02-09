@@ -1,5 +1,5 @@
 from napalm import get_network_driver
-from json2html import *
+from json2table import convert
 
 from lib.action import NapalmBaseAction
 
@@ -45,7 +45,7 @@ class NapalmGetInterfaces(NapalmBaseAction):
                     interfaces = result
 
                 if htmlout:
-                    interfaces = json2html.convert(json = interfaces)
+                    interfaces = convert(interfaces)
 
         except Exception, e:
             self.logger.error(str(e))

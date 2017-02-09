@@ -11,7 +11,7 @@
   criteria: {}
 
   action:
-    ref: napalm.interface_down_chain
+    ref: napalm.interface_down_workflow
     parameters:
       hostname: "{{trigger.body.logsource}}"
       host_ip: "{{trigger.body.host}}"

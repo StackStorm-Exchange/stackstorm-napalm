@@ -1,0 +1,68 @@
+---
+  version: '2.0'
+
+  napalm.interface_down_workflow:
+
+    input:
+      - hostname
+      - host_ip
+      - message
+      - interface
+
+    type: direct
+
+    task-defaults:
+      on-error:
+        - notify_on_error
+
+    tasks:
+
+      show_interface:
+        action: "napalm.get_interfaces"
+        input:
+          hostname: <% $.hostname %>
+          host_ip: <% $.host_ip %>
+          interface: <% $.interface %>
+          htmlout: true
+        on-success: "show_interface_counters"
+
+      show_interface_counters:
+        action: "napalm.get_interfaces"
+        input:
+          hostname: <% $.hostname %>
+          host_ip: <% $.host_ip %>
+          interface: <% $.interface %>
+          htmlout: true
+          counters: true
+        on-success: "show_log"
+
+      show_log:
+        action: "napalm.get_log"
+        input:
+          hostname: <% $.hostname %>
+          host_ip: <% $.host_ip %>
+          lastlines: 10
+        on-success: "send_email"
+
+      send_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_interface_down_mailto') %>"
+          from: "<% st2kv('system.napalm_interface_down_mailfrom') %>"
+          subject: "Interface <% $.interface %> is down on <% $.hostname %>."
+          content_type: "text/html"
+          body: "The following syslog triggered this event: <% $.message %><br />
+                <% task(show_interface).result.result %>
+                <% task(show_interface_counters).result.result %>
+                <% task(show_log).result.result %>
+                "
+
+      notify_on_error:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_actionerror_mailto') %>"
+          from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
+          subject: "Stackstorm interface down workflow error"
+          body:  "Something went wrong with the interface down workflow. Check stackstorm for the error. Execution ID <% env().st2_execution_id %>\r\n\r\n"
+        on-complete:
+          - fail
