@@ -45,3 +45,8 @@ parameters:
         description: "Get only the ip addresses on the interfaces"
         required: false
         position: 7
+    htmlout:
+        type: "boolean"
+        description: "Return output in HTML instead of a python dictionary."
+        required: false
+        position: 8
