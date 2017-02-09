@@ -42,6 +42,18 @@
           hostname: <% $.hostname %>
           host_ip: <% $.host_ip %>
           lastlines: 10
+        on-success: "get_html_header"
+
+      get_html_header:
+        action: "core.local"
+        input:
+          cmd: cat <% st2kv('system.napalm_html_mail_header_file') %>
+        on-success: "get_html_footer"
+
+      get_html_footer:
+        action: "core.local"
+        input:
+          cmd: cat <% st2kv('system.napalm_html_mail_footer_file') %>
         on-success: "send_email"
 
       send_email:

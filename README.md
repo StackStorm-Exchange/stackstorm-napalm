@@ -118,6 +118,10 @@ st2 key set napalm_actionerror_mailto "stackstorm_errors@example.com"
 
 # What email should be the sender of failure notifications
 st2 key set napalm_actionerror_mailfrom "stackstorm@example.com"
+
+# HTML header and footer files which get read in by some of the workflows to send nice emails.
+st2 key set napalm_html_mail_header_file "/opt/stackstorm/packs/napalm/examples/html_header.html"
+st2 key set napalm_html_mail_footer_file "/opt/stackstorm/packs/napalm/examples/html_footer.html"
 ```
 
 For the remote backup action chain the following commands will create the datastore key value pairs needed.
@@ -160,5 +164,15 @@ st2 key set napalm_bgpsyslog_mailfrom "stackstorm@example.com"
 ```
 
 ## Notes
+
+### HTML Emails
+
+Each action can output an HTML table version of the result, this allows you to
+send emails in HTML format with the output nicely formatted.
+
+The HTML header and footer files are used to format nice HTML emails and to
+style the templates. Some examples have been provided in the examples directory
+and should be copied into a location specified by the key value datastore set
+above.
 
 This pack is actively being developed.
