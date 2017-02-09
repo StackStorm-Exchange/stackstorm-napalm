@@ -42,6 +42,7 @@
           hostname: <% $.hostname %>
           host_ip: <% $.host_ip %>
           lastlines: 10
+          htmlout: true
         on-success: "get_html_header"
 
       get_html_header:
