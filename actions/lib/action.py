@@ -86,7 +86,11 @@ class NapalmBaseAction(Action):
         return (host_result, host_ip, driver, credentials)
 
 
-    def _html_out(to_convert):
-        table_attributes = {"style" : "width:100%", "border" : "1"}
-        
+    def _html_out(self, to_convert):
+
+        table_attributes = {"style" : self.config['html_table_style']}
+
+        if self.config['html_table_border']:
+            table_attributes['border'] = 1;
+
         return convert(to_convert, table_attributes=table_attributes)

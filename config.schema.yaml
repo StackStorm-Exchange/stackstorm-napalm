@@ -1,4 +1,13 @@
 ---
+html_table_style:
+  description: "Style for table in HTML output."
+  type: "string"
+  required: true
+html_table_border:
+  description: "HTML table output should have borders."
+  type: "boolean"
+  required: true
+
 devices:
   description: "List of devices to map the device hostname with the driver and credentials"
   required: true
