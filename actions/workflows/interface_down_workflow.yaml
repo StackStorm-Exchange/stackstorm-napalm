@@ -48,7 +48,8 @@
         action: "core.local"
         input:
           cmd: cat <% st2kv('system.napalm_html_mail_header_file') %>
-        html_header: <% task(get_html_header).result.stdout %>
+        publish:
+          html_header: <% task(get_html_header).result.stdout %>
         on-success: "get_html_footer"
 
       get_html_footer:
