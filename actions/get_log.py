@@ -53,7 +53,7 @@ class NapalmGetLog(NapalmBaseAction):
                 result = {"raw" : log_output[-lastlines:] }
 
             if htmlout:
-                result['html'] = "<pre>" + result['raw'].join("\n") + "</pre>"
+                result['html'] = "<pre>" + "\n".join(result['raw']) + "</pre>"
 
         except Exception, e:
             self.logger.error(str(e))
