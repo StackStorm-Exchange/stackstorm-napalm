@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmTraceroute(NapalmBaseAction):
+    """Run a tracroute from a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, destination, source, ttl=255, trtimeout=2, htmlout=False):
 

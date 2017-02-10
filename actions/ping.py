@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmPing(NapalmBaseAction):
+    """Run a ping from a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, destination, source, ttl=255, pingtout=2, size=100, count=5, htmlout=False):
 

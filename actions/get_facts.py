@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmGetFacts(NapalmBaseAction):
+    """Get Facts from a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, htmlout=False):
 
@@ -30,7 +33,7 @@ class NapalmGetFacts(NapalmBaseAction):
 
                 if htmlout:
                     result['html'] = self._html_out(result['raw'])
-                    
+
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))

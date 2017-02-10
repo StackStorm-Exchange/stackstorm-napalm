@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmCLI(NapalmBaseAction):
+    """Run CLI commands on a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, commands, htmlout=False):
 

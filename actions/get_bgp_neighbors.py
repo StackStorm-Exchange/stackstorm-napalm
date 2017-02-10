@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmGetBGPNeighbours(NapalmBaseAction):
+    """Get BGP Neighbours from a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, routing_instance, neighbour, htmlout=False):
 

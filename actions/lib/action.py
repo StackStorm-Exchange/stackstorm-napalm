@@ -1,14 +1,17 @@
 from napalm import get_network_driver
 from json2table import convert
 from st2actions.runners.pythonrunner import Action
-
 import socket
+
 
 __all__ = [
     'NapalmBaseAction'
 ]
 
+
 class NapalmBaseAction(Action):
+    """Base class for all NAPALM ST2 actions
+    """
 
     def __init__(self, config):
         super(NapalmBaseAction, self).__init__(config)

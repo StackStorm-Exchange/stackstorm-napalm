@@ -2,7 +2,10 @@ from napalm import get_network_driver
 
 from lib.action import NapalmBaseAction
 
+
 class NapalmGetLog(NapalmBaseAction):
+    """Get Logs from a network device via NAPALM
+    """
 
     def run(self, hostname, host_ip, driver, port, credentials, lastlines, htmlout=False):
 
