@@ -176,3 +176,9 @@ and should be copied into a location specified by the key value datastore set
 above.
 
 This pack is actively being developed.
+
+### Raw output
+
+Most actions put their output under the key raw and when the htmlout option is ticked (see above)
+the output is in 'raw' and 'html'. the cli action also adds a 'raw_array' key to the result so
+you can iterate through the lines as 'raw' contains lines with a newline ending.
