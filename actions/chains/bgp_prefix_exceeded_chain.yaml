@@ -7,6 +7,7 @@
           hostname: "{{ hostname }}"
           host_ip: "{{ host_ip }}"
           neighbour: "{{ neighbour }}"
+          htmlout: true
         on-success: "show_route"
         on-failure: "report_failure"
       -
@@ -16,6 +17,7 @@
           hostname: "{{ hostname }}"
           host_ip: "{{ host_ip }}"
           destination: "{{ neighbour }}"
+          htmlout: true
         on-success: "show_log"
         on-failure: "report_failure"
       -
@@ -24,9 +26,26 @@
         parameters:
           hostname: "{{ hostname }}"
           host_ip: "{{ host_ip }}"
+          htmlout: true
           lastlines: 10
-        on-success: "send_email"
+        on-success: "get_html_header"
         on-failure: "report_failure"
+      -
+        name: get_html_header
+        ref: "core.local"
+        parameters:
+          cmd: "cat {{ st2kv.system.napalm_html_mail_header_file }}"
+        publish:
+          html_header: "{{ get_html_header.stdout }}"
+        on-success: "get_html_footer"
+      -
+        name: get_html_footer
+        ref: "core.local"
+        parameters:
+          cmd: "cat {{ st2kv.system.napalm_html_mail_footer_file }}"
+        publish:
+          html_footer: "{{ get_html_footer.stdout }}"
+        on-success: "send_email"
       -
         name: "send_email"
         ref: "core.sendmail"
@@ -34,36 +53,17 @@
           to: "{{st2kv.system.napalm_bgpsyslog_mailto}}"
           from: "{{st2kv.system.napalm_bgpsyslog_mailfrom}}"
           subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
-          content_type: "text/plain"
-          body: "{{ message }}\r\n\r\n
-                {% for key, value in show_bgp_neighbours.result.iteritems() %}
-                  {% if key is equalto 'address_family' %}
-                    {% for keyaf, valueaf in value.iteritems() %}
-                      {% if keyaf is equalto 'ipv4' %}
-                        \r\nAddress Family (IPv4):
-                        {% for keyv4, valuev4 in valueaf.iteritems() %}
-                          \r\n{{ keyv4 }} : {{ valuev4 }}
-                        {% endfor %}
-                      {% elif keyaf is equalto 'ipv6' %}
-                        \r\nAddress Family (IPv6):
-                        {% for keyv6, valuev6 in valueaf.iteritems() %}
-                          \r\n{{ keyv6 }} : {{ valuev6 }}
-                        {% endfor %}
-                      {% endif %}
-                    {% endfor %}
-                  {% else %}
-                    \r\n{{ key }} : {{ value }}
-                  {% endif %}
-                {% endfor %}
-
-                \r\nRoute to neighbour is:\r\n\r\n
-                {{ show_route.result | to_json_string }}\r\n\r\n
-
-                \r\nLog file from Device:\r\n\r\n
-                {% for log_line in show_log.result.raw %}
-                  \r\n{{ log_line }}
-                {% endfor %}
-                \r\n\r\n"
+          content_type: "text/html"
+          body: "{{ html_header }}
+                <p>The following syslog triggered this event: {{ message }}</p>
+                <h2>BGP Neighbour Details</h2>
+                {{ show_bgp_neighbours.result.html }}<br />
+                <h2>Route to BGP Peer Address</h2>
+                {{ show_route.result.html }}<br />
+                <h2>Last 10 log lines on Device</h2>
+                {{ show_log.result.html }}
+                {{ html_footer }}
+                "
       -
         name: "report_failure"
         ref: "core.sendmail"
