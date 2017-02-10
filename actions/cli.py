@@ -16,7 +16,7 @@ class NapalmCLI(NapalmBaseAction):
             #
             (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if not port:
                 optional_args=None
@@ -44,7 +44,7 @@ class NapalmCLI(NapalmBaseAction):
                 result['raw_array'] = result_as_array
 
                 if htmlout:
-                    result['html'] = self._html_out(result_with_pre)
+                    result['html'] = self.html_out(result_with_pre)
 
         except Exception, e:
             self.logger.error(str(e))

@@ -1,7 +1,7 @@
+import socket
 from napalm import get_network_driver
 from json2table import convert
 from st2actions.runners.pythonrunner import Action
-import socket
 
 
 __all__ = [
@@ -16,7 +16,7 @@ class NapalmBaseAction(Action):
     def __init__(self, config):
         super(NapalmBaseAction, self).__init__(config)
 
-    def _get_credentials(self, credentials):
+    def get_credentials(self, credentials):
 
         authconfig = self.config['credentials'].get(credentials, None)
 
@@ -31,7 +31,7 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_device_from_config (self, search, host_ip=None, driver=None, credentials=None):
+    def find_device_from_config(self, search, host_ip=None, driver=None, credentials=None):
 
         devices = self.config['devices']
 
@@ -69,12 +69,15 @@ class NapalmBaseAction(Action):
         # we fail.
 
         if not driver:
-            raise ValueError('Can not find driver for host {}, try with driver parameter.'.format(host_result))
+            raise ValueError('Can not find driver for host {}, try with \
+                            driver parameter.'.format(host_result))
 
         if not credentials:
-            raise ValueError('Can not find credential group for host {}, try with credentials parameter.'.format(host_result))
+            raise ValueError(('Can not find credential group for host {}, try with credentials'
+                              'parameter.').format(host_result))
 
-        if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos", "pluribus", "panos", "ros", "vyos"]:
+        if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos",
+                          "pluribus", "panos", "ros", "vyos"]:
             raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
 
         # If the IP address is given we don't need to work it out otherwise
@@ -88,9 +91,8 @@ class NapalmBaseAction(Action):
         #
         return (host_result, host_ip, driver, credentials)
 
+    def html_out(self, to_convert):
 
-    def _html_out(self, to_convert):
-
-        table_attributes = {"class" : self.config['html_table_class']}
+        table_attributes = {"class": self.config['html_table_class']}
 
         return convert(to_convert, table_attributes=table_attributes)

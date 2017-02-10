@@ -16,7 +16,7 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
             #
             (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if not port:
                 optional_args=None
@@ -36,7 +36,7 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
                     network_instances = {'raw' : device.get_network_instances(name)}
 
                 if htmlout:
-                    network_instances['html'] = self._html_out(network_instances['raw'])
+                    network_instances['html'] = self.html_out(network_instances['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

@@ -16,7 +16,7 @@ class NapalmGetInterfaces(NapalmBaseAction):
             #
             (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if counters and ipaddresses:
                 raise ValueError("Both ipaddresses and counters can not be set at the same time.")
@@ -47,7 +47,7 @@ class NapalmGetInterfaces(NapalmBaseAction):
                     interfaces = {"raw" : result }
 
                 if htmlout:
-                    interfaces['html'] = self._html_out(interfaces['raw'])
+                    interfaces['html'] = self.html_out(interfaces['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

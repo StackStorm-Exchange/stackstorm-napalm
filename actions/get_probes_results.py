@@ -19,7 +19,7 @@ class NapalmGetProbesResults(NapalmBaseAction):
             if driver not in ["iosxr", "junos"]:
                 raise ValueError('Not supported with {} driver, only IOS-XR and JunOS are supported.'.format(driver))
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if not port:
                 optional_args=None
@@ -34,7 +34,7 @@ class NapalmGetProbesResults(NapalmBaseAction):
             ) as device:
                 result = {'raw': device.get_probes_results()}
                 if htmlout:
-                    result['html'] = self._html_out(result['raw'])
+                    result['html'] = self.html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

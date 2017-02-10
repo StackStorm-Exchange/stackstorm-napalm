@@ -16,7 +16,7 @@ class NapalmGetBGPConfig(NapalmBaseAction):
             #
             (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if not port:
                 optional_args=None
@@ -44,7 +44,7 @@ class NapalmGetBGPConfig(NapalmBaseAction):
                 result = {'raw' : bgpconf }
 
                 if htmlout:
-                    result['html'] = self._html_out(result['raw'])
+                    result['html'] = self.html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))

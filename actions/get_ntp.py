@@ -16,7 +16,7 @@ class NapalmGetNTP(NapalmBaseAction):
             #
             (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
-            login = self._get_credentials(credentials)
+            login = self.get_credentials(credentials)
 
             if not type:
                 type = 'stats'
@@ -47,7 +47,7 @@ class NapalmGetNTP(NapalmBaseAction):
                     raise ValueError (("%s is not a valid ntp query type, use: stats, servers or peers" % (type)))
 
                 if htmlout:
-                    ntp_result['html'] = self._html_out(ntp_result['raw'])
+                    ntp_result['html'] = self.html_out(ntp_result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
