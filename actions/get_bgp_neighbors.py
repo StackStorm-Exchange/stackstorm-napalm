@@ -7,7 +7,8 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
     """Get BGP Neighbours from a network device via NAPALM
     """
 
-    def run(self, hostname, host_ip, driver, port, credentials, routing_instance, neighbour, htmlout=False):
+    def run(self, hostname, host_ip, driver, port, credentials,
+            routing_instance, neighbour, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
