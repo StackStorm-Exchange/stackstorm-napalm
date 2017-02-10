@@ -33,7 +33,7 @@ class NapalmGetARPTable(NapalmBaseAction):
             ) as device:
                 result = {'raw': device.get_arp_table()}
                 if htmlout:
-                    result['html'] = self._html_out(result['raw'])
+                    result['html'] = self.html_out(result['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
