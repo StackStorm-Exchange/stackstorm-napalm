@@ -14,14 +14,17 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
             # Also overides the hostname since we might have a partial host i.e. from
             # syslog such as host1 instead of host1.example.com
             #
-            (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
+            (hostname,
+             host_ip,
+             driver,
+             credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
             login = self.get_credentials(credentials)
 
             if not port:
-                optional_args=None
+                optional_args = None
             else:
-                optional_args={'port': str(port)}
+                optional_args = {'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(host_ip),
@@ -30,10 +33,10 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
                 optional_args=optional_args
             ) as device:
 
-                if not neighbour:
-                    lldp_neighbours = {'raw': device.get_lldp_neighbors() }
+                if not interface:
+                    lldp_neighbours = {'raw': device.get_lldp_neighbors()}
                 else:
-                    lldp_neighbours = {'raw': device.get_lldp_neighbors_detail(interface) }
+                    lldp_neighbours = {'raw': device.get_lldp_neighbors_detail(interface)}
 
                 if htmlout:
                     lldp_neighbours['html'] = self.html_out(lldp_neighbours['raw'])

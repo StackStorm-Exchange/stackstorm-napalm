@@ -14,7 +14,10 @@ class NapalmGetLog(NapalmBaseAction):
             # Also overides the hostname since we might have a partial host i.e. from
             # syslog such as host1 instead of host1.example.com
             #
-            (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
+            (hostname,
+             host_ip,
+             driver,
+             credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
             login = self.get_credentials(credentials)
 
@@ -38,12 +41,13 @@ class NapalmGetLog(NapalmBaseAction):
                 commands = ['term width 32767', 'term len 0']
                 commands.append(log_cmd)
             else:
-                raise ValueError('Not able to find logging command for {}, with driver {}.'.format(hostname, driver))
+                raise ValueError(('Not able to find logging command for {}, '
+                                  'with driver {}.').format(hostname, driver))
 
             if not port:
-                optional_args=None
+                optional_args = None
             else:
-                optional_args={'port': str(port)}
+                optional_args = {'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(host_ip),
@@ -53,7 +57,7 @@ class NapalmGetLog(NapalmBaseAction):
             ) as device:
                 cmd_result = device.cli(commands)
                 log_output = list(filter(None, cmd_result[log_cmd].split('\n')))
-                result = {"raw" : log_output[-lastlines:] }
+                result = {"raw": log_output[-lastlines:]}
 
             if htmlout:
                 result['html'] = "<pre>" + "\n".join(result['raw']) + "</pre>"

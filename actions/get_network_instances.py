@@ -14,14 +14,17 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
             # Also overides the hostname since we might have a partial host i.e. from
             # syslog such as host1 instead of host1.example.com
             #
-            (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
+            (hostname,
+             host_ip,
+             driver,
+             credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
             login = self.get_credentials(credentials)
 
             if not port:
-                optional_args=None
+                optional_args = None
             else:
-                optional_args={'port': str(port)}
+                optional_args = {'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(host_ip),
@@ -31,9 +34,9 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
             ) as device:
 
                 if not name:
-                    network_instances = {'raw' : device.get_network_instances()}
+                    network_instances = {'raw': device.get_network_instances()}
                 else:
-                    network_instances = {'raw' : device.get_network_instances(name)}
+                    network_instances = {'raw': device.get_network_instances(name)}
 
                 if htmlout:
                     network_instances['html'] = self.html_out(network_instances['raw'])

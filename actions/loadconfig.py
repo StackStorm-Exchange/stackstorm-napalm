@@ -3,7 +3,7 @@ from napalm import get_network_driver
 from lib.action import NapalmBaseAction
 
 
-class NapalmLoadConfig(Action):
+class NapalmLoadConfig(NapalmBaseAction):
     """Load configuration into network device via NAPALM
     """
 
@@ -14,7 +14,10 @@ class NapalmLoadConfig(Action):
             # Also overides the hostname since we might have a partial host i.e. from
             # syslog such as host1 instead of host1.example.com
             #
-            (hostname, host_ip, driver, credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
+            (hostname,
+             host_ip,
+             driver,
+             credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)
 
             login = self.get_credentials(credentials)
 
@@ -23,12 +26,13 @@ class NapalmLoadConfig(Action):
             else:
                 method = method.lower()
                 if method not in ["merge", "replace"]:
-                    raise ValueError ("{} is not a valid load method, use: merge or replace".format(method))
+                    raise ValueError(('{} is not a valid load method, use: '
+                                      'merge or replace').format(method))
 
             if not port:
-                optional_args=None
+                optional_args = None
             else:
-                optional_args={'port': str(port)}
+                optional_args = {'port': str(port)}
 
             with get_network_driver(driver)(
                 hostname=str(host_ip),
