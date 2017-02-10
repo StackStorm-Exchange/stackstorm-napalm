@@ -1,5 +1,4 @@
 import socket
-from napalm import get_network_driver
 from json2table import convert
 from st2actions.runners.pythonrunner import Action
 
