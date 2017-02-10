@@ -28,16 +28,20 @@ class NapalmCLI(NapalmBaseAction):
             ) as device:
                 cmds_output = device.cli(commands)
 
-                result = {'raw' : cmds_output }
+               result = {'raw' : cmds_output }
+
                 result_with_pre = {}
+                result_as_array = {}
 
+                for this_cmd in cmds_output:
+                    result_as_array[this_cmd] = cmds_output[this_cmd].split('\n')
+                    if htmlout:
+                      result_with_pre[this_cmd] = "<pre>" + cmds_output[this_cmd] + "</pre>"
 
-                # for cmd in cmds_output:
-                    # result['raw_array'][cmd] = cmds_output[cmd].split('\n')
-                    # result_with_pre[cmd] = "<pre>" + cmds_output[cmd] + "</pre>"
+                result['raw_array'] = result_as_array
 
                 if htmlout:
-                    result['html'] = self._html_out(result['raw'])
+                    result['html'] = self._html_out(result_with_pre)
 
         except Exception, e:
             self.logger.error(str(e))
