@@ -1,0 +1,75 @@
+---
+  chain:
+      -
+        name: "show_bgp_neighbours"
+        ref: "napalm.get_bgp_neighbors"
+        parameters:
+          hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
+          neighbour: "{{ neighbour }}"
+          htmlout: true
+        on-success: "show_route"
+        on-failure: "report_failure"
+      -
+        name: "show_route"
+        ref: "napalm.get_route_to"
+        parameters:
+          hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
+          destination: "{{ neighbour }}"
+          htmlout: true
+        on-success: "show_log"
+        on-failure: "report_failure"
+      -
+        name: "show_log"
+        ref: "napalm.get_log"
+        parameters:
+          hostname: "{{ hostname }}"
+          host_ip: "{{ host_ip }}"
+          htmlout: true
+          lastlines: 10
+        on-success: "get_html_header"
+        on-failure: "report_failure"
+      -
+        name: get_html_header
+        ref: "core.local"
+        parameters:
+          cmd: "cat {{ st2kv.system.napalm_html_mail_header_file }}"
+        publish:
+          html_header: "{{ get_html_header.stdout }}"
+        on-success: "get_html_footer"
+      -
+        name: get_html_footer
+        ref: "core.local"
+        parameters:
+          cmd: "cat {{ st2kv.system.napalm_html_mail_footer_file }}"
+        publish:
+          html_footer: "{{ get_html_footer.stdout }}"
+        on-success: "send_email"
+      -
+        name: "send_email"
+        ref: "core.sendmail"
+        parameters:
+          to: "{{st2kv.system.napalm_bgpsyslog_mailto}}"
+          from: "{{st2kv.system.napalm_bgpsyslog_mailfrom}}"
+          subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
+          content_type: "text/html"
+          body: "{{ html_header }}
+                <p>The following syslog triggered this event: {{ message }}</p>
+                <h2>BGP Neighbour Details</h2>
+                {{ show_bgp_neighbours.result.html }}<br />
+                <h2>Route to BGP Peer Address</h2>
+                {{ show_route.result.html }}<br />
+                <h2>Last 10 log lines on Device</h2>
+                {{ show_log.result.html }}
+                {{ html_footer }}
+                "
+      -
+        name: "report_failure"
+        ref: "core.sendmail"
+        parameters:
+          to: "{{st2kv.system.napalm_actionerror_mailto}}"
+          from: "{{st2kv.system.napalm_actionerror_mailfrom}}"
+          subject: "Stackstorm BGP prefix exceeded workflow error"
+          body:  "Something went wrong with the BGP prefix exceeded workflow. Check stackstorm for the error. Execution ID: {{action_context.parent.execution_id}}.\r\n\r\n"
+  default: "show_bgp_neighbours"

@@ -1,0 +1,28 @@
+---
+  name: "configuration_change_workflow"
+  description: "Workflow to process a configuration change on a device."
+  runner_type: "mistral-v2"
+  pack: napalm
+  enabled: true
+  entry_point: "workflows/configuration_change_workflow.yaml"
+  parameters:
+    hostname:
+      required: true
+      description: "Hostname of the device"
+      type: string
+    host_ip:
+      required: true
+      description: "IP Address of the device"
+      type: string
+    driver:
+      required: true
+      description: "NAPALM Device drive to use to connect to device."
+      type: string
+    message:
+      required: true
+      description: "Syslog message"
+      type: string
+    username:
+      required: true
+      description: "Username who made the configuration change."
+      type: string

@@ -1,0 +1,26 @@
+---
+html_table_class:
+  description: "Class for table in HTML output."
+  type: "string"
+  required: true
+
+devices:
+  description: "List of devices to map the device hostname with the driver and credentials"
+  required: true
+  type: "array"
+  items:
+    type: "object"
+    required: true
+    properties:
+      hostname:
+        description: "Hostname for the device"
+        type: "string"
+        required: true
+      driver:
+        description: "Driver for the device"
+        type: "string"
+        required: true
+      credentials:
+        description: "Credentials group used to login to the device"
+        type: "string"
+        required: true

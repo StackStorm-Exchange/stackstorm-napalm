@@ -1,0 +1,19 @@
+---
+  name: "interface_down"
+  enabled: true
+  description: "Webhook which handles an interface going down on a network device."
+
+  trigger:
+    type: "core.st2.webhook"
+    parameters:
+      url: "napalm_interface_down"
+
+  criteria: {}
+
+  action:
+    ref: napalm.interface_down_workflow
+    parameters:
+      hostname: "{{trigger.body.logsource}}"
+      host_ip: "{{trigger.body.host}}"
+      message: "{{trigger.body.message}}"
+      interface: "{{trigger.body.interface}}"

@@ -1,0 +1,13 @@
+---
+name: napalm
+description: A StackStorm pack for working with network devices using the NAPALM library
+keywords:
+    - networking
+    - napalm
+    - cisco
+    - juniper
+    - arista
+    - ibm
+version: 0.2.0
+author: mierdin, Rob Woodward
+email: info@stackstorm.com
