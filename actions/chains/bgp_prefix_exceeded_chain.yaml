@@ -1,7 +1,7 @@
 ---
   chain:
       -
-        name: "show_bgp_neighbours"
+        name: "show_bgp_neighbors"
         ref: "napalm.get_bgp_neighbors"
         parameters:
           hostname: "{{ hostname }}"
