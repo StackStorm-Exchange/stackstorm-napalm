@@ -3,12 +3,12 @@ from napalm import get_network_driver
 from lib.action import NapalmBaseAction
 
 
-class NapalmGetBGPNeighbours(NapalmBaseAction):
-    """Get BGP Neighbours from a network device via NAPALM
+class NapalmGetBGPneighbors(NapalmBaseAction):
+    """Get BGP neighbors from a network device via NAPALM
     """
 
     def run(self, hostname, host_ip, driver, port, credentials,
-            routing_instance, neighbour, htmlout=False):
+            routing_instance, neighbor, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -39,16 +39,16 @@ class NapalmGetBGPNeighbours(NapalmBaseAction):
                     raise ValueError(('Routing instance {} does not exist on '
                                       'this device.').format(routing_instance))
 
-                if not neighbour:
-                    bgp_neighbours = result[routing_instance]['peers']
+                if not neighbor:
+                    bgp_neighbors = result[routing_instance]['peers']
                 else:
-                    if neighbour not in result[routing_instance]['peers']:
-                        raise ValueError(('BGP Neighbour {} does not exist '
-                                          'on this device.').format(neighbour))
+                    if neighbor not in result[routing_instance]['peers']:
+                        raise ValueError(('BGP neighbor {} does not exist '
+                                          'on this device.').format(neighbor))
                     else:
-                        bgp_neighbours = result[routing_instance]['peers'][neighbour]
+                        bgp_neighbors = result[routing_instance]['peers'][neighbor]
 
-                result = {'raw': bgp_neighbours}
+                result = {'raw': bgp_neighbors}
 
                 if htmlout:
                     result['html'] = self.html_out(result['raw'])

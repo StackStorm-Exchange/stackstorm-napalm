@@ -1,7 +1,7 @@
 ---
 name: "get_bgp_neighbors"
 runner_type: "python-script"
-description: "Get the BGP Neighbours from a device using NAPALM."
+description: "Get the BGP neighbors from a device using NAPALM."
 enabled: true
 entry_point: "get_bgp_neighbors.py"
 parameters:
@@ -32,13 +32,13 @@ parameters:
         position: 4
     routing_instance:
         type: "string"
-        description: "Get BGP neighbour details for a speific routing instance."
+        description: "Get BGP neighbor details for a speific routing instance."
         required: false
         default: "global"
         position: 5
-    neighbour:
+    neighbor:
         type: "string"
-        description: "Get a specific BGP neighbour, for more detailed neighbour output use the get_bgp_neighbors_detail action instead."
+        description: "Get a specific BGP neighbor, for more detailed neighbor output use the get_bgp_neighbors_detail action instead."
         required: false
         position: 6
     htmlout:

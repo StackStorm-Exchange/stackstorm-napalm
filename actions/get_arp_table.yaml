@@ -1,7 +1,7 @@
 ---
 name: "get_arp_table"
 runner_type: "python-script"
-description: "Get the APR table from a device using NAPALM."
+description: "Get the ARP table from a device using NAPALM."
 enabled: true
 entry_point: "get_arp_table.py"
 parameters:

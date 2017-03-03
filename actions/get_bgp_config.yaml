@@ -33,12 +33,12 @@ parameters:
         position: 4
     group:
         type: "string"
-        description: "Restrict configuration to this BGP Neighbour/Peer group"
+        description: "Restrict configuration to this BGP neighbor/Peer group"
         required: false
         position: 5
-    neighbour:
+    neighbor:
         type: "string"
-        description: "Restrict configuration to this BGP Neighbour"
+        description: "Restrict configuration to this BGP neighbor"
         required: false
         position: 6
     htmlout:

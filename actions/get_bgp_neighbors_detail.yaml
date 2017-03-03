@@ -1,7 +1,7 @@
 ---
 name: "get_bgp_neighbors_detail"
 runner_type: "python-script"
-description: "Get a detailed BGP neighbour from a device using NAPALM."
+description: "Get a detailed BGP neighbor from a device using NAPALM."
 enabled: true
 entry_point: "get_bgp_neighbors.py"
 parameters:
@@ -30,9 +30,9 @@ parameters:
         description: "The credentials group which contains the username and password to log in"
         required: false
         position: 4
-    neighbour:
+    neighbor:
         type: "string"
-        description: "The BGP Neighbour to get details of."
+        description: "The BGP neighbor to get details of."
         required: true
         position: 5
     htmlout:

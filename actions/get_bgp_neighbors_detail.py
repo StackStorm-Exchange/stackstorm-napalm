@@ -3,9 +3,9 @@ from napalm import get_network_driver
 from lib.action import NapalmBaseAction
 
 
-class NapalmGetBGPNeighbourDetail(NapalmBaseAction):
+class NapalmGetBGPNeighborDetail(NapalmBaseAction):
 
-    def run(self, hostname, host_ip, driver, port, credentials, neighbour, htmlout=False):
+    def run(self, hostname, host_ip, driver, port, credentials, neighbor, htmlout=False):
 
         try:
             # Look up the driver  and if it's not given from the configuration file
@@ -30,7 +30,7 @@ class NapalmGetBGPNeighbourDetail(NapalmBaseAction):
                 password=login['password'],
                 optional_args=optional_args
             ) as device:
-                result = {'raw': device.get_bgp_neighbors_detail(neighbour)}
+                result = {'raw': device.get_bgp_neighbors_detail(neighbor)}
 
                 if htmlout:
                     result['html'] = self.html_out(result['raw'])

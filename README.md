@@ -9,6 +9,10 @@ StackStorm in the form of sensors, actions, and more.
 This pack leverages the NAPALM library to allow ST2 to perform multivendor
 network automation
 
+**This pack is actively being developed and should be considered BETA status for
+the time being. Please open a github issue or pull request if you run into any
+problems with this pack**
+
 ## Requirements
 
 All Python dependencies are included in requirements.txt. This is primarily
