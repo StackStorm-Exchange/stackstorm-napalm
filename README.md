@@ -7,16 +7,56 @@ new capabilities that allow a StackStorm user to leverage NAPALM within
 StackStorm in the form of sensors, actions, and more.
 
 This pack leverages the NAPALM library to allow ST2 to perform multivendor
-network automation
+network automation.
 
-**This pack is actively being developed and should be considered BETA status for
+> This pack is actively being developed and should be considered BETA status for
 the time being. Please open a github issue or pull request if you run into any
-problems with this pack**
+problems with this pack
+
+## Installation
+
+To install this pack, simply run:
+
+```
+st2 pack install napalm
+```
+
+## Usage
+
+For many actions, the only required parameter is `hostname`. The majority of the
+"housekeeping" options you may be familiar with from NAPALM, such as credentials
+or driver type, are all handled in the pack configuration.
+
+> See section "Configuration" for more on this.
+
+We'll use the `ping` action as an example. With a proper configuration, this works
+just fine:
+
+```
+st2 run napalm.ping hostname=sw01.example.org
+```
+
+However, many of the aforementioned options can be provided at the command-line
+and these will override what is present in the configuration:
+
+```
+st2 run napalm.ping hostname=sw01.example.org driver=junos
+```
+
+For more information on which parameters you can pass to each action, use the `-h`
+flag like so:
+
+```
+st2 run napalm.<action_name> -h
+```
 
 ## Requirements
 
 All Python dependencies are included in requirements.txt. This is primarily
 comprised of the various Python libraries that make up the NAPALM project.
+
+These will be installed for you when you install the pack using `st2 pack install`.
+
 
 ## Configuration
 
