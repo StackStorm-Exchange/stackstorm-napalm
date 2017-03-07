@@ -1,4 +1,3 @@
-import socket
 from json2table import convert
 from st2actions.runners.pythonrunner import Action
 
@@ -17,30 +16,27 @@ class NapalmBaseAction(Action):
         super(NapalmBaseAction, self).__init__(config)
 
     def get_driver(self, **std_kwargs):
-        """This function centralizes some of the setup logic for each action
+        """Centralizes some of the setup logic for each action
 
         This will allow each action to more or less focus solely on the logic specific
         to its task
         """
 
-        # TODO(mierdin): Some of these may be optional, and may need to use dict.get()
-        credentials = std_kwargs['credentials']
+        # Hostname is required
         hostname = std_kwargs['hostname']
-        driver = std_kwargs['driver']
-        port = std_kwargs['port']
 
+        # These are not required, so we can default to None
+        credentials = std_kwargs.get('credentials')
+        driver = std_kwargs.get('driver')
+        port = std_kwargs.get('port')
         htmlout = std_kwargs.get('htmlout', False)
 
         # Look up the driver  and if it's not given from the configuration file
         # Also overides the hostname since we might have a partial host i.e. from
         # syslog such as host1 instead of host1.example.com
-        (hostname,
-         driver,
-         credentials) = self.find_device_from_config(hostname, driver, credentials)  # TODO(mierdin): a bit awkward, perhaps use kwargs
-        # ["10.12.0.123", "10.12.0.123", "junos", "core"]
+        found_device = self.find_device_from_config(hostname, driver, credentials)
 
-        login = self.get_credentials(credentials)
-        # {"username": "root", "password": "Juniper!"}
+        login = self.get_credentials(found_device['credentials'])
 
         if not port:
             optional_args = None
@@ -49,18 +45,20 @@ class NapalmBaseAction(Action):
 
         # Some actions like to use these params in log messages, or commands, etc.
         # So we tie to instance for easy lookup
-        self.hostname = hostname
-        self.driver = driver
+        self.hostname = found_device['hostname']
+        self.driver = found_device['driver']
         self.htmlout = htmlout
 
         return get_network_driver(driver)(
-            hostname=str(hostname),
+            hostname=str(found_device['hostname']),
             username=login['username'],
             password=login['password'],
             optional_args=optional_args
         )
 
     def get_credentials(self, credentials):
+        """Looks up credentials section references in the device configuration
+        """
 
         authconfig = self.config['credentials'].get(credentials, None)
 
@@ -76,6 +74,8 @@ class NapalmBaseAction(Action):
         return authconfig
 
     def find_device_from_config(self, search, driver=None, credentials=None):
+        """Locates device in configuration based on search parameters
+        """
 
         devices = self.config['devices']
 
@@ -126,8 +126,11 @@ class NapalmBaseAction(Action):
 
         # Return, this will be the original search and parameters
         # if we didn't find anything
-        #
-        return (host_result, driver, credentials)
+        return {
+            "hostname": host_result,
+            "driver": driver,
+            "credentials": credentials,
+        }
 
     def html_out(self, to_convert):
 
