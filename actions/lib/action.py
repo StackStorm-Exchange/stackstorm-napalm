@@ -34,9 +34,8 @@ class NapalmBaseAction(Action):
         # Also overides the hostname since we might have a partial host i.e. from
         # syslog such as host1 instead of host1.example.com
         (hostname,
-         host_ip,
          driver,
-         credentials) = self.find_device_from_config(hostname, host_ip, driver, credentials)  # TODO(mierdin): a bit awkward, perhaps use kwargs
+         credentials) = self.find_device_from_config(hostname, driver, credentials)  # TODO(mierdin): a bit awkward, perhaps use kwargs
         # ["10.12.0.123", "10.12.0.123", "junos", "core"]
 
         login = self.get_credentials(credentials)
@@ -69,7 +68,7 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_device_from_config(self, search, host_ip=None, driver=None, credentials=None):
+    def find_device_from_config(self, search, driver=None, credentials=None):
 
         devices = self.config['devices']
 
@@ -118,16 +117,10 @@ class NapalmBaseAction(Action):
                           "pluribus", "panos", "ros", "vyos"]:
             raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
 
-        # If the IP address is given we don't need to work it out otherwise
-        # resolve the hostname. Check for string None - thinking jinja sometimes
-        # converts to a string.
-        if not host_ip or host_ip == "None":
-            host_ip = socket.gethostbyname(host_result)
-
         # Return, this will be the original search and parameters
         # if we didn't find anything
         #
-        return (host_result, host_ip, driver, credentials)
+        return (host_result, driver, credentials)
 
     def html_out(self, to_convert):
 

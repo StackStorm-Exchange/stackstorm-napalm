@@ -1,4 +1,3 @@
-
 from lib.action import NapalmBaseAction
 
 

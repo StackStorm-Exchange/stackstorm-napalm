@@ -5,7 +5,6 @@
 
     input:
       - hostname
-      - host_ip
       - driver
       - message
       - username
@@ -34,7 +33,7 @@
         action: "core.remote"
         wait-before: 60
         input:
-          cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %> <% $.host_ip %> <% $.driver %>"
+          cmd: "<% st2kv('system.napalm_remotebackup_cmd') %> <% $.hostname %> <% $.driver %>"
           username: "<% st2kv('system.napalm_remotebackup_user') %>"
           private_key: "/home/stanley/.ssh/stanley_rsa"
           hosts: "<% st2kv('system.napalm_remotebackup_host') %>"

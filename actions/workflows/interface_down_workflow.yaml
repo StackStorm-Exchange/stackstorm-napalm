@@ -5,7 +5,6 @@
 
     input:
       - hostname
-      - host_ip
       - message
       - interface
 
@@ -21,7 +20,6 @@
         action: "napalm.get_interfaces"
         input:
           hostname: <% $.hostname %>
-          host_ip: <% $.host_ip %>
           interface: <% $.interface %>
           htmlout: true
         on-success: "show_interface_counters"
@@ -30,7 +28,6 @@
         action: "napalm.get_interfaces"
         input:
           hostname: <% $.hostname %>
-          host_ip: <% $.host_ip %>
           interface: <% $.interface %>
           htmlout: true
           counters: true
@@ -40,7 +37,6 @@
         action: "napalm.get_log"
         input:
           hostname: <% $.hostname %>
-          host_ip: <% $.host_ip %>
           lastlines: 10
           htmlout: true
         on-success: "get_html_header"

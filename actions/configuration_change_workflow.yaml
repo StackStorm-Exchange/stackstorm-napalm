@@ -10,10 +10,6 @@
       required: true
       description: "Hostname of the device"
       type: string
-    host_ip:
-      required: true
-      description: "IP Address of the device"
-      type: string
     driver:
       required: true
       description: "NAPALM Device drive to use to connect to device."
