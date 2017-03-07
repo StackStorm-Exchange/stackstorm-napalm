@@ -10,38 +10,33 @@ parameters:
         description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
         required: true
         position: 0
-    host_ip:
-        type: "string"
-        description: "The IP address of the device to connect to. If no IP address is given the hostname will be resolved if possible."
-        required: false
-        position: 1
     driver:
         type: "string"
         description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
         required: false
-        position: 2
+        position: 1
     port:
         type: "string"
         description: "port for accessing device"
         required: false
-        position: 3
+        position: 2
     credentials:
         type: "string"
         description: "The credentials group which contains the username and password to log in"
         required: false
-        position: 4
+        position: 3
     destination:
         type: "string"
         description: "Destination IP network or Address"
         required: true
-        position: 5
+        position: 4
     protocol:
         type: "string"
         description: "Retrieve the routes only for a specific protocol (bgp or isis)"
         required: false
-        position: 6
+        position: 5
     htmlout:
         type: "boolean"
         description: "In addition to the normal output also includes html output."
         required: false
-        position: 7
+        position: 6
