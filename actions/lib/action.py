@@ -27,7 +27,6 @@ class NapalmBaseAction(Action):
         credentials = std_kwargs['credentials']
         hostname = std_kwargs['hostname']
         driver = std_kwargs['driver']
-        host_ip = std_kwargs['host_ip']
         port = std_kwargs['port']
 
         # Look up the driver  and if it's not given from the configuration file
@@ -46,8 +45,13 @@ class NapalmBaseAction(Action):
         else:
             optional_args = {'port': str(port)}
 
+        # Some actions like to use these params in log messages, or commands, etc.
+        # So we tie to instance for easy lookup
+        self.hostname = hostname
+        self.driver = driver
+
         return get_network_driver(driver)(
-            hostname=str(host_ip),
+            hostname=str(hostname),
             username=login['username'],
             password=login['password'],
             optional_args=optional_args
