@@ -5,7 +5,7 @@ class NapalmGetInterfaces(NapalmBaseAction):
     """Get Interfaces from a network device via NAPALM
     """
 
-    def run(self, interface=None, counters=False, ipaddresses=False, htmlout=False, **std_kwargs):
+    def run(self, interface=None, counters=False, ipaddresses=False, **std_kwargs):
 
         try:
 
@@ -27,7 +27,7 @@ class NapalmGetInterfaces(NapalmBaseAction):
                 else:
                     interfaces = {"raw": result}
 
-                if htmlout:
+                if self.htmlout:
                     interfaces['html'] = self.html_out(interfaces['raw'])
 
         except Exception, e:

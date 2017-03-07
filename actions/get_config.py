@@ -3,7 +3,7 @@ from lib.action import NapalmBaseAction
 
 class NapalmGetConfig(NapalmBaseAction):
 
-    def run(self, retrieve, htmlout=False, **std_kwargs):
+    def run(self, retrieve, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
@@ -14,7 +14,7 @@ class NapalmGetConfig(NapalmBaseAction):
                     config_output = device.get_config(retrieve)
 
                 result = {'raw': config_output}
-                if htmlout:
+                if self.htmlout:
                     result['html'] = self.html_out(result['raw'])
 
         except Exception, e:

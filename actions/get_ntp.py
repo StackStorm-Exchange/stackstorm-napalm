@@ -5,7 +5,7 @@ class NapalmGetNTP(NapalmBaseAction):
     """Get NTP details from a network device via NAPALM
     """
 
-    def run(self, query_type, htmlout=False, **std_kwargs):
+    def run(self, query_type, **std_kwargs):
 
         try:
             if not query_type:
@@ -28,7 +28,7 @@ class NapalmGetNTP(NapalmBaseAction):
                     raise ValueError(('{} is not a valid ntp query type use: '
                                       'stats, servers or peers.').format(type))
 
-                if htmlout:
+                if self.htmlout:
                     ntp_result['html'] = self.html_out(ntp_result['raw'])
 
         except Exception, e:

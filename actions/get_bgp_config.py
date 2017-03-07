@@ -5,7 +5,7 @@ class NapalmGetBGPConfig(NapalmBaseAction):
     """Get BGP configuration from a network device via NAPALM
     """
 
-    def run(self, group, neighbour, htmlout=False, **std_kwargs):
+    def run(self, group, neighbour, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
@@ -23,7 +23,7 @@ class NapalmGetBGPConfig(NapalmBaseAction):
 
                 result = {'raw': bgpconf}
 
-                if htmlout:
+                if self.htmlout:
                     result['html'] = self.html_out(result['raw'])
 
         except Exception, e:

@@ -5,7 +5,7 @@ class NapalmGetRouteTo(NapalmBaseAction):
     """Get route from a network device via NAPALM
     """
 
-    def run(self, destination, protocol, htmlout=False, **std_kwargs):
+    def run(self, destination, protocol, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
@@ -15,7 +15,7 @@ class NapalmGetRouteTo(NapalmBaseAction):
                 else:
                     route = {'raw': device.get_route_to(destination, protocol)}
 
-                if htmlout:
+                if self.htmlout:
                     route['html'] = self.html_out(route['raw'])
 
         except Exception, e:

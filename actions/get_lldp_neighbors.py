@@ -5,7 +5,7 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
     """Get LLDP neighbours from a network device via NAPALM
     """
 
-    def run(self, interface, htmlout=False, **std_kwargs):
+    def run(self, interface, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
@@ -15,7 +15,7 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
                 else:
                     lldp_neighbours = {'raw': device.get_lldp_neighbors_detail(interface)}
 
-                if htmlout:
+                if self.htmlout:
                     lldp_neighbours['html'] = self.html_out(lldp_neighbours['raw'])
 
         except Exception, e:

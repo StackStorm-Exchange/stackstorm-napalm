@@ -29,6 +29,8 @@ class NapalmBaseAction(Action):
         driver = std_kwargs['driver']
         port = std_kwargs['port']
 
+        htmlout = std_kwargs.get('htmlout', False)
+
         # Look up the driver  and if it's not given from the configuration file
         # Also overides the hostname since we might have a partial host i.e. from
         # syslog such as host1 instead of host1.example.com
@@ -49,6 +51,7 @@ class NapalmBaseAction(Action):
         # So we tie to instance for easy lookup
         self.hostname = hostname
         self.driver = driver
+        self.htmlout = htmlout
 
         return get_network_driver(driver)(
             hostname=str(hostname),

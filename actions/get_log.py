@@ -5,7 +5,7 @@ class NapalmGetLog(NapalmBaseAction):
     """Get Logs from a network device via NAPALM
     """
 
-    def run(self, lastlines, htmlout=False, **std_kwargs):
+    def run(self, lastlines, **std_kwargs):
 
         try:
 
@@ -37,7 +37,7 @@ class NapalmGetLog(NapalmBaseAction):
                 log_output = list(filter(None, cmd_result[log_cmd].split('\n')))
                 result = {"raw": log_output[-lastlines:]}
 
-            if htmlout:
+            if self.htmlout:
                 result['html'] = "<pre>" + "\n".join(result['raw']) + "</pre>"
 
         except Exception, e:

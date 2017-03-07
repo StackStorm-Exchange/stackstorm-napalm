@@ -5,13 +5,13 @@ class NapalmGetFacts(NapalmBaseAction):
     """Get Facts from a network device via NAPALM
     """
 
-    def run(self, htmlout=False, **std_kwargs):
+    def run(self, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
                 result = {'raw': device.get_facts()}
 
-                if htmlout:
+                if self.htmlout:
                     result['html'] = self.html_out(result['raw'])
 
         except Exception, e:

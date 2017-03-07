@@ -5,7 +5,7 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
     """Get VRF/Routing instances from a network device via NAPALM
     """
 
-    def run(self, name, htmlout=False, **std_kwargs):
+    def run(self, name, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
@@ -15,7 +15,7 @@ class NapalmGetNetworkInstances(NapalmBaseAction):
                 else:
                     network_instances = {'raw': device.get_network_instances(name)}
 
-                if htmlout:
+                if self.htmlout:
                     network_instances['html'] = self.html_out(network_instances['raw'])
 
         except Exception, e:
