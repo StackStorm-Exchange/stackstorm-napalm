@@ -1,0 +1,18 @@
+---
+html_table_class: napalm
+
+credentials:
+  core:
+    username: myuser
+    password: mypassword
+  customer:
+    username: customeruser
+    password: customerpw
+
+devices:
+- hostname: router1.lon
+  driver: junos
+  credentials: core
+- hostname: router2.par
+  driver: junos
+  credentials: customer

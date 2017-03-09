@@ -1,0 +1,83 @@
+---
+  version: '2.0'
+
+  napalm.interface_down_workflow:
+
+    input:
+      - hostname
+      - message
+      - interface
+
+    type: direct
+
+    task-defaults:
+      on-error:
+        - notify_on_error
+
+    tasks:
+
+      show_interface:
+        action: "napalm.get_interfaces"
+        input:
+          hostname: <% $.hostname %>
+          interface: <% $.interface %>
+          htmlout: true
+        on-success: "show_interface_counters"
+
+      show_interface_counters:
+        action: "napalm.get_interfaces"
+        input:
+          hostname: <% $.hostname %>
+          interface: <% $.interface %>
+          htmlout: true
+          counters: true
+        on-success: "show_log"
+
+      show_log:
+        action: "napalm.get_log"
+        input:
+          hostname: <% $.hostname %>
+          lastlines: 10
+          htmlout: true
+        on-success: "get_html_header"
+
+      get_html_header:
+        action: "core.local"
+        input:
+          cmd: cat <% st2kv('system.napalm_html_mail_header_file') %>
+        publish:
+          html_header: <% task(get_html_header).result.stdout %>
+        on-success: "get_html_footer"
+
+      get_html_footer:
+        action: "core.local"
+        input:
+          cmd: cat <% st2kv('system.napalm_html_mail_footer_file') %>
+        publish:
+          html_footer: <% task(get_html_footer).result.stdout %>
+        on-success: "send_email"
+
+      send_email:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_interface_down_mailto') %>"
+          from: "<% st2kv('system.napalm_interface_down_mailfrom') %>"
+          subject: "Interface <% $.interface %> is down on <% $.hostname %>."
+          content_type: "text/html"
+          body: "<% $.html_header %>
+                <p>The following syslog triggered this event: <% $.message %></p>
+                <% task(show_interface).result.result.html %><br /><br />
+                <% task(show_interface_counters).result.result.html %><br /><br />
+                <% task(show_log).result.result.html %>
+                <% $.html_footer %>
+                "
+
+      notify_on_error:
+        action: core.sendmail
+        input:
+          to: "<% st2kv('system.napalm_actionerror_mailto') %>"
+          from: "<% st2kv('system.napalm_actionerror_mailfrom') %>"
+          subject: "Stackstorm interface down workflow error"
+          body:  "Something went wrong with the interface down workflow. Check stackstorm for the error. Execution ID <% env().st2_execution_id %>\r\n\r\n"
+        on-complete:
+          - fail

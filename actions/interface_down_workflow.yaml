@@ -1,0 +1,20 @@
+---
+  name: "interface_down_workflow"
+  description: "Workflow to process an interface down event on a device."
+  runner_type: "mistral-v2"
+  pack: napalm
+  enabled: true
+  entry_point: "workflows/interface_down_workflow.yaml"
+  parameters:
+    hostname:
+      required: true
+      description: "Hostname of the device"
+      type: string
+    message:
+      required: true
+      description: "Syslog Message"
+      type: string
+    interface:
+      required: true
+      description: "Name of the down interface."
+      type: string
