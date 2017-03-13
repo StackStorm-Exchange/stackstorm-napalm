@@ -49,7 +49,7 @@ class NapalmBaseAction(Action):
         self.driver = found_device['driver']
         self.htmlout = htmlout
 
-        return get_network_driver(driver)(
+        return get_network_driver(self.driver)(
             hostname=str(found_device['hostname']),
             username=login['username'],
             password=login['password'],
