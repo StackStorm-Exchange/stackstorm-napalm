@@ -1,0 +1,37 @@
+---
+name: "check_consistency"
+runner_type: "python-script"
+description: "Check that the device's configuration is consistent with the 'golden' config in a Git repository"
+enabled: true
+entry_point: "check_consistency.py"
+parameters:
+    hostname:
+        type: "string"
+        description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
+        required: true
+        position: 0
+    driver:
+        type: "string"
+        description: "Device driver name for connecting to device, see https://napalm.readthedocs.io/en/latest/support/index.html for list."
+        required: false
+        position: 1
+    port:
+        type: "string"
+        description: "port for accessing device"
+        required: false
+        position: 2
+    credentials:
+        type: "string"
+        description: "The credentials group which contains the username and password to log in"
+        required: false
+        position: 3
+    htmlout:
+        type: "boolean"
+        description: "In addition to the normal output also includes html output."
+        required: false
+        position: 4
+    repository:
+        type: "string"
+        description: "Git repository where the 'golden' device configurations are stored"
+        required: false
+        position: 5
