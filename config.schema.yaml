@@ -4,6 +4,11 @@ html_table_class:
   type: "string"
   required: true
 
+config_repo:
+  description: "Git repository where configurations are located"
+  type: "string"
+  required: false
+
 devices:
   description: "List of devices to map the device hostname with the driver and credentials"
   required: true

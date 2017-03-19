@@ -32,6 +32,6 @@ parameters:
         position: 4
     repository:
         type: "string"
-        description: "Git repository where the 'golden' device configurations are stored"
+        description: "Git repository where the 'golden' device configurations are stored (overrides configuration)"
         required: false
         position: 5

@@ -30,7 +30,14 @@ class NapalmCheckConsistency(NapalmBaseAction):
                 return "".join(config_file.readlines())
 
 
-    def run(self, repository, **std_kwargs):
+    def run(self, repository=None, **std_kwargs):
+
+        if not self.config['config_repo'] and not repository:
+            raise Exception("Golden configs repository not provided in args or config")
+        else:
+            # Use config if arg not provided
+            if not repository:
+                repository = self.config['config_repo']
 
         result = {
             "deviation": False,
@@ -49,6 +56,7 @@ class NapalmCheckConsistency(NapalmBaseAction):
                 golden=golden_config.splitlines(1)
                 actual=actual_config.splitlines(1)
                 diff=difflib.unified_diff(golden, actual)
+                diff = ''.join(diff)
 
                 if diff:
                     result['deviation'] = True
