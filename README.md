@@ -226,3 +226,16 @@ This pack is actively being developed.
 Most actions put their output under the key raw and when the htmlout option is ticked (see above)
 the output is in 'raw' and 'html'. the cli action also adds a 'raw_array' key to the result so
 you can iterate through the lines as 'raw' contains lines with a newline ending.
+
+### Developing the NAPALM Pack
+
+If you're copying or rsyncing files directly into a VM, bypassing the normal pack installation process
+(which is normal during development) then you'll want to be aware of a few things.
+
+First, you'll need to install the virtualenv yourself:
+
+  st2 run packs.setup_virtualenv packs=napalm
+
+Also, you will need to manually register the pack if you make changes to its metadata or configuration:
+
+  st2 pack register napalm
