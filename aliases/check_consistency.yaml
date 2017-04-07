@@ -4,5 +4,17 @@ pack: "napalm"
 action_ref: "napalm.check_consistency"
 description: "Check consistency of the device's configuration"
 formats:
-  - "check consistency on {{hostname}}"
+  - "napalm check consistency on {{hostname}}"
   # - "check consistency on all"  #TODO(mierdin): Won't work until actions can iterate over device list
+
+result:
+  format: |
+    {% if execution.result.result.deviation %}
+      The configuration on {{ execution.parameters.hostname }} has deviated from the golden configuration.
+
+      Diff to follow:
+        {{ execution.result.result.diff_contents }}
+
+    {% else %}
+      The configuration on {{ execution.parameters.hostname }} exactly matches the golden configuration.
+    {% endif %}
