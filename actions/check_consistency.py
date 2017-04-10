@@ -42,7 +42,7 @@ class NapalmCheckConsistency(NapalmBaseAction):
                     return "".join(config_file.readlines())
 
             except IOError:
-                self.logger.error("Golden config not present in repo")
+                self.logger.error("Golden config not present in repo: %s" % repo)
                 raise
 
     def run(self, repository=None, **std_kwargs):
