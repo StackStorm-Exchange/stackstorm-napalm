@@ -113,8 +113,8 @@ class NapalmBaseAction(Action):
         # we fail.
 
         if not driver:
-            raise ValueError('Can not find driver for host {}, try with \
-                            driver parameter.'.format(host_result))
+            raise ValueError('Can not find driver for host {}, try with '
+                             'driver parameter.'.format(host_result))
 
         if not credentials:
             raise ValueError(('Can not find credential group for host {}, try with credentials'

@@ -10,3 +10,4 @@ napalm-pluribus
 napalm-panos
 napalm
 json2table
+GitPython
