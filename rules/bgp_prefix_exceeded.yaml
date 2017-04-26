@@ -1,5 +1,6 @@
 ---
   name: "bgp_prefix_exceeded"
+  pack: "napalm"
   enabled: true
   description: "Webhook which handles a BGP neighbour exceeding it's prefix limit"
 
@@ -14,7 +15,6 @@
     ref: napalm.bgp_prefix_exceeded_chain
     parameters:
       hostname: "{{trigger.body.logsource}}"
-      host_ip: "{{trigger.body.host}}"
       message: "{{trigger.body.message}}"
       neighbour: "{{trigger.body.neighbour}}"
       asnum: "{{trigger.body.asnum}}"
