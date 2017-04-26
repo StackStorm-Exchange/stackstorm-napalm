@@ -1,5 +1,6 @@
 ---
   name: "configuration_change"
+  pack: "napalm"
   enabled: true
   description: "Webhook which handles when a device has been configured and changes commited"
 
@@ -14,7 +15,6 @@
     ref: napalm.configuration_change_workflow
     parameters:
       hostname: "{{trigger.body.logsource}}"
-      host_ip: "{{trigger.body.host}}"
       driver: "{{trigger.body.os_type}}"
       message: "{{trigger.body.message}}"
       username: "{{trigger.body.username}}"
