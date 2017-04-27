@@ -5,7 +5,6 @@ description: "Get BGP configuration from a device using NAPALM."
 enabled: true
 entry_point: "get_bgp_config.py"
 parameters:
-parameters:
     hostname:
         type: "string"
         description: "The hostname of the device to connect to. Driver must be specified if hostname is not in configuration. Hostname without FQDN can be given if device is in configuration."
