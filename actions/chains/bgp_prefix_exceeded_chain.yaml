@@ -5,7 +5,7 @@
         ref: "napalm.get_bgp_neighbors"
         parameters:
           hostname: "{{ hostname }}"
-          neighbour: "{{ neighbour }}"
+          neighbor: "{{ neighbor }}"
           htmlout: true
         on-success: "show_route"
         on-failure: "report_failure"
@@ -14,7 +14,7 @@
         ref: "napalm.get_route_to"
         parameters:
           hostname: "{{ hostname }}"
-          destination: "{{ neighbour }}"
+          destination: "{{ neighbor }}"
           htmlout: true
         on-success: "show_log"
         on-failure: "report_failure"
@@ -49,12 +49,12 @@
         parameters:
           to: "{{st2kv.system.napalm_bgpsyslog_mailto}}"
           from: "{{st2kv.system.napalm_bgpsyslog_mailfrom}}"
-          subject: "BGP neighbour {{ neighbour }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
+          subject: "BGP neighbor {{ neighbor }} AS{{ asnum }} exceeded prefix limit on {{ hostname }}."
           content_type: "text/html"
           body: "{{ html_header }}
                 <p>The following syslog triggered this event: {{ message }}</p>
-                <h2>BGP Neighbour Details</h2>
-                {{ show_bgp_neighbours.result.html }}<br />
+                <h2>BGP Neighbor Details</h2>
+                {{ show_bgp_neighbors.result.html }}<br />
                 <h2>Route to BGP Peer Address</h2>
                 {{ show_route.result.html }}<br />
                 <h2>Last 10 log lines on Device</h2>
@@ -69,4 +69,4 @@
           from: "{{st2kv.system.napalm_actionerror_mailfrom}}"
           subject: "Stackstorm BGP prefix exceeded workflow error"
           body:  "Something went wrong with the BGP prefix exceeded workflow. Check stackstorm for the error. Execution ID: {{action_context.parent.execution_id}}.\r\n\r\n"
-  default: "show_bgp_neighbours"
+  default: "show_bgp_neighbors"

@@ -1,8 +1,8 @@
 from lib.action import NapalmBaseAction
 
 
-class NapalmGetLLDPNeighbours(NapalmBaseAction):
-    """Get LLDP neighbours from a network device via NAPALM
+class NapalmGetLLDPNeighbors(NapalmBaseAction):
+    """Get LLDP neighbors from a network device via NAPALM
     """
 
     def run(self, interface, **std_kwargs):
@@ -11,15 +11,15 @@ class NapalmGetLLDPNeighbours(NapalmBaseAction):
             with self.get_driver(**std_kwargs) as device:
 
                 if not interface:
-                    lldp_neighbours = {'raw': device.get_lldp_neighbors()}
+                    lldp_neighbors = {'raw': device.get_lldp_neighbors()}
                 else:
-                    lldp_neighbours = {'raw': device.get_lldp_neighbors_detail(interface)}
+                    lldp_neighbors = {'raw': device.get_lldp_neighbors_detail(interface)}
 
                 if self.htmlout:
-                    lldp_neighbours['html'] = self.html_out(lldp_neighbours['raw'])
+                    lldp_neighbors['html'] = self.html_out(lldp_neighbors['raw'])
 
         except Exception, e:
             self.logger.error(str(e))
             return (False, str(e))
 
-        return (True, lldp_neighbours)
+        return (True, lldp_neighbors)
