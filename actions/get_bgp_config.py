@@ -5,21 +5,21 @@ class NapalmGetBGPConfig(NapalmBaseAction):
     """Get BGP configuration from a network device via NAPALM
     """
 
-    def run(self, group, neighbour, **std_kwargs):
+    def run(self, group, neighbor, **std_kwargs):
 
         try:
             with self.get_driver(**std_kwargs) as device:
 
                 if not group:
-                    if not neighbour:
+                    if not neighbor:
                         bgpconf = device.get_bgp_config()
                     else:
-                        bgpconf = device.get_bgp_config(neighbor=neighbour)
+                        bgpconf = device.get_bgp_config(neighbor=neighbor)
                 else:
-                    if not neighbour:
+                    if not neighbor:
                         bgpconf = device.get_bgp_config(group=group)
                     else:
-                        bgpconf = device.get_bgp_config(group=group, neighbor=neighbour)
+                        bgpconf = device.get_bgp_config(group=group, neighbor=neighbor)
 
                 result = {'raw': bgpconf}
 
