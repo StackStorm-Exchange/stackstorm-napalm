@@ -3,7 +3,7 @@ name: "get_bgp_neighbors_detail"
 runner_type: "python-script"
 description: "Get a detailed BGP neighbor from a device using NAPALM."
 enabled: true
-entry_point: "get_bgp_neighbors.py"
+entry_point: "get_bgp_neighbors_detail.py"
 parameters:
     hostname:
         type: "string"
