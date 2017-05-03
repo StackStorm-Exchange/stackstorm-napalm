@@ -112,16 +112,16 @@ Actions in the NAPALM pack largely mirror the NAPALM library methods documented
 [here](https://napalm.readthedocs.io/en/latest/base.html).
 
 - **cli**: Run a CLI command on a devices.
-- **get_arp_table**:  Get the APR table from a device.
+- **get_arp_table**:  Get the ARP table from a device.
 - **get_bgp_config**: Get BGP configuration from a device.
-- **get_bgp_neighbors**: Get the BGP Neighbours from a device.
-- **get_bgp_neighbors_detail**: Get a detailed BGP neighbour from a device.
+- **get_bgp_neighbors**: Get the BGP Neighbors from a device.
+- **get_bgp_neighbors_detail**: Get a detailed BGP neighbor from a device.
 - **get_config**: Get configuration from the device.
 - **get_environment**: Get the environment sensor output from a device.
 - **get_facts**: Get the various facts (Version, Serial Number, Vendor, Model, etc.) from a device.
 - **get_firewall_policies**: Get firewall policies from a device.
 - **get_interfaces**: Get interfaces from a device.
-- **get_lldp_neighbors**: Get the LLDP Neighbours from a device.
+- **get_lldp_neighbors**: Get the LLDP Neighbors from a device.
 - **get_log**: Get logs from devices.
 - **get_mac_address_table**: Get the MAC Address table from a device.
 - **get_network_instances**: Get details of network/routing instances/vrfs from a device.
@@ -148,7 +148,7 @@ on this.
 
 - **configuration_change_workflow**: Webhook trigger to run a remote backup mistral workflow when a configuration change is detected on a device.
 - **interface_down_chain**: Webhook trigger to run an action chain when an interface goes down.
-- **bgp_prefix_exceeded_chain**: Webhook trigger to run an action chain when a bgp neighbour exceeds its prefix limit.
+- **bgp_prefix_exceeded_chain**: Webhook trigger to run an action chain when a bgp neighbor exceeds its prefix limit.
 
 ## Datastore
 
