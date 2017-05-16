@@ -1,0 +1,17 @@
+---
+  name: "lldp_remediate"
+  pack: "napalm"
+  enabled: true
+  description: "Demonstrate simple auto-remediation event"
+
+  trigger:
+    type: "napalm.NeighborDecrease"
+    parameters: {}
+
+  criteria: {}
+
+  action:
+    ref: napalm.loadconfig
+    parameters:
+      hostname: juniper1.twb-tech.com
+      config_file: /vagrant/remediation_config.txt

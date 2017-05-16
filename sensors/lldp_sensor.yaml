@@ -1,0 +1,34 @@
+---
+class_name: "NapalmLLDPSensor"
+entry_point: "lldp_sensor.py"
+description: "Sensor that uses NAPALM to retrieve LLDP information from network devices"
+
+trigger_types:
+
+- name: "NeighborIncrease"
+  description: "Trigger which occurs when a device's LLDP neighbors increase"
+  payload_schema:
+    type: "object"
+    properties:
+      device:
+        type: "string"
+      oldpeers:
+        type: "integer"
+      newpeers:
+        type: "integer"
+      timestamp:
+        type: "string"
+
+- name: "NeighborDecrease"
+  description: "Trigger which occurs when a device's LLDP neighbors decrease"
+  payload_schema:
+    type: "object"
+    properties:
+      device:
+        type: "string"
+      oldpeers:
+        type: "integer"
+      newpeers:
+        type: "integer"
+      timestamp:
+        type: "string"
