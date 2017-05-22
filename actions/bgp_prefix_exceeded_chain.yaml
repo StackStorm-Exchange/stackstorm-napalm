@@ -1,6 +1,6 @@
 ---
   name: "bgp_prefix_exceeded_chain"
-  description: "Action Chain to process a BGP neighbour prefix limit exceeded event."
+  description: "Action Chain to process a BGP neighbor prefix limit exceeded event."
   runner_type: "action-chain"
   pack: napalm
   enabled: true
@@ -14,15 +14,15 @@
       required: true
       description: "Syslog Message"
       type: string
-    neighbour:
+    neighbor:
       required: true
-      description: "IP Address of the neighbour that has gone down."
+      description: "IP Address of the neighbor that has gone down."
       type: string
     asnum:
       required: true
-      description: "AS Number of the neighbour that has gone down"
+      description: "AS Number of the neighbor that has gone down"
       type: string
     prefixes:
       required: true
-      description: "Number of prefixes the neighbour is sending"
+      description: "Number of prefixes the neighbor is sending"
       type: integer

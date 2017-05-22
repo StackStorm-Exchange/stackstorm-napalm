@@ -1,7 +1,7 @@
 ---
 name: "get_lldp_neighbors"
 runner_type: "python-script"
-description: "Get the LLDP Neighbours from a device using NAPALM."
+description: "Get the LLDP Neighbors from a device using NAPALM."
 enabled: true
 entry_point: "get_lldp_neighbors.py"
 parameters:
