@@ -35,3 +35,10 @@ parameters:
         description: "In addition to the normal output also includes html output."
         required: false
         position: 5
+    query_type:
+        type: "string"
+        description: "The type of query to execute."
+        default: 'stats'
+        enum: ['stats', 'servers', 'peers']
+        required: false
+        position: 6
