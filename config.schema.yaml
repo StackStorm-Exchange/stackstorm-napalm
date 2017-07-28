@@ -41,7 +41,7 @@ credentials:
 cred_group:
   type: "object"
   properties:
-    user:
+    username:
       description: "Username for network device"
       type: "string"
       required: true
