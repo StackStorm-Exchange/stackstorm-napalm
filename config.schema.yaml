@@ -29,3 +29,25 @@ devices:
         description: "Credentials group used to login to the device"
         type: "string"
         required: true
+
+credentials:
+  type: "object"
+  required: true
+  patternProperties:
+      "^\\w+":
+        "$ref": "#/properties/cred_group"
+  additionalProperties: false
+
+cred_group:
+  type: "object"
+  properties:
+    user:
+      description: "Username for network device"
+      type: "string"
+      required: true
+    password:
+      description: "Password for network device"
+      type: "string"
+      secret: true
+      required: true
+  additionalProperties: false

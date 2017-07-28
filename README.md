@@ -60,11 +60,11 @@ These will be installed for you when you install the pack using `st2 pack instal
 
 ## Configuration
 
-Look at config.schema.yaml. The napalm.yaml.example file as a base to start
-the configuration which needs to be copied into your stackstorm configs
-directory (/opt/stackstorm/configs/ by default on debian/ubuntu) as napalm.yaml.
-This is where you'll need to tell StackStorm about the network devices
-you wish use and the credentails for logging into the devices.
+The `napalm.yaml.example` file is an example configuration file.
+Copy this to `/opt/stackstorm/configs/napalm.yaml`, and edit as required.
+
+This is where you tell StackStorm about your network devices, their types,
+and credentials to manage the devices.
 
 ### Credentials configuration
 
@@ -105,6 +105,9 @@ devices:
   driver: junos
   credentials: customer
 ```
+
+After you have finished editing `/opt/stackstorm/configs/napalm.yaml`, you must tell
+StackStorm to load the configuration, with `sudo st2ctl reload --register-configs`
 
 ## Actions
 
