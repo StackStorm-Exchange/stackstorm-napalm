@@ -13,5 +13,5 @@
   action:
     ref: napalm.loadconfig
     parameters:
-      hostname: juniper1.twb-tech.com
+      hostname: vsrx01
       config_file: /vagrant/remediation_config.txt
