@@ -21,44 +21,12 @@ class NapalmLLDPSensor(PollingSensor):
         # self._poll_interval = 30
 
     def setup(self):
-        # Need to get initial BGP RIB, neighbor table, etc. Put into "self".
-        # Then, write some logic within "poll" that checks again, and
-        # detects diffs
-        # Detects:
-        # - Diffs in BGP RIB (need to give a threshold like 100s or 1000s or
-        #   routes different)
-        #   (may want to not only store the previous result, but also the
-        #    previous 10 or so and do a stddev calc)
-
-        # Stores number of BGP neighbors
-        # self.bgp_neighbors = 0
-
-        # Stores RIB information in-between calls
-        # self.bgp_rib = {}
-
         # Dictionary for tracking per-device known state
         # Top-level keys are the management IPs sent to NAPALM, and
         # information on each is contained below that
         self.device_state = {}
 
         napalm_config = self._config
-
-        # Assign sane defaults for configuration
-        # default_opts = {
-        #     "opt1": "val1"
-        # }
-        # for opt_name, opt_val in default_opts.items():
-
-        #     try:
-
-        #         # key exists but is set to nothing
-        #         if not napalm_config[opt_name]:
-        #             napalm_config[opt_name] == default_opts
-
-        #     except KeyError:
-
-        #         # key doesn't exist
-        #         napalm_config[opt_name] == default_opts
 
         # Assign options to instance
         self._devices = napalm_config['devices']
@@ -68,8 +36,8 @@ class NapalmLLDPSensor(PollingSensor):
         self.devices = {
             str(device['hostname']): get_network_driver(device['driver'])(
                 hostname=str(device['hostname']),
-                username="interop",
-                password="netauto42",
+                username="root",   # TODO(mierdin): Obviously not desirable. Retrieve from config
+                password="Juniper",
                 optional_args={
                     'port': "22"
                 })
@@ -95,7 +63,7 @@ class NapalmLLDPSensor(PollingSensor):
                     "Peer count went UP to %s" % str(this_lldp_neighbors)
                 )
                 self._lldp_peer_trigger(NEIGHBOR_INCREASE, hostname,
-                                       last_lldp_neighbors, this_lldp_neighbors)
+                                        last_lldp_neighbors, this_lldp_neighbors)
 
             elif this_lldp_neighbors < last_lldp_neighbors:
                 self._logger.info(
@@ -103,7 +71,7 @@ class NapalmLLDPSensor(PollingSensor):
                 )
 
                 self._lldp_peer_trigger(NEIGHBOR_DECREASE, hostname,
-                                       last_lldp_neighbors, this_lldp_neighbors)
+                                        last_lldp_neighbors, this_lldp_neighbors)
 
             elif this_lldp_neighbors == last_lldp_neighbors:
                 self._logger.info(
@@ -148,7 +116,6 @@ class NapalmLLDPSensor(PollingSensor):
         return this_lldp_neighbors
 
     def _lldp_peer_trigger(self, trigger, hostname, oldpeers, newpeers):
-        # trigger = 'napalm.BgpPeerDecrease'
         payload = {
             'device': hostname,
             'oldpeers': int(oldpeers),
