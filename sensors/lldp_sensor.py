@@ -34,7 +34,7 @@ class NapalmLLDPSensor(PollingSensor):
                 optional_args={
                     # TODO(mierdin): This is obviously not desirable. However, fixing this would
                     # also require fixing the way Actions get their port configuration,
-                    # so I'm leaving this here for now.
+                    # so I'm leaving this here for now, and will fix in a separate PR
                     'port': "22"
                 })
             for device in self._config['devices']
