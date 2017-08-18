@@ -6,7 +6,7 @@ enabled: false
 
 trigger_types:
 
-- name: "NeighborIncrease"
+- name: "LLDPNeighborDecrease"
   description: "Trigger which occurs when a device's LLDP neighbors increase"
   payload_schema:
     type: "object"
@@ -20,7 +20,7 @@ trigger_types:
       timestamp:
         type: "string"
 
-- name: "NeighborDecrease"
+- name: "LLDPNeighborDecrease"
   description: "Trigger which occurs when a device's LLDP neighbors decrease"
   payload_schema:
     type: "object"

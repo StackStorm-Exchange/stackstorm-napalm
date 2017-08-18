@@ -4,8 +4,8 @@ from napalm import get_network_driver
 
 from st2reactor.sensor.base import PollingSensor
 
-NEIGHBOR_INCREASE = 'napalm.NeighborIncrease'
-NEIGHBOR_DECREASE = 'napalm.NeighborDecrease'
+NEIGHBOR_INCREASE = 'napalm.LLDPNeighborIncrease'
+NEIGHBOR_DECREASE = 'napalm.LLDPNeighborDecrease'
 
 
 class NapalmLLDPSensor(PollingSensor):

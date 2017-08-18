@@ -5,7 +5,7 @@
   description: "Demonstrate simple auto-remediation event"
 
   trigger:
-    type: "napalm.NeighborDecrease"
+    type: "napalm.LLDPNeighborDecrease"
     parameters: {}
 
   criteria: {}
