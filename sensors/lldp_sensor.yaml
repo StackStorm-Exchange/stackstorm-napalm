@@ -2,7 +2,7 @@
 class_name: "NapalmLLDPSensor"
 entry_point: "lldp_sensor.py"
 description: "Sensor that uses NAPALM to retrieve LLDP information from network devices"
-enabled: false
+enabled: false  # disabled by default; this is for demo purposes only.
 
 trigger_types:
 
