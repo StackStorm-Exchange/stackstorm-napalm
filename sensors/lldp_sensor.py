@@ -18,35 +18,50 @@ class NapalmLLDPSensor(PollingSensor):
             name=self.__class__.__name__
         )
 
-        # self._poll_interval = 30
-
     def setup(self):
         # Dictionary for tracking per-device known state
         # Top-level keys are the management IPs sent to NAPALM, and
         # information on each is contained below that
         self.device_state = {}
 
-        napalm_config = self._config
-
-        # Assign options to instance
-        self._devices = napalm_config['devices']
-
         # Generate dictionary of device objects per configuration
         # IP Address(key): Device Object(value)
         self.devices = {
-            str(device['hostname']): get_network_driver(device['driver'])(
-                hostname=str(device['hostname']),
-                username="root",   # TODO(mierdin): Obviously not desirable. Retrieve from config
-                password="Juniper",
+            device['hostname']: get_network_driver(device['driver'])(
+                hostname=device['hostname'],
+                username=self._get_creds(device['hostname'])['username'],
+                password=self._get_creds(device['hostname'])['password'],
                 optional_args={
+                    # TODO(mierdin): This is obviously not desirable. However, fixing this would
+                    # also require fixing the way Actions get their port configuration,
+                    # so I'm leaving this here for now.
                     'port': "22"
                 })
-            for device in self._devices
+            for device in self._config['devices']
         }
+
+    def _get_creds(self, hostname):
+        for device in self._config['devices']:
+            if device['hostname'] == hostname:
+                return self._config['credentials'][device['credentials']]
 
     def poll(self):
 
         for hostname, device_obj in self.devices.items():
+
+            # Skip if device not online
+            try:
+                device_obj.open()
+            except Exception:
+                # Currently, we just skip the device. if we can't reach it.
+                # In the future it may be worth doing something with
+                # the neighbor count after a few misses, as in this state,
+                # the sensor will continue to report that a device has the
+                # same number of neighbors even if the device is inaccessible
+                self._logger.warn(
+                    "Failed to open connection to %s. Skipping this device for now." % hostname
+                )
+                continue
 
             try:
                 last_lldp_neighbors = self.device_state[hostname]["last_lldp_neighbors"]
@@ -73,8 +88,8 @@ class NapalmLLDPSensor(PollingSensor):
                 self._lldp_peer_trigger(NEIGHBOR_DECREASE, hostname,
                                         last_lldp_neighbors, this_lldp_neighbors)
 
-            elif this_lldp_neighbors == last_lldp_neighbors:
-                self._logger.info(
+            else:
+                self._logger.debug(
                     "Device %s LLDP nbrs STAYED at %s" % (hostname, str(this_lldp_neighbors))
                 )
 
