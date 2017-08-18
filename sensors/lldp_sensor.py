@@ -60,14 +60,14 @@ class NapalmLLDPSensor(PollingSensor):
 
             if this_lldp_neighbors > last_lldp_neighbors:
                 self._logger.info(
-                    "Peer count went UP to %s" % str(this_lldp_neighbors)
+                    "Device %s peer count went UP to %s" % (hostname, str(this_lldp_neighbors))
                 )
                 self._lldp_peer_trigger(NEIGHBOR_INCREASE, hostname,
                                         last_lldp_neighbors, this_lldp_neighbors)
 
             elif this_lldp_neighbors < last_lldp_neighbors:
                 self._logger.info(
-                    "LLDP neighbors went DOWN to %s" % str(this_lldp_neighbors)
+                    "Device %s LLDP nbrs went DOWN to %s" % (hostname, str(this_lldp_neighbors))
                 )
 
                 self._lldp_peer_trigger(NEIGHBOR_DECREASE, hostname,
@@ -75,7 +75,7 @@ class NapalmLLDPSensor(PollingSensor):
 
             elif this_lldp_neighbors == last_lldp_neighbors:
                 self._logger.info(
-                    "LLDP neighbors STAYED at %s" % str(this_lldp_neighbors)
+                    "Device %s LLDP nbrs STAYED at %s" % (hostname, str(this_lldp_neighbors))
                 )
 
             # Save this state for the next poll
@@ -122,5 +122,4 @@ class NapalmLLDPSensor(PollingSensor):
             'newpeers': int(newpeers),
             'timestamp': str(datetime.now()),
         }
-        self._logger.debug("DISPATCHING TRIGGER %s" % trigger)
         self._sensor_service.dispatch(trigger=trigger, payload=payload)
