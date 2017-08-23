@@ -137,6 +137,14 @@ Actions in the NAPALM pack largely mirror the NAPALM library methods documented
 - **loadconfig**: Loads (merge) a configuration to a device.
 - **traceroute**: Run a traceroute from a device.
 
+## Sensors
+
+There is one Sensor currently implemented by this pack:
+
+- **napalm.NapalmLLDPSensor**: Detect changes in the number of active LLDP neighbors
+
+> **NOTE** these are here for illustrative purposes only. To ensure production-quality detection of network events, you should integrate StackStorm with your existing monitoring tools.
+
 ## Rules and Triggers
 
 The pack defines rules for handing syslog events or monitoring events. Logstash
