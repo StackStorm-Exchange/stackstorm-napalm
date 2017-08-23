@@ -34,14 +34,14 @@ class NapalmBaseAction(Action):
         # Look up the driver  and if it's not given from the configuration file
         # Also overides the hostname since we might have a partial host i.e. from
         # syslog such as host1 instead of host1.example.com
-        found_device = self.find_device_from_config(hostname, driver, credentials)
+        found_device = self.find_device_from_config(hostname, driver, credentials, port)
 
         login = self.get_credentials(found_device['credentials'])
 
-        if not port:
+        if not found_device['port']:
             optional_args = None
         else:
-            optional_args = {'port': str(port)}
+            optional_args = {'port': int(found_device['port'])}
 
         # Some actions like to use these params in log messages, or commands, etc.
         # So we tie to instance for easy lookup
@@ -73,7 +73,7 @@ class NapalmBaseAction(Action):
 
         return authconfig
 
-    def find_device_from_config(self, search, driver=None, credentials=None):
+    def find_device_from_config(self, search, driver=None, credentials=None, port=None):
         """Locates device in configuration based on search parameters
         """
 
@@ -100,6 +100,13 @@ class NapalmBaseAction(Action):
                 if not credentials:
                     credentials = d['credentials']
 
+                # Port has not been set by a parameter so set from config.
+                if not port:
+
+                    # NOTE that this can also be None, and if it is, optional_args
+                    # will be empty (meaning the NAPALM driver will impose its default)
+                    port = d.get('port')
+
                 # Set FQDN or hostname from the config, found in the match.
                 host_result = hostname
 
@@ -117,7 +124,7 @@ class NapalmBaseAction(Action):
                              'driver parameter.'.format(host_result))
 
         if not credentials:
-            raise ValueError(('Can not find credential group for host {}, try with credentials'
+            raise ValueError(('Can not find credential group for host {}, try with credentials '
                               'parameter.').format(host_result))
 
         if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos",
@@ -128,6 +135,7 @@ class NapalmBaseAction(Action):
         # if we didn't find anything
         return {
             "hostname": host_result,
+            "port": port,
             "driver": driver,
             "credentials": credentials,
         }
