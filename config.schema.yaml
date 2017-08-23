@@ -21,6 +21,10 @@ devices:
         description: "Hostname for the device"
         type: "string"
         required: true
+      port:
+        description: "Port for the device"
+        type: "integer"
+        required: false
       driver:
         description: "Driver for the device"
         type: "string"
