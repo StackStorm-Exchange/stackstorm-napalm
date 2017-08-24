@@ -7,19 +7,14 @@ class NapalmGetProbesConfig(NapalmBaseAction):
 
     def run(self, **std_kwargs):
 
-        try:
-            if self.driver not in ["iosxr", "junos"]:
-                raise ValueError(('Not supported with {} driver, only IOS-XR and JunOS '
-                                  'are supported.').format(self.driver))
+        if self.driver not in ["iosxr", "junos"]:
+            raise ValueError(('Not supported with {} driver, only IOS-XR and JunOS '
+                              'are supported.').format(self.driver))
 
-            with self.get_driver(**std_kwargs) as device:
-                result = {'raw': device.get_probes_config()}
+        with self.get_driver(**std_kwargs) as device:
+            result = {'raw': device.get_probes_config()}
 
-                if self.htmlout:
-                    result['html'] = self.html_out(result['raw'])
-
-        except Exception, e:
-            self.logger.error(str(e))
-            return (False, str(e))
+            if self.htmlout:
+                result['html'] = self.html_out(result['raw'])
 
         return (True, result)
