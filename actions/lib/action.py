@@ -77,7 +77,15 @@ class NapalmBaseAction(Action):
         """Locates device in configuration based on search parameters
         """
 
-        devices = self.config['devices']
+        try:
+            devices = self.config['devices']
+        except KeyError:
+            # Probably means the user needs to provide a config and/or
+            # reload with `st2ctl reload --register-configs`, so we can
+            # provide helpful error message
+            message = ("Configuration Error: Please provide a pack config and ensure it's loaded "
+                       " with `st2ctl reload --register-configs`")
+            raise Exception(message)
 
         search = search.lower()
 
