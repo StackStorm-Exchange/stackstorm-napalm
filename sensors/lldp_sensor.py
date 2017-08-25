@@ -26,19 +26,44 @@ class NapalmLLDPSensor(PollingSensor):
 
         # Generate dictionary of device objects per configuration
         # IP Address(key): Device Object(value)
-        self.devices = {
-            device['hostname']: get_network_driver(device['driver'])(
-                hostname=device['hostname'],
-                username=self._get_creds(device['hostname'])['username'],
-                password=self._get_creds(device['hostname'])['password'],
-                optional_args={
-                    # TODO(mierdin): This is obviously not desirable. However, fixing this would
-                    # also require fixing the way Actions get their port configuration,
-                    # so I'm leaving this here for now, and will fix in a separate PR
-                    'port': "22"
-                })
-            for device in self._config['devices']
-        }
+        self.devices = self._get_devices()
+
+    def _get_devices(self):
+        """Generate a dictionary of devices
+
+        This used to be a fancy dictionary comprehension, but the way that most
+        NAPALM drivers handle optional_args, this was difficult to maintain.
+        We're doing it this way now so that optional_args is only provided when
+        we are explicitly setting "port". Otherwise, we don't want to pass in
+        "optional_args", so NAPALM can use its default value for port.
+        """
+
+        devices = {}
+        for device in self._config['devices']:
+            port = self._get_port(device)
+            if port:
+                devices[device['hostname']] = get_network_driver(device['driver'])(
+                    hostname=device['hostname'],
+                    username=self._get_creds(device['hostname'])['username'],
+                    password=self._get_creds(device['hostname'])['password'],
+                    optional_args={
+                        'port': self._get_port(device)
+                    }
+                )
+            else:
+                devices[device['hostname']] = get_network_driver(device['driver'])(
+                    hostname=device['hostname'],
+                    username=self._get_creds(device['hostname'])['username'],
+                    password=self._get_creds(device['hostname'])['password']
+                )
+        return devices
+
+    def _get_port(self, device):
+        port = device.get('port')
+        if port:
+            return str(port)
+        else:
+            return None
 
     def _get_creds(self, hostname):
         for device in self._config['devices']:

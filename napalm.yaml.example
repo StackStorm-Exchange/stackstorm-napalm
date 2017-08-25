@@ -12,8 +12,10 @@ credentials:
 
 devices:
 - hostname: router1.lon
+  port: 22
   driver: junos
   credentials: core
 - hostname: router2.par
+  port: 22
   driver: junos
   credentials: customer
