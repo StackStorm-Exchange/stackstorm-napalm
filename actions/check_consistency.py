@@ -59,39 +59,33 @@ class NapalmCheckConsistency(NapalmBaseAction):
             "diff_contents": ""
         }
 
-        try:
+        with self.get_driver(**std_kwargs) as device:
 
-            with self.get_driver(**std_kwargs) as device:
+            # Get golden and actual configs
+            golden_config = self.get_golden_config(repository, self.hostname)
+            actual_config = device.get_config()['running']
 
-                # Get golden and actual configs
-                golden_config = self.get_golden_config(repository, self.hostname)
-                actual_config = device.get_config()['running']
+            # Regular expressions for matching lines to ignore
+            # Lot of network devices have lines like "last modified" that we don't
+            # want to include in the diff
+            #
+            # In the future, this may be a configurable option, but we're doing
+            # this statically for now.
+            ignore_regexs = [
+                "## .*\n"
+            ]
+            for pattern in ignore_regexs:
+                actual_config = re.sub(pattern, "", actual_config)
+                golden_config = re.sub(pattern, "", golden_config)
 
-                # Regular expressions for matching lines to ignore
-                # Lot of network devices have lines like "last modified" that we don't
-                # want to include in the diff
-                #
-                # In the future, this may be a configurable option, but we're doing
-                # this statically for now.
-                ignore_regexs = [
-                    "## .*\n"
-                ]
-                for pattern in ignore_regexs:
-                    actual_config = re.sub(pattern, "", actual_config)
-                    golden_config = re.sub(pattern, "", golden_config)
+            # Generate diff
+            golden = golden_config.splitlines(1)
+            actual = actual_config.splitlines(1)
+            diff = difflib.unified_diff(golden, actual)
+            diff = ''.join(diff)
 
-                # Generate diff
-                golden = golden_config.splitlines(1)
-                actual = actual_config.splitlines(1)
-                diff = difflib.unified_diff(golden, actual)
-                diff = ''.join(diff)
-
-                if diff:
-                    result['deviation'] = True
-                    result['diff_contents'] = ''.join(diff)
-
-        except Exception, e:
-            self.logger.error(str(e))
-            return (False, str(e))
+            if diff:
+                result['deviation'] = True
+                result['diff_contents'] = ''.join(diff)
 
         return (True, result)
