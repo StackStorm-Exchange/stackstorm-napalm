@@ -35,3 +35,10 @@ parameters:
         description: "Method to load the config (either 'merge' or 'replace', default is 'merge')"
         required: false
         position: 5
+    inline_transfer:
+        enum:
+        - "TRUE"
+        description: "If driver has inline transfer capabilities, set to TRUE, it will use SSH and not SCP." 
+        required: false
+        position: 6
+
