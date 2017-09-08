@@ -27,7 +27,7 @@ parameters:
         position: 3
     config_file:
         type: "string"
-        description: "configuration to load to device"
+        description: "Configuration file including full path to load to device (/x/y/z.type)"
         required: true
         position: 4
     method:
@@ -38,7 +38,7 @@ parameters:
     inline_transfer:
         enum:
         - "TRUE"
-        description: "If driver has inline transfer capabilities, set to TRUE, it will use SSH and not SCP." 
+        description: "If driver has inline transfer capabilities, set to TRUE, it will use SSH and not SCP" 
         required: false
         position: 6
 
