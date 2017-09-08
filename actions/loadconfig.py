@@ -17,7 +17,7 @@ class NapalmLoadConfig(NapalmBaseAction):
                                       'merge or replace').format(method))
 
             with self.get_driver(**std_kwargs) as device:
-                # inline_transfer: If set it becomes True, else False     
+                # inline_transfer: If set it becomes True, else False
                 device.inline_transfer = inline_transfer
 
                 if method == "replace":
