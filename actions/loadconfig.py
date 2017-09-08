@@ -34,3 +34,4 @@ class NapalmLoadConfig(NapalmBaseAction):
             device.commit_config()
 
         return (True, "load ({}) successful on {}".format(method, self.hostname))
+    
