@@ -7,15 +7,10 @@ class NapalmOptics(NapalmBaseAction):
 
     def run(self, **std_kwargs):
 
-        try:
-            with self.get_driver(**std_kwargs) as device:
-                result = {'raw': device.get_optics()}
+        with self.get_driver(**std_kwargs) as device:
+            result = {'raw': device.get_optics()}
 
-                if self.htmlout:
-                    result['html'] = self.html_out(result['raw'])
-
-        except Exception, e:
-            self.logger.error(str(e))
-            return (False, str(e))
+            if self.htmlout:
+                result['html'] = self.html_out(result['raw'])
 
         return (True, result)

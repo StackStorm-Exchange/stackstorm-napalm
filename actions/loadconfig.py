@@ -31,4 +31,6 @@ class NapalmLoadConfig(NapalmBaseAction):
             self.logger.error(str(e))
             return (False, str(e))
 
+            device.commit_config()
+
         return (True, "load ({}) successful on {}".format(method, self.hostname))
