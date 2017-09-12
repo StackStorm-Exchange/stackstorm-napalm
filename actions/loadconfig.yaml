@@ -36,9 +36,9 @@ parameters:
         required: false
         position: 5
     inline_transfer:
-        enum:
-        - "TRUE"
-        description: "If driver has inline transfer capabilities, set to TRUE, it will use SSH and not SCP" 
+        type: "boolean"
+        default: False
+        description: "If selected, the ios driver will use SSH and not SCP to transfer config" 
         required: false
         position: 6
 
