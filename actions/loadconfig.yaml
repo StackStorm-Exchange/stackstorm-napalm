@@ -27,7 +27,7 @@ parameters:
         position: 3
     config_file:
         type: "string"
-        description: "Configuration file including full path to load to device (/x/y/z.type)"
+        description: "Absolute path to configuration file on local system that will be sent to the device"
         required: true
         position: 4
     method:
