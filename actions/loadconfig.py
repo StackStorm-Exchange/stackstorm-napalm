@@ -24,6 +24,6 @@ class NapalmLoadConfig(NapalmBaseAction):
             else:
                 device.load_merge_candidate(filename=config_file)
 
-                device.commit_config()
+            device.commit_config()
 
         return (True, "load ({}) successful on {}".format(method, self.hostname))
