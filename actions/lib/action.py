@@ -1,5 +1,5 @@
 from json2table import convert
-from st2actions.runners.pythonrunner import Action
+from st2common.runners.base_action import Action
 
 from napalm import get_network_driver
 
