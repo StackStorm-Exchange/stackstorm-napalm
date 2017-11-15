@@ -27,12 +27,12 @@ parameters:
         position: 3
     config_file:
         type: "string"
-        description: "Absolute path to configuration file on local system that will be sent to the device"
+        description: "Absolute path to configuration file on local system that will be sent to the device. Need to specify either config_file or config_text. If both given, config_file takes precedence."
         required: false
         position: 4
     config_text:
         type: "string"
-        description: "A command that will be sent to the device"
+        description: "A command that will be sent to the device. Need to specify either config_file or config_text. If both given, config_file takes precedence."
         required: false
         position: 5
     method:

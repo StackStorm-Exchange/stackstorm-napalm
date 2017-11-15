@@ -10,6 +10,9 @@ class NapalmLoadConfig(NapalmBaseAction):
 
     def run(self, config_file, config_text, method, inline_transfer, **std_kwargs):
         try:
+            if not config_file and not config_text:
+                raise ValueError('Specify either config_file or config_text')
+
             with self.get_driver(**std_kwargs) as device:
                 # inline_transfer: If set it becomes True, else False
                 device.inline_transfer = inline_transfer

@@ -19,7 +19,7 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
             'hostname': 'localhost',
             'driver': 'junos',
             'config_file': None,
-            'config_text': None,
+            'config_text': '/usr/local/etc/junos_config',
             'method': 'merge',
             'inline_transfer': False,
             'credentials': 'core',
@@ -102,3 +102,13 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
 
         self.assertTrue(result[0])
         self.assertEqual(result[1].find('load (merge) successful'), 0)
+
+    @mock.patch('lib.action.get_network_driver')
+    def test_run_without_both_config_file_and_text(self, mock_method):
+        self.default_kwargs['config_file'] = self.default_kwargs['config_text'] = None
+
+        action = self.get_action_instance(self.full_config)
+        result = action.run(**self.default_kwargs)
+
+        self.assertFalse(result[0])
+        self.assertEqual(result[1], 'Specify either config_file or config_text')
