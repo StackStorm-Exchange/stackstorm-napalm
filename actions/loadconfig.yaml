@@ -28,17 +28,25 @@ parameters:
     config_file:
         type: "string"
         description: "Absolute path to configuration file on local system that will be sent to the device"
-        required: true
+        required: false
         position: 4
+    config_text:
+        type: "string"
+        description: "A command that will be sent to the device"
+        required: false
+        position: 5
     method:
         type: "string"
         description: "Method to load the config (either 'merge' or 'replace', default is 'merge')"
         required: false
-        position: 5
+        position: 6
+        enum:
+            - merge
+            - replace
+        default: merge
     inline_transfer:
         type: "boolean"
         default: False
         description: "If selected, the ios driver will use SSH and not SCP to transfer config" 
         required: false
-        position: 6
-
+        position: 7
