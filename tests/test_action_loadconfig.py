@@ -30,26 +30,24 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
 
         action = self.get_action_instance(self.full_config)
 
-        with self.assertRaises(KeyError):
+        with self.assertRaisesRegexp(KeyError, 'hostname'):
             action.run(**self.default_kwargs)
 
     def test_run_with_invalid_driver_parameter(self):
         self.default_kwargs['driver'] = 'invalid_driver'
 
         action = self.get_action_instance(self.full_config)
-        result = action.run(**self.default_kwargs)
-
-        self.assertFalse(result[0])
-        self.assertEqual(result[1], 'Driver "invalid_driver" is not a valid NAPALM Driver.')
+        with self.assertRaisesRegexp(ValueError,
+                                     'Driver "invalid_driver" is not a valid NAPALM Driver.'):
+            action.run(**self.default_kwargs)
 
     def test_run_without_credentials(self):
         del self.default_kwargs['credentials']
 
         action = self.get_action_instance(self.full_config)
-        result = action.run(**self.default_kwargs)
-
-        self.assertFalse(result[0])
-        self.assertEqual(result[1].find('Can not find credential group for host localhost'), 0)
+        with self.assertRaisesRegexp(ValueError,
+                                     'Can not find credential group for host localhost'):
+            action.run(**self.default_kwargs)
 
     @mock.patch('lib.action.get_network_driver')
     def test_run_with_incorrect_config_parameter_using_replace_method(self, mock_method):
@@ -68,10 +66,8 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
         mock_method.return_value = mock_driver
 
         action = self.get_action_instance(self.full_config)
-        result = action.run(**self.default_kwargs)
-
-        self.assertFalse(result[0])
-        self.assertEqual(result[1], err_msg)
+        with self.assertRaisesRegexp(exceptions.ReplaceConfigException, err_msg):
+            action.run(**self.default_kwargs)
 
     @mock.patch('lib.action.get_network_driver')
     def test_run_with_incorrect_config_parameter_using_merge_method(self, mock_method):
@@ -90,10 +86,8 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
         mock_method.return_value = mock_driver
 
         action = self.get_action_instance(self.full_config)
-        result = action.run(**self.default_kwargs)
-
-        self.assertFalse(result[0])
-        self.assertEqual(result[1], err_msg)
+        with self.assertRaisesRegexp(exceptions.MergeConfigException, err_msg):
+            action.run(**self.default_kwargs)
 
     @mock.patch('lib.action.get_network_driver')
     def test_run_with_correct_parameters(self, mock_method):
@@ -108,7 +102,6 @@ class NapalmLoadConfigTestCase(BaseActionTestCase):
         self.default_kwargs['config_file'] = self.default_kwargs['config_text'] = None
 
         action = self.get_action_instance(self.full_config)
-        result = action.run(**self.default_kwargs)
-
-        self.assertFalse(result[0])
-        self.assertEqual(result[1], 'Specify either config_file or config_text')
+        with self.assertRaisesRegexp(ValueError,
+                                     'Specify either config_file or config_text'):
+            action.run(**self.default_kwargs)
