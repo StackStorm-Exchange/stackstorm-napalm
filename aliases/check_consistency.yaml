@@ -9,12 +9,16 @@ formats:
 
 result:
   format: |
-    {% if execution.result.result.deviation %}
-      The configuration on {{ execution.parameters.hostname }} has deviated from the golden configuration.
+    {% if execution.status != "failed"  %}
+      {% if execution.result.result.deviation %}
+        The configuration on {{ execution.parameters.hostname }} has deviated from the golden configuration.
 
-      Diff to follow:
-        {{ execution.result.result.diff_contents }}
+        Diff to follow:
+          {{ execution.result.result.diff_contents }}
 
+      {% else %}
+        The configuration on {{ execution.parameters.hostname }} exactly matches the golden configuration.
+      {% endif %}
     {% else %}
-      The configuration on {{ execution.parameters.hostname }} exactly matches the golden configuration.
+      There was a problem running this consistency check.
     {% endif %}

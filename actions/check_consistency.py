@@ -27,7 +27,8 @@ class TempRepo(object):
 
 
 class NapalmCheckConsistency(NapalmBaseAction):
-    """Check that the device's configuration is consistent with the 'golden' config in a Git repository
+    """
+    Check that the device's configuration is consistent with the 'golden' config in a Git repository
     """
 
     def get_golden_config(self, repo, device):
@@ -42,7 +43,8 @@ class NapalmCheckConsistency(NapalmBaseAction):
                     return "".join(config_file.readlines())
 
             except IOError:
-                self.logger.error("Golden config not present in repo: %s" % repo)
+                self.logger.error(
+                    "Golden config for device %s not present in repo: %s" % (device, repo))
                 raise
 
     def run(self, repository=None, **std_kwargs):
