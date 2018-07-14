@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.13
+
+- Support `secret` parameter for IOS devices that need password to enter enable mode
+
 ## 0.2.11
 
 - Added "config_text" parameter to loadconfig action to be able to specify a command to set to device as text

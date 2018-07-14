@@ -54,4 +54,9 @@ cred_group:
       type: "string"
       secret: true
       required: true
+    secret:
+      description: "Optional password for entering enable mode"
+      type: "string"
+      secret: true
+      required: false
   additionalProperties: false

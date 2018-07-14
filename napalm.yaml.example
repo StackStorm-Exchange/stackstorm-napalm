@@ -9,6 +9,10 @@ credentials:
   customer:
     username: customeruser
     password: customerpw
+  access:
+    username: ciscouser
+    password: ciscopw
+    secret: ciscoenable
 
 devices:
 - hostname: router1.lon
@@ -19,3 +23,7 @@ devices:
   port: 22
   driver: junos
   credentials: customer
+- hostname: router3.tok
+  port: 22
+  driver: ios
+  credentials: access
