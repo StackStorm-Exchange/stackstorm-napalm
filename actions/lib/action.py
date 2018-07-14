@@ -42,7 +42,7 @@ class NapalmBaseAction(Action):
 
         if not found_device['port']:
             pass
-        else
+        else:
             optional_args = {'port': int(found_device['port'])}
 
         if 'secret' in login:
