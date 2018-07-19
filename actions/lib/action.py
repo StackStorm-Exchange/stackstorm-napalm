@@ -38,10 +38,15 @@ class NapalmBaseAction(Action):
 
         login = self.get_credentials(found_device['credentials'])
 
+        optional_args = {}
+
         if not found_device['port']:
-            optional_args = None
+            pass
         else:
             optional_args = {'port': int(found_device['port'])}
+
+        if 'secret' in login:
+            optional_args = {'secret': login['secret']}
 
         # Some actions like to use these params in log messages, or commands, etc.
         # So we tie to instance for easy lookup
