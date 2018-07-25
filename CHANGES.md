@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.14
+
+- Support `key_file` for SSH key authentication
+
 ## 0.2.13
 
 - Support `secret` parameter for IOS devices that need password to enter enable mode

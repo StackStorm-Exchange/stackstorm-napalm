@@ -48,6 +48,9 @@ class NapalmBaseAction(Action):
         if 'secret' in login:
             optional_args = {'secret': login['secret']}
 
+        if 'key_file' in login:
+            optional_args = {'key_file': login['key_file']}
+
         # Some actions like to use these params in log messages, or commands, etc.
         # So we tie to instance for easy lookup
         self.hostname = found_device['hostname']
@@ -70,8 +73,8 @@ class NapalmBaseAction(Action):
         if not authconfig:
             raise ValueError('Can not find credentials group {}.'.format(credentials))
 
-        if authconfig['password'] is None:
-            raise ValueError("Missing password in credentials.")
+        if authconfig['password'] is None and authconfig['key_file'] is None:
+            raise ValueError("Missing password or SSH key in credentials.")
 
         if authconfig['username'] is None:
             raise ValueError("Missing username in credentials.")

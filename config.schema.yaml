@@ -53,10 +53,14 @@ cred_group:
       description: "Password for network device"
       type: "string"
       secret: true
-      required: true
+      required: false
     secret:
       description: "Optional password for entering enable mode"
       type: "string"
       secret: true
+      required: false
+    key_file:
+      description: "Path to a private key file"
+      type: "string"
       required: false
   additionalProperties: false
