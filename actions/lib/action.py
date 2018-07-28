@@ -50,6 +50,7 @@ class NapalmBaseAction(Action):
 
         if 'key_file' in login:
             optional_args = {'key_file': login['key_file']}
+            login['password'] = None
 
         # Some actions like to use these params in log messages, or commands, etc.
         # So we tie to instance for easy lookup
@@ -73,7 +74,7 @@ class NapalmBaseAction(Action):
         if not authconfig:
             raise ValueError('Can not find credentials group {}.'.format(credentials))
 
-        if authconfig['password'] is None and authconfig['key_file'] is None:
+        if 'password' not in authconfig and 'key_file' not in authconfig:
             raise ValueError("Missing password or SSH key in credentials.")
 
         if authconfig['username'] is None:
