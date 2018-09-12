@@ -13,6 +13,10 @@ credentials:
     username: ciscouser
     password: ciscopw
     secret: ciscoenable
+  firewall:
+    username: junos
+    key_file: "/home/fwadmin/.ssh/id_rsa"
+
 
 devices:
 - hostname: router1.lon
@@ -27,3 +31,7 @@ devices:
   port: 22
   driver: ios
   credentials: access
+- hostname: fw1.syd
+  port: 22
+  driver: junos
+  credentials: firewall
