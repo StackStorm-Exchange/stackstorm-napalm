@@ -49,7 +49,7 @@ class NapalmBaseAction(Action):
             optional_args = {'secret': login['secret']}
 
         if 'key_file' in login:
-            optional_args = {'key_file': login['key_file']}
+            optional_args = {'key_file': str(login['key_file'])}
             login['password'] = None
 
         # Some actions like to use these params in log messages, or commands, etc.
