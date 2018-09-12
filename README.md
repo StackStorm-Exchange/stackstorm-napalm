@@ -89,6 +89,20 @@ credentials:
     password: customerpw
 ```
 
+You can also use an enable secret for those devices that require, or an SSH key
+file, e.g.:
+
+```yaml
+credentials:
+  cisco:
+    username: cisco
+    password: loginpass
+    secret: enablePass
+  juniper:
+    username: cisco
+    key_file: /opt/stackstorm/configs/id_rsa
+```
+
 ### Devices configuration
 
 The devices configuration is so that credentials and drivers for each device
