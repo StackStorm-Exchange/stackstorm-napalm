@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.15
+
+- Version bump to fix tagging issues, no code changes
+
 ## 0.2.14
 
 - Support `key_file` for SSH key authentication
