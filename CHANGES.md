@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.16
+
+- Added "nxos_ssh" to supported Napalm drivers for legacy nx-os systems without NX-API support. (inline transfer only)
+
 ## 0.2.15
 
 - Version bump to fix tagging issues, no code changes
