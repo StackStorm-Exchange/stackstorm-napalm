@@ -145,7 +145,7 @@ class NapalmBaseAction(Action):
                               'parameter.').format(host_result))
 
         if driver not in ["ios", "iosxr", "junos", "eos", "fortios", "ibm", "nxos",
-                          "pluribus", "panos", "ros", "vyos"]:
+                          "pluribus", "panos", "ros", "vyos", "nxos_ssh"]:
             raise ValueError('Driver "{}" is not a valid NAPALM Driver.'.format(driver))
 
         # Return, this will be the original search and parameters
