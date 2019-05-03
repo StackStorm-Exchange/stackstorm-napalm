@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.3
+## 0.3.0
 
 - Removed `napalm-ibm` as it is no longer maintained, and pins to an older version of paramiko that breaks other drivers.
 
