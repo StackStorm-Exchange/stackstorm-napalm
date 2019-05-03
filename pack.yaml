@@ -7,6 +7,6 @@ keywords:
     - cisco
     - juniper
     - arista
-version: 0.3
+version: 0.3.0
 author: mierdin, Rob Woodward
 email: info@stackstorm.com
