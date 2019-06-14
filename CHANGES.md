@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.0
+
+- Driver reunification - switched to just "napalm" import, removed device-specific and napalm-base
+
 ## 0.3.0
 
 - Removed `napalm-ibm` as it is no longer maintained, and pins to an older version of paramiko that breaks other drivers.
