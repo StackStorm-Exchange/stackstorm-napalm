@@ -1,12 +1,3 @@
-napalm-base
-napalm-eos
-napalm-fortios
-napalm-ios
-napalm-iosxr
-napalm-junos
-napalm-nxos
-napalm-pluribus
-napalm-panos
 napalm
 json2table
 GitPython
