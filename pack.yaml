@@ -2,11 +2,11 @@
 name: napalm
 description: NAPALM network automation library integration pack
 keywords:
-    - networking
-    - napalm
-    - cisco
-    - juniper
-    - arista
+  - networking
+  - napalm
+  - cisco
+  - juniper
+  - arista
 version: 0.4.0
 author: mierdin, Rob Woodward
 email: info@stackstorm.com
