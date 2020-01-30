@@ -10,3 +10,6 @@ keywords:
 version: 0.4.0
 author: mierdin, Rob Woodward
 email: info@stackstorm.com
+python_versions:
+  - "2"
+  - "3"
