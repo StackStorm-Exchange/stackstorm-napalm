@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1
+
+- Restrict napalm dependency to < 3.0 to preserve Python 2.7 support
+
 ## 0.4.0
 
 - Driver reunification - switched to just "napalm" import, removed device-specific and napalm-base
