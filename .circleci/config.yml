@@ -31,6 +31,7 @@ jobs:
           key: v1-dependency-cache-py27-{{ checksum "requirements.txt" }}
           paths:
             - ~/.cache/pip
+            - ~/.apt-cache
       # NOTE: We use virtualenv files from Python 2.7 step in "deploy" job so we
       # only persist paths from this job
       - persist_to_workspace:
@@ -85,6 +86,7 @@ jobs:
           key: v1-dependency-cache-py36-{{ checksum "requirements.txt" }}
           paths:
             - ~/.cache/pip
+            - ~/.apt-cache
 
   deploy:
     docker:
