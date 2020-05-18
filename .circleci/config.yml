@@ -104,14 +104,10 @@ jobs:
       - attach_workspace:
           at: /
       - run:
-          name: Clear apt cache
-          command: sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
-      - run:
-          name: Update apt cache
-          command: sudo apt-get update
-      - run:
           name: Install dependencies
-          command: sudo apt -y install gmic optipng
+          command: |
+            sudo apt-get update
+            sudo apt -y install gmic optipng
       - run:
           name: Update exchange.stackstorm.org
           command:  ~/ci/.circle/deployment
