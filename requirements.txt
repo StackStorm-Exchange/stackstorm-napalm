@@ -1,3 +1,4 @@
+# Invalidate CircleCI cache: v2
 napalm<3.0
 json2table
 GitPython
