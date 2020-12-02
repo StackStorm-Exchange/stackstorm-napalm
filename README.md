@@ -264,3 +264,7 @@ First, you'll need to install the virtualenv yourself:
 Also, you will need to manually register the pack if you make changes to its metadata or configuration:
 
   st2 pack register napalm
+
+## Maintainers
+Active pack maintainers with review & write repository access and expertise with NAPALM:
+* Jeremiah Millay ([@floatingstatic](https://github.com/floatingstatic)), Fastly
