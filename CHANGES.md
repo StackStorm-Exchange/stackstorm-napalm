@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.0
+
+- Convert mistral workflows to orquesta
+
 ## 0.4.1
 
 - Restrict napalm dependency to < 3.0 to preserve Python 2.7 support

@@ -107,7 +107,7 @@ credentials:
 
 The devices configuration is so that credentials and drivers for each device
 don't have to be entered manually. This is useful for automated action chains
-or mistral workflows where (most of the time) only the hostname is known
+or orquesta workflows where (most of the time) only the hostname is known
 (for example from a syslog logsource field.)
 
 ```YAML
@@ -171,7 +171,7 @@ being set to the IP address of the host and the logsoure being set to the hostna
 received from the box. The example rsyslog configuration example details more
 on this.
 
-- **configuration_change_workflow**: Webhook trigger to run a remote backup mistral workflow when a configuration change is detected on a device.
+- **configuration_change_workflow**: Webhook trigger to run a remote backup orquesta workflow when a configuration change is detected on a device.
 - **interface_down_chain**: Webhook trigger to run an action chain when an interface goes down.
 - **bgp_prefix_exceeded_chain**: Webhook trigger to run an action chain when a bgp neighbor exceeds its prefix limit.
 
@@ -189,8 +189,8 @@ st2 key set napalm_actionerror_mailto "stackstorm_errors@example.com"
 st2 key set napalm_actionerror_mailfrom "stackstorm@example.com"
 
 # HTML header and footer files which get read in by some of the workflows to send nice emails.
-st2 key set napalm_html_mail_header_file "/opt/stackstorm/packs/napalm/examples/html_header.html"
-st2 key set napalm_html_mail_footer_file "/opt/stackstorm/packs/napalm/examples/html_footer.html"
+st2 key set napalm_html_mail_header_file "/opt/stackstorm/packs/napalm/examples/html_templates/html_header.html"
+st2 key set napalm_html_mail_footer_file "/opt/stackstorm/packs/napalm/examples/html_templates/html_footer.html"
 ```
 
 For the remote backup action chain the following commands will create the datastore key value pairs needed.

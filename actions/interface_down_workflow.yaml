@@ -1,7 +1,7 @@
 ---
   name: "interface_down_workflow"
   description: "Workflow to process an interface down event on a device."
-  runner_type: "mistral-v2"
+  runner_type: "orquesta"
   pack: napalm
   enabled: true
   entry_point: "workflows/interface_down_workflow.yaml"

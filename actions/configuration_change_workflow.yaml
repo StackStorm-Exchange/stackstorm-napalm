@@ -1,7 +1,7 @@
 ---
   name: "configuration_change_workflow"
   description: "Workflow to process a configuration change on a device."
-  runner_type: "mistral-v2"
+  runner_type: "orquesta"
   pack: napalm
   enabled: true
   entry_point: "workflows/configuration_change_workflow.yaml"
