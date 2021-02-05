@@ -7,9 +7,8 @@ keywords:
   - cisco
   - juniper
   - arista
-version: 0.5.0
+version: 1.0.0
 author: mierdin, Rob Woodward
 email: info@stackstorm.com
 python_versions:
-  - "2"
   - "3"
