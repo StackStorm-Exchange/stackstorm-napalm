@@ -6,7 +6,7 @@ enabled: false  # disabled by default; this is for demo purposes only.
 
 trigger_types:
 
-- name: "LLDPNeighborDecrease"
+- name: "LLDPNeighborIncrease"
   description: "Trigger which occurs when a device's LLDP neighbors increase"
   payload_schema:
     type: "object"
