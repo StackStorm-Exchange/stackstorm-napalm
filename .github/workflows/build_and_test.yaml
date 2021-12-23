@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
   schedule:
     # NOTE: We run this weekly at 1 am UTC on every Saturday
