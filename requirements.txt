@@ -2,4 +2,4 @@ napalm<3.0
 json2table
 GitPython
 # transitive deps: (napalm deps)
-ciscoconfparse<1.5.49
+ciscoconfparse==1.5.48
