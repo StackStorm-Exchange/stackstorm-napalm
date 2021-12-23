@@ -1,4 +1,6 @@
-# Invalidate CircleCI cache: v2
 napalm<3.0
 json2table
 GitPython
+# transitive deps: (napalm deps)
+#   pack tests hang with ciscoconfparse 1.5.48+
+ciscoconfparse<1.5.48
