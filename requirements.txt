@@ -1,4 +1,4 @@
-# Invalidate CircleCI cache: v2
 napalm<3.0
 json2table
 GitPython
+ciscoconfparse<1.5.48
