@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.0
+
+- Update napalm dependency to > 3.4 to support Python 3.6+ only
+- Fix issue #71
+
 ## 1.0.1
 
 - Fix `LLDPNeighborIncrease` trigger in LLDP sensor

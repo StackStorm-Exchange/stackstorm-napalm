@@ -1,4 +1,4 @@
-napalm<3.0
+napalm>3.4
 json2table
 GitPython
 # transitive deps: (napalm deps)
