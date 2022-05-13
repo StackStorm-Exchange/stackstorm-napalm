@@ -2,7 +2,8 @@
 
 ## 1.1.0
 
-- Update napalm dependency to > 3.0 to support Python 3.6+ only
+- Update napalm dependency to > 3.4 to support Python 3.6+ only
+- Fix issue #71
 
 ## 1.0.1
 
